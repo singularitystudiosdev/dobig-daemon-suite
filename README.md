@@ -1,7 +1,7 @@
 # Roblox Daemon Toolkit
 
-Six tools for live operated Roblox games, styled after dobig.com/games: Creator Dox, Thumbnail Daemon, Discord Daemon,
-Description Daemon, DMCA Daemon and Hack Daemon. Everything a tool shows comes from a real source during a real run.
+Nine tools for live operated Roblox games, styled after dobig.com/games: Creator Dox, Thumbnail Daemon, Discord Daemon,
+Description Daemon, DMCA Daemon, Hack Daemon, Content Creator Daemon, Rank Daemon and Pulse Daemon. Everything a tool shows comes from a real source during a real run.
 Nothing is seeded, recorded or simulated.
 
 ```
@@ -68,6 +68,9 @@ Thumbnail Daemon and 2,500 to the others. There is no payment: it is a local all
 | Discord Daemon | Recent messages from your own server, read by your own bot, summed up as sentiment per person. Quotes are short excerpts. | A Discord bot token, the Message Content intent, and an OpenRouter key. |
 | Description Daemon | The live Roblox description, drafted again and linted for policy. | An OpenRouter key. |
 | Creator Dox | How to reach the people behind the game: the owner, the owning group's leaders, Discord servers tied to the game (each resolved through Discord's public invite lookup), and the X, YouTube and other links or emails they published in their own profile text. Roblox shows game and group social links only to signed-in users, so those are not read. Only what the owner published; no private details. | Nothing. |
+| Content Creator Daemon | YouTube creators who cover the game and games like it, scored for fit, each with a personal outreach draft that refers to one of their real videos. Drafts only: it sends nothing. | An OpenRouter key. |
+| Rank Daemon | Where the game appears in Roblox search for the phrases players type, compared with the last run. Public search results, read without a login. | Nothing (an OpenRouter key adds suggested phrases). |
+| Pulse Daemon | Players, likes, public-server frame rate and ping, fill and time since the last update, with regressions flagged against the last run. | Nothing. |
 
 ### What is and is not automated
 
@@ -76,6 +79,14 @@ Thumbnail Daemon and 2,500 to the others. There is no payment: it is a local all
   look-alike is never labelled certain.
 - Description drafts are suggestions. You apply them on the Roblox game page.
 - The Discord Daemon only reads servers where you have added your own bot, and never direct messages.
+
+## Automate with our engineers
+
+Every tool's bar has an **automate** option (for example "Send DMCA takedowns for me" on the DMCA Daemon, "Auto-upload and
+optimize" on the Thumbnail Daemon, "Send the outreach for me" on the Content Creator Daemon). It opens the contact-us panel with
+the request already written. The tools never send, file or publish anything on their own: the DMCA Daemon prepares the
+takedown (Roblox Rights Manager has no public API) and the Content Creator Daemon drafts the messages. Setting either up to run
+automatically is done with our engineers, through that panel.
 
 ## New tool requests
 

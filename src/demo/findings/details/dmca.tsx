@@ -1,13 +1,15 @@
-import { useId, useRef, useState, type ReactNode } from 'react'
-import { Check, Copy, ExternalLink, FileCheck2, ShieldAlert, Undo2, X } from 'lucide-react'
+import { useId, useState, type ReactNode } from 'react'
+import { Check, Copy, ExternalLink, ShieldAlert, Undo2, X } from 'lucide-react'
 import { Badge, Button, useToast } from '@/components/ui'
 import { cn } from '@/lib/cn'
 import type { DmcaDetail, DmcaImagePair, DmcaLane } from '@/lib/details/dmca'
 import type { Tone } from '@/lib/tone'
+import { AutomateCta } from '@/demo/shell/AutomateCta'
 import type { DetailViewProps } from './types'
 
 /* DMCA Daemon detail: the exact game link first, then the real evidence (image pairs with their hash distance, text
-   overlap), the rule that chose the lane, and the notice draft. Filing is a human step: nothing here files anything. */
+   overlap), the rule that chose the lane, and a practice walkthrough of the filing. Filing is a human step in Roblox
+   Rights Manager: nothing here files or sends anything. The only way to ask for it to be done for you is the contact-us option. */
 
 const LANE_LABEL: Record<DmcaLane, string> = { identical: 'Identical image', near: 'Near-identical image', review: 'Needs review', weak: 'Weak signal' }
 const LANE_TONE: Record<DmcaLane, Tone> = { identical: 'danger', near: 'danger', review: 'warn', weak: 'muted' }
@@ -94,26 +96,236 @@ function Stat({ label, value, note }: { label: string; value: string; note: stri
   )
 }
 
-export default function DmcaDetailView({ finding, detail: d, state, act }: DetailViewProps<DmcaDetail>) {
+/* ---- Practice the filing ---- */
+
+/** The statements the filer must be able to make under 17 U.S.C. 512(c)(3)(A)(v) and (vi), each one plain sentence. */
+const STATEMENTS = [
+  'You own the exclusive right in the work, or you are authorised to act for the owner.',
+  'You have opened both games yourself and the material you name is really there.',
+  'You have a good-faith belief that the use is not authorised by the copyright owner, its agent, or the law.',
+  'Everything in the notice is accurate, and you say so under penalty of perjury.',
+]
+
+/** What each bracketed item of the notice asks the filer to write, in plain words. */
+const FILL_INS: [RegExp, string][] = [
+  [/^Describe which/, 'Which of your works are protected, and that you own them or may act for the owner'],
+  [/^Add what you/, 'What you saw yourself in their game, and the exact assets copied'],
+  [/^YOUR FULL NAME/, 'Your full name, postal address, email and phone'],
+  [/^YOUR STATEMENT that you have a good faith/, 'Your good-faith statement'],
+  [/^YOUR STATEMENT that the information/, 'Your accuracy and authority statement, under penalty of perjury'],
+  [/^YOUR PHYSICAL/, 'Your signature: your full legal name'],
+]
+
+/** The bracketed items of the notice, so the filer sees what is left to write. The header's own "[BRACKETED]" is skipped. */
+function fillIns(notice: string): string[] {
+  const out: string[] = []
+  for (const m of notice.matchAll(/\[([^\]]+)\]/g)) {
+    const text = m[1].trim()
+    if (text === 'BRACKETED') continue
+    const known = FILL_INS.find(([re]) => re.test(text))
+    if (known) out.push(known[1])
+    else {
+      const first = text.split(/(?<=[.:])\s+/)[0].replace(/[.:]$/, '')
+      out.push(first.length > 110 ? `${first.slice(0, 107).trimEnd()}...` : first)
+    }
+  }
+  return out
+}
+
+async function writeClipboard(text: string): Promise<void> {
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch {
+    const area = document.createElement('textarea')
+    area.value = text
+    area.setAttribute('readonly', '')
+    area.style.position = 'fixed'
+    area.style.opacity = '0'
+    document.body.appendChild(area)
+    area.select()
+    document.execCommand('copy')
+    area.remove()
+  }
+}
+
+function CopyButton({ text, what, toastTitle, children }: { text: string; what: string; toastTitle: string; children: ReactNode }) {
   const toast = useToast()
-  const areaRef = useRef<HTMLTextAreaElement>(null)
-  const areaId = useId()
   const [copied, setCopied] = useState(false)
+  async function copy() {
+    await writeClipboard(text)
+    setCopied(true)
+    toast.push({ title: toastTitle, description: 'Practice only. Nothing was sent.', tone: 'ok' })
+    window.setTimeout(() => setCopied(false), 2000)
+  }
+  return (
+    <Button size="sm" icon={copied ? Check : Copy} onClick={copy} aria-label={`Copy ${what}`}>
+      {copied ? 'Copied' : children}
+    </Button>
+  )
+}
+
+/** One row of the walkthrough: a real checkbox with its title as the label, then the step's own content. */
+function StepRow({ n, title, done, onToggle, children }: { n: number; title: string; done: boolean; onToggle: (on: boolean) => void; children: ReactNode }) {
+  const id = useId()
+  return (
+    <li className="flex gap-12 border-b border-line py-16 last:border-b-0">
+      <input id={id} type="checkbox" checked={done} onChange={(e) => onToggle(e.target.checked)} className="mt-2 size-16 shrink-0 accent-accent" />
+      <div className="flex min-w-0 flex-1 flex-col gap-8">
+        <label htmlFor={id} className={cn('w-fit cursor-pointer text-label font-medium', done ? 'text-muted' : 'text-ink')}>
+          {n}. {title}
+        </label>
+        {children}
+      </div>
+    </li>
+  )
+}
+
+function ValueLine({ label, href, text, copyWhat }: { label: string; href: string; text: string; copyWhat: string }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
+      <span className="w-full text-micro text-muted">{label}</span>
+      <ExternalLinkText href={href} className="min-w-0">
+        {text}
+      </ExternalLinkText>
+      <CopyButton text={text} what={copyWhat} toastTitle="Link copied">
+        Copy
+      </CopyButton>
+    </div>
+  )
+}
+
+const STEP_COUNT = 5
+
+function PracticeFiling({ d, state, act }: { d: DmcaDetail; state: string | undefined; act: (state: string) => void }) {
+  const c = d.candidate
+  const areaId = useId()
+  const [done, setDone] = useState<boolean[]>(() => Array.from({ length: STEP_COUNT }, () => false))
+  const filed = state === 'filed'
+  const isDone = (i: number) => (i === STEP_COUNT - 1 ? filed || done[i] : done[i])
+  const set = (i: number) => (on: boolean) => setDone((prev) => prev.map((v, j) => (j === i ? on : v)))
+  const count = Array.from({ length: STEP_COUNT }, (_, i) => isDone(i)).filter(Boolean).length
+  const next = Array.from({ length: STEP_COUNT }, (_, i) => isDone(i)).indexOf(false)
+  const progress = next === -1 ? 'All 5 steps done' : `Step ${next + 1} of 5`
+  const placeholders = fillIns(d.notice)
+  const creatorKind = c.creatorType ? (c.creatorType.toLowerCase() === 'group' ? 'community' : 'user') : ''
+
+  return (
+    <Section label="Practice the filing" hint="Nothing is sent. This is a practice run; the real filing happens in Rights Manager.">
+      <p aria-live="polite" className="text-micro text-muted">
+        <span className="font-medium text-ink">{progress}.</span> {count} of {STEP_COUNT} done. Ticks are kept on this page only.
+      </p>
+      <ol className="flex flex-col">
+        <StepRow n={1} title="Compare the evidence" done={isDone(0)} onToggle={set(0)}>
+          <p className="max-w-prose text-label text-muted">
+            Look at the image pairs above, Yours beside Theirs. A real copy shows the same scene, the same text or the same layout, not only a similar colour or theme. If the pairs only look alike in style, mark this game as not a copy.
+          </p>
+        </StepRow>
+
+        <StepRow n={2} title="Confirm both games" done={isDone(1)} onToggle={set(1)}>
+          <div className="flex flex-col gap-8">
+            <ValueLine label={`Your game: ${d.ours.name}`} href={d.ours.url} text={d.ours.url} copyWhat="your game link" />
+            <ValueLine label={`Their game: ${c.name}`} href={c.url} text={c.url} copyWhat="their game link" />
+            <p className="text-micro text-muted">
+              Creator of theirs{creatorKind ? ` (${creatorKind})` : ''}: <span className="text-ink">{c.creatorName || 'Unknown'}</span>,{' '}
+              <ExternalLinkText href={c.creatorUrl} className="text-micro">
+                {c.creatorUrl}
+              </ExternalLinkText>
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <span className="text-micro text-muted">You must be able to say, truthfully, each of these</span>
+            <ul className="flex list-disc flex-col gap-4 pl-20 marker:text-subtle">
+              {STATEMENTS.map((t) => (
+                <li key={t} className="max-w-prose text-label text-ink">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex items-start gap-8">
+            <ShieldAlert aria-hidden className="mt-2 size-16 shrink-0 text-warn" />
+            <p className="max-w-prose text-micro text-muted">
+              <span className="font-medium text-ink">Before you file: </span>
+              under 17 U.S.C. 512(f), knowingly filing a false takedown makes you liable for the other side&apos;s damages and legal fees.
+            </p>
+          </div>
+        </StepRow>
+
+        <StepRow n={3} title="Copy the notice" done={isDone(2)} onToggle={set(2)}>
+          <div className="flex flex-col gap-4">
+            <span className="text-micro text-muted">Fill these in before you file. The notice marks each one in square brackets.</span>
+            <ul className="flex list-disc flex-col gap-2 pl-20 marker:text-subtle">
+              {placeholders.map((t, i) => (
+                <li key={i} className="max-w-prose text-micro text-ink">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <label htmlFor={areaId} className="sr-only">
+            Notice text, read only
+          </label>
+          <textarea id={areaId} readOnly rows={10} value={d.notice} className="w-full resize-y rounded-8 border border-line bg-sunken p-12 font-mono text-micro text-ink" />
+          <div>
+            <CopyButton text={d.notice} what="the notice text" toastTitle="Notice copied">
+              Copy notice
+            </CopyButton>
+          </div>
+        </StepRow>
+
+        <StepRow n={4} title="Open Rights Manager" done={isDone(3)} onToggle={set(3)}>
+          <p className="max-w-prose text-label text-muted">
+            Creator Hub, Intellectual Property, Removal Requests. The rights owner must be signed in, and registered as a rights holder.{' '}
+            <ExternalLinkText href={d.rightsManagerDocsUrl} className="text-label">
+              Roblox guide
+            </ExternalLinkText>
+          </p>
+          <a
+            href={d.rightsManagerUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="state-layer inline-flex h-32 w-fit items-center gap-6 rounded-8 border border-line bg-raised px-12 text-label font-medium text-ink"
+          >
+            <ExternalLink aria-hidden className="size-16" />
+            Open Rights Manager
+          </a>
+        </StepRow>
+
+        <StepRow n={5} title="Mark as filed" done={isDone(4)} onToggle={set(4)}>
+          {filed ? (
+            <div className="flex flex-wrap items-center gap-12">
+              <Badge tone="live">Filed</Badge>
+              <span className="text-label text-muted">Marked as filed by you. DMCA Daemon filed nothing.</span>
+              <Button size="sm" icon={Undo2} onClick={() => act('open')}>
+                Reopen
+              </Button>
+            </div>
+          ) : (
+            <div className="flex flex-wrap items-center gap-12">
+              <Button
+                size="sm"
+                icon={Check}
+                onClick={() => {
+                  set(4)(true)
+                  act('filed')
+                }}
+              >
+                Mark as filed
+              </Button>
+              <span className="max-w-prose text-micro text-subtle">This only records that you filed it yourself in Rights Manager. The daemon sends nothing.</span>
+            </div>
+          )}
+        </StepRow>
+      </ol>
+    </Section>
+  )
+}
+
+export default function DmcaDetailView({ finding, detail: d, state, act }: DetailViewProps<DmcaDetail>) {
   const c = d.candidate
   const checked = d.checked ? new Date(d.checked).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'Not available'
   const pageInfo = [`${c.playing.toLocaleString('en-US')} playing`, `${c.visits.toLocaleString('en-US')} visits`, c.created ? `created ${c.created.slice(0, 10)}` : null].filter(Boolean).join(', ')
-
-  async function copyNotice() {
-    try {
-      await navigator.clipboard.writeText(d.notice)
-    } catch {
-      areaRef.current?.select()
-      document.execCommand('copy')
-    }
-    setCopied(true)
-    toast.push({ title: 'Notice copied', description: 'Complete every bracketed item before you file it.', tone: 'ok' })
-    window.setTimeout(() => setCopied(false), 2000)
-  }
+  const fileable = d.lane !== 'weak'
 
   return (
     <div className="flex flex-col gap-16">
@@ -198,58 +410,23 @@ export default function DmcaDetailView({ finding, detail: d, state, act }: Detai
         )}
       </Section>
 
-      <Section label="Takedown notice draft" hint="Facts come from this comparison. Your name, contact, good-faith and accuracy statements are bracketed for you to write.">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-3">
-          <div className="flex min-w-0 flex-col gap-8 lg:col-span-2">
-            <label htmlFor={areaId} className="sr-only">
-              Notice text, read only
-            </label>
-            <textarea
-              id={areaId}
-              ref={areaRef}
-              readOnly
-              rows={16}
-              value={d.notice}
-              className="w-full resize-y rounded-8 border border-line bg-sunken p-12 font-mono text-micro text-ink"
-            />
-            <div>
-              <Button size="sm" variant="primary" icon={copied ? Check : Copy} onClick={copyNotice}>
-                {copied ? 'Copied' : 'Copy notice'}
-              </Button>
-            </div>
-          </div>
-          <div className="flex min-w-0 flex-col gap-12">
-            <a
-              href={d.rightsManagerUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="state-layer inline-flex h-32 w-fit items-center gap-6 rounded-8 border border-line bg-raised px-12 text-label font-medium text-ink"
-            >
-              <ExternalLink aria-hidden className="size-16" />
-              Open Rights Manager
-            </a>
-            <p className="text-micro text-muted">
-              Creator Hub, Intellectual Property, Removal Requests. You must be a registered rights holder.{' '}
-              <ExternalLinkText href={d.rightsManagerDocsUrl} className="text-micro">
-                Roblox guide
-              </ExternalLinkText>
-            </p>
-            <div className="flex items-start gap-8 rounded-8 border border-line bg-raised p-12">
-              <ShieldAlert aria-hidden className="mt-2 size-16 shrink-0 text-warn" />
-              <p className="text-micro text-muted">
-                <span className="font-medium text-ink">Before you file: </span>
-                under 17 U.S.C. 512(f), knowingly filing a false takedown makes you liable for the other side&apos;s damages and legal fees. Roblox Rights Manager has no public API, so DMCA Daemon cannot file for you.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Section>
+      {fileable ? (
+        <PracticeFiling d={d} state={state} act={act} />
+      ) : (
+        <Section label="Not a filing candidate" hint="A weak signal is a lead to look at, not grounds for a takedown.">
+          <p className="max-w-prose text-label text-muted">
+            Open the game and look yourself. A notice needs your own evidence, and under 17 U.S.C. 512(f), knowingly filing a false takedown makes you liable for the other side&apos;s damages and legal fees.
+          </p>
+        </Section>
+      )}
+
+      {fileable && <AutomateCta slug="dmca-daemon" game={d.ours.name} variant="line" />}
 
       <div className="flex flex-wrap items-center gap-12 border-t border-line pt-16">
-        {state === 'dismissed' || state === 'filed' ? (
+        {state === 'dismissed' ? (
           <>
-            <Badge tone={state === 'filed' ? 'live' : 'muted'}>{state === 'filed' ? 'Filed' : 'Dismissed'}</Badge>
-            <span className="text-label text-muted">{state === 'filed' ? `Marked as filed by you. DMCA Daemon filed nothing.` : `${finding.title} is marked as not a copy.`}</span>
+            <Badge tone="muted">Dismissed</Badge>
+            <span className="text-label text-muted">{finding.title} is marked as not a copy.</span>
             <Button size="sm" icon={Undo2} onClick={() => act('open')}>
               Reopen
             </Button>
@@ -259,10 +436,7 @@ export default function DmcaDetailView({ finding, detail: d, state, act }: Detai
             <Button size="sm" icon={X} onClick={() => act('dismissed')}>
               Not a copy
             </Button>
-            <Button size="sm" icon={FileCheck2} onClick={() => act('filed')}>
-              I filed this
-            </Button>
-            <span className="max-w-prose text-micro text-subtle">&quot;I filed this&quot; only records that you filed it yourself in Creator Hub.</span>
+            <span className="max-w-prose text-micro text-subtle">&quot;Not a copy&quot; only marks it here. It tells nobody.</span>
           </>
         )}
       </div>

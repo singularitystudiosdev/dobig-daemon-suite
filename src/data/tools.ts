@@ -174,12 +174,12 @@ export const tools: ToolMeta[] = [
     thinking: ['Composing the watchlist query', 'Crawling public videos', 'Filtering bait and malware', 'Clustering real exploits', 'Mapping to game systems', 'Writing developer briefs'],
   },
   {
-    slug: 'sponsor-daemon',
-    name: 'Sponsor Daemon',
+    slug: 'content-creator-daemon',
+    name: 'Content Creator Daemon',
     blurb: 'Reach the creators who should be playing your game.',
-    art: asset('/tools/sponsor-daemon.webp'),
+    art: asset('/tools/content-creator-daemon.webp'),
     description: [
-      'Sponsor Daemon finds the YouTube creators who already cover games like yours, scores how well each one fits, and writes a personal outreach message for every good match, with their numbers and the video it refers to.',
+      'Content Creator Daemon finds the YouTube creators who already cover games like yours, scores how well each one fits, and writes a personal outreach message for every good match, with their numbers and the video it refers to.',
       'It keeps the pipeline across reruns: who is new, who you have a draft for, who you contacted. Messages are drafted for you to send; sending them automatically is set up with our engineers.',
     ],
     steps: ['Finds creators covering your game and its genre', 'Reads their audience, views and past sponsorships', 'Scores fit and checks brand safety', 'Drafts a personal outreach message for each good match'],
@@ -301,7 +301,7 @@ export const automation: Record<DaemonSlug, Automation> = {
     pitch: 'We open a ticket per exploit class in your tracker, with the server-side fix, and follow it until it is patched.',
     template: 'Please set up exploit tickets for {game}: open one ticket per exploit class in our tracker with the fix and follow it until it is patched.',
   },
-  'sponsor-daemon': {
+  'content-creator-daemon': {
     label: 'Send the outreach for me',
     pitch: 'We send each approved message from your address, follow up, and keep every reply and rate in one place.',
     template: 'Please set up automatic creator outreach for {game}: send the approved sponsorship messages from our address, follow up and track replies and rates.',
@@ -321,6 +321,6 @@ export const automation: Record<DaemonSlug, Automation> = {
 /** Real games to try a tool on without owning one. They fill the input; nothing runs until the visitor presses the button. */
 export const TRY_GAMES: { name: string; link: string }[] = [
   { name: 'Steal An Egg', link: 'https://www.roblox.com/games/107778070777162/Steal-An-Egg' },
-  { name: 'Grow a Garden', link: 'https://www.roblox.com/games/126884695634066/Grow-a-Garden' },
-  { name: 'Fisch', link: 'https://www.roblox.com/games/16732694052/Fisch' },
+  { name: 'Escape Tsunami For Brainrots', link: 'https://www.roblox.com/games/131623223084840/Escape-Tsunami-For-Brainrots' },
+  { name: 'Murder Mystery 2', link: 'https://www.roblox.com/games/142823291/Murder-Mystery-2' },
 ]

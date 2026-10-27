@@ -149,7 +149,7 @@ export function createEngine(options: EngineOptions): Engine {
       method: 'POST',
       path: '/api/requests',
       async handler(ctx) {
-        const clean = cleanRequest(await ctx.body())
+        const clean = cleanRequest(await ctx.body(), slugs)
         if ('error' in clean) return bad(ctx, clean.error)
         try {
           ctx.json(201, { ok: true, request: await requests.add(clean.value) })

@@ -19,12 +19,12 @@ const llm = createLlm({ key: process.env.OPENROUTER_API_KEY ?? '', baseUrl: 'htt
 const store = new Map()
 const memory = { get: (k) => (store.has(k) ? JSON.parse(store.get(k)) : undefined), set: (k, v) => store.set(k, JSON.stringify(v)) }
 
-async function runOnce(label, previous) {
+async function runOnce(label, previous, tgt = target) {
   const events = { steps: [], summary: null, findings: [] }
   const t0 = Date.now()
   await tool.analyze({
     tool: 'dmca-daemon',
-    target,
+    target: tgt,
     trigger: 'user',
     runId: 'test',
     daemonId: 'test',
@@ -68,10 +68,22 @@ check(first.findings.every((f) => f.meta.some((m) => m.label === 'Link' && m.val
 check(first.findings.every((f) => f.detail.candidate.creatorId !== 825735094), 'no finding is by the owner (creator 825735094)')
 check(first.findings.every((f) => f.detail.candidate.universeId !== target.universeId), 'our own universe is never a candidate')
 check(first.findings.every((f) => /\[YOUR FULL NAME/.test(f.detail.notice) && !/—/.test(f.detail.notice)), 'notices keep the owner placeholders')
+check(first.findings.every((f) => !/sent automatically|sends? (it|this|the notice) (for you|automatically)|we (will )?(send|file)|auto-?(send|file)/i.test(f.detail.notice)) && first.findings.every((f) => /has not filed this and cannot/.test(f.detail.notice)), 'notices never claim to send or file anything automatically')
+check(first.summary.notices.some((n) => /human step/.test(n.lead)) && first.summary.notices.some((n) => /512\(f\)/.test(n.body)), 'the 512(f) warning and "Filing is a human step" notices stay')
+check(first.findings.length > 0 ? !first.summary.notices.some((n) => /No copies found/.test(n.lead)) : first.summary.notices[0].lead === 'No copies found. Nothing to file.', 'the empty-result notice appears only when nothing was found')
 check(first.findings.filter((f) => f.group === 'weak').length <= 8, 'at most 8 weak signals listed')
 check(new Set(first.findings.map((f) => f.id)).size === first.findings.length, 'finding ids are unique and stable (dmca:<universeId>)')
 check(first.findings.every((f) => f.isNew === undefined), 'first run sets no isNew (nothing to compare with)')
 if (process.env.DMCA_JSON) writeFileSync(process.env.DMCA_JSON, JSON.stringify({ summary: first.summary, findings: first.findings }, null, 1))
+
+console.log('\n== 1b. empty result (a game with no look-alikes) ==')
+const lonely = await runOnce('empty', [], { kind: 'roblox-game', universeId: 1686885941, placeId: 4924922222, name: 'Brookhaven' })
+console.log('  items:', lonely.summary.items.map((i) => `${i.label}=${i.value}`).join(' | '))
+if (lonely.findings.length === 0) {
+  const n = lonely.summary.notices[0]
+  check(n.lead === 'No copies found. Nothing to file.' && /Compared \d+ images across \d+ games\./.test(n.body) && /better first try/.test(n.body), `empty result reads "${n.lead}" and says how much was compared`)
+  check(/Nothing to file/.test(lonely.summary.sortLabel) && lonely.summary.notices.length === 3, 'empty result keeps both filing notices and says nothing to file in the sort line')
+} else console.log('  info: Brookhaven now has candidates; empty-result checks skipped')
 
 console.log('\n== 2. hash validation on our own images ==')
 const gallery = (await fetchGalleryUrls([target.universeId], 10)).get(target.universeId) ?? []

@@ -6,7 +6,7 @@ import DmcaDetailView from './dmca'
 import HackDetailView from './hack'
 import PulseDetailView from './pulse'
 import RankDetailView from './rank'
-import SponsorDetailView from './sponsor'
+import ContentCreatorDetailView from './content-creator'
 import SentimentDetailView from './sentiment'
 import ThumbnailDetailView from './thumbnail'
 import type { DetailViewProps } from './types'
@@ -21,6 +21,6 @@ export const detailViews: Record<FindingDetail['kind'], ComponentType<DetailView
   creator: CreatorDetailView,
   thumbnail: ThumbnailDetailView,
   rank: RankDetailView,
-  sponsor: SponsorDetailView,
+  'content-creator': ContentCreatorDetailView,
   pulse: PulseDetailView,
 }

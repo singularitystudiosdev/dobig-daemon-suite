@@ -1,8 +1,9 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 import { ChevronDown, History, Trash2, Zap } from 'lucide-react'
+import { AutomateCta } from './AutomateCta'
 import { Button, LiveDot, Select, Skeleton, useToast } from '@/components/ui'
 import type { DaemonSlug } from '@/data/daemons'
-import { runCost, toolsBySlug } from '@/data/tools'
+import { automation, runCost, toolsBySlug } from '@/data/tools'
 import { ApiFailure, getDaemon, patchDaemon, runDaemonNow } from '@/lib/api'
 import type { Credits } from '@/lib/credits'
 import { cn } from '@/lib/cn'
@@ -221,6 +222,11 @@ export function DaemonBar({
         </div>
       )}
       <p className="text-micro text-muted">{tool.daemonNote}</p>
+
+      <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-4 border-t border-line pt-12">
+        <p className="min-w-0 max-w-prose text-micro text-muted">{automation[slug].pitch}</p>
+        <AutomateCta slug={slug} game={daemon.title} />
+      </div>
     </section>
   )
 }

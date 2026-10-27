@@ -6,9 +6,15 @@ import type { Store } from './store.ts'
    (a Slack or Discord incoming webhook) each new request is also posted there, and `delivered` says whether that post
    was accepted. Without a webhook the request is saved and `delivered` stays false: nothing here pretends otherwise. */
 
+export type RequestKind = 'new-tool' | 'automation'
+
 export interface ToolRequest {
   id: string
   createdAt: string
+  /** new-tool: asks for something that does not exist yet. automation: asks for an existing tool to be set up to run for the user. */
+  kind: RequestKind
+  /** The tool slug an automation request is about; null for a new-tool request. */
+  tool: string | null
   message: string
   game: string | null
   contact: string
@@ -17,6 +23,8 @@ export interface ToolRequest {
 }
 
 export interface RequestInput {
+  kind: RequestKind
+  tool: string | null
   message: string
   game: string | null
   contact: string
@@ -36,8 +44,15 @@ const CONTROL = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/
 const ANY_CONTROL = /[\u0000-\u001f\u007f]/
 
 /** Validates what the client sent. Returns the clean input or one plain sentence saying what to fix. */
-export function cleanRequest(raw: unknown): { value: RequestInput } | { error: string } {
-  const o = (raw && typeof raw === 'object' ? raw : {}) as { message?: unknown; game?: unknown; contact?: unknown }
+export function cleanRequest(raw: unknown, validTools: ReadonlySet<string> = new Set()): { value: RequestInput } | { error: string } {
+  const o = (raw && typeof raw === 'object' ? raw : {}) as { message?: unknown; game?: unknown; contact?: unknown; kind?: unknown; tool?: unknown }
+  const kind: RequestKind = o.kind === 'automation' ? 'automation' : 'new-tool'
+  let tool: string | null = null
+  if (o.tool !== undefined && o.tool !== null && o.tool !== '') {
+    if (typeof o.tool !== 'string' || !validTools.has(o.tool)) return { error: 'That tool is not in the toolkit.' }
+    tool = o.tool
+  }
+  if (kind === 'automation' && !tool) return { error: 'Say which tool you want set up to run for you.' }
   if (typeof o.message !== 'string') return { error: 'Describe what the tool should do.' }
   const message = o.message.replace(/\r\n/g, '\n').trim()
   if (message.length < MIN_MESSAGE) return { error: `Add a little more detail: at least ${MIN_MESSAGE} characters about what the tool should do.` }
@@ -52,7 +67,7 @@ export function cleanRequest(raw: unknown): { value: RequestInput } | { error: s
     game = o.game.trim()
     if (game.length > 200 || ANY_CONTROL.test(game)) return { error: 'That game link is too long or has line breaks. Paste one roblox.com/games link.' }
   }
-  return { value: { message, game, contact } }
+  return { value: { kind, tool: kind === 'automation' ? tool : null, message, game, contact } }
 }
 
 export interface Requests {
@@ -75,9 +90,15 @@ function isList(v: unknown): v is ToolRequest[] {
   return Array.isArray(v) && v.every((r) => !!r && typeof r === 'object' && typeof (r as ToolRequest).id === 'string' && typeof (r as ToolRequest).message === 'string')
 }
 
+/** Requests saved before kinds existed are new-tool requests. */
+function normalize(list: ToolRequest[]): ToolRequest[] {
+  return list.map((r) => ({ ...r, kind: r.kind === 'automation' ? 'automation' : 'new-tool', tool: typeof r.tool === 'string' ? r.tool : null }))
+}
+
 /** The text a webhook receives. Both `text` (Slack) and `content` (Discord) carry it. */
 export function webhookText(r: ToolRequest): string {
-  const lines = ['New tooling request', '', r.message, '', `Reach them at: ${r.contact}`]
+  const head = r.kind === 'automation' ? `Automation request${r.tool ? `: ${r.tool}` : ''}` : 'New tooling request'
+  const lines = [head, '', r.message, '', `Reach them at: ${r.contact}`]
   if (r.game) lines.push(`Game: ${r.game}`)
   const text = lines.join('\n')
   return text.length > 1900 ? `${text.slice(0, 1897)}...` : text
@@ -86,7 +107,7 @@ export function webhookText(r: ToolRequest): string {
 export function createRequests(opts: { store: Store; webhookUrl?: string; fetchImpl?: typeof fetch; now?: () => number }): Requests {
   const now = opts.now ?? (() => Date.now())
   const doFetch = opts.fetchImpl ?? fetch
-  const items = opts.store.load<ToolRequest[]>(FILE, [], isList)
+  const items = normalize(opts.store.load<ToolRequest[]>(FILE, [], isList))
   const recent: number[] = []
   const hook = opts.webhookUrl?.trim() || ''
 
@@ -117,7 +138,7 @@ export function createRequests(opts: { store: Store; webhookUrl?: string; fetchI
       while (recent.length && t - recent[0] > RATE_WINDOW_MS) recent.shift()
       if (recent.length >= RATE_LIMIT) throw new RequestsError('rate-limited', `You sent ${RATE_LIMIT} requests in the last 10 minutes. Wait a little, or add the rest to one request.`)
       recent.push(t)
-      const record: ToolRequest = { id: randomUUID(), createdAt: new Date(t).toISOString(), message: input.message, game: input.game, contact: input.contact, delivered: false }
+      const record: ToolRequest = { id: randomUUID(), createdAt: new Date(t).toISOString(), kind: input.kind, tool: input.tool, message: input.message, game: input.game, contact: input.contact, delivered: false }
       items.unshift(record)
       if (items.length > MAX_STORED) items.length = MAX_STORED
       record.delivered = await post(record)

@@ -9,7 +9,7 @@ export type DaemonSlug =
   | 'dmca-daemon'
   | 'hack-daemon'
   | 'rank-daemon'
-  | 'sponsor-daemon'
+  | 'content-creator-daemon'
   | 'pulse-daemon'
 
 export interface DaemonMeta {
@@ -65,7 +65,7 @@ export const daemons: DaemonMeta[] = [
     tone: 'data5',
   },
   { slug: 'rank-daemon', name: 'Rank Daemon', navLabel: 'Rankings', icon: TrendingUp, tone: 'live' },
-  { slug: 'sponsor-daemon', name: 'Sponsor Daemon', navLabel: 'Sponsors', icon: Handshake, tone: 'accent' },
+  { slug: 'content-creator-daemon', name: 'Content Creator Daemon', navLabel: 'Creators', icon: Handshake, tone: 'accent' },
   { slug: 'pulse-daemon', name: 'Pulse Daemon', navLabel: 'Pulse', icon: Activity, tone: 'warn' },
 ]
 

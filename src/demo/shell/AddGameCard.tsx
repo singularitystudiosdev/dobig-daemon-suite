@@ -1,7 +1,7 @@
 import { startTransition, useCallback, useEffect, useRef, useState, ViewTransition, type FormEvent, type RefObject } from 'react'
 import { CircleAlert, Link2, Plus } from 'lucide-react'
 import { Button, Field, Skeleton } from '@/components/ui'
-import { CREDITS_PER_VARIANT, runCost, toolsBySlug } from '@/data/tools'
+import { CREDITS_PER_VARIANT, runCost, toolsBySlug, TRY_GAMES } from '@/data/tools'
 import { ApiFailure, createDaemon, resolveGame } from '@/lib/api'
 import type { ApiError, ResolveResponse } from '@/lib/apiTypes'
 import { refreshCredits, useCredits } from '@/lib/credits'
@@ -272,6 +272,23 @@ export function AddGameCard({ slug, balance, existingIds, inputRef, initialLink,
               </div>
             )}
           </Field>
+          <div className="flex flex-wrap items-center gap-8" role="group" aria-label="Games to try it on">
+            <span className="text-micro text-muted">No game handy? Try a real one</span>
+            {TRY_GAMES.map((g) => (
+              <button
+                key={g.name}
+                type="button"
+                onClick={() => {
+                  setLink(g.link)
+                  if (phase.kind === 'error') setPhase({ kind: 'idle' })
+                  inputRef.current?.focus()
+                }}
+                className="state-layer inline-flex h-32 items-center rounded-full border border-line px-12 text-micro text-ink"
+              >
+                {g.name}
+              </button>
+            ))}
+          </div>
           {phase.kind === 'error' && (
             <div id="add-game-error" role="alert" className="flex items-start gap-8 rounded-8 bg-danger-soft p-12 text-label text-danger">
               <CircleAlert aria-hidden className="mt-2 size-16 shrink-0" />

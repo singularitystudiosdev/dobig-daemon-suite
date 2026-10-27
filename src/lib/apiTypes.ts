@@ -93,6 +93,10 @@ export const VARIANTS_PER_THUMB = 3
 export interface ToolRequest {
   id: string
   createdAt: string
+  /** new-tool asks for something that does not exist yet; automation asks for an existing tool to be set up to run for you. */
+  kind: 'new-tool' | 'automation'
+  /** The tool slug an automation request is about. */
+  tool: string | null
   message: string
   game: string | null
   contact: string
@@ -101,6 +105,8 @@ export interface ToolRequest {
 }
 
 export interface ToolRequestInput {
+  kind?: 'new-tool' | 'automation'
+  tool?: string
   message: string
   game?: string
   contact: string

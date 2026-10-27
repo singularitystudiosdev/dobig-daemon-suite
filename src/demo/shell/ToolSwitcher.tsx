@@ -10,9 +10,10 @@ import { useOnClickOutside } from '@/lib/hooks'
 import { cn } from '@/lib/cn'
 import { STATIC_PREVIEW } from '@/lib/static'
 import { NewToolDialog } from './NewToolDialog'
+import { openNewTool } from './newTool'
 
 /* The tool frame, top left of the dashboard: the current tool's art, its name and a chevron.
-   Opens a listbox of all six tools with their credits left, then a "New tool" row that opens the panel for building
+   Opens a listbox of every tool with their credits left, then a "New tool" row that opens the panel for building
    custom tooling with the forward deployed engineers. Arrows, Home, End, Enter, Escape and Tab work;
    Escape and picking return focus to the button. */
 
@@ -31,7 +32,6 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
   const tool = toolsBySlug[slug]
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(0)
-  const [newOpen, setNewOpen] = useState(false)
   const wrapRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
@@ -58,7 +58,7 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
   const NEW = tools.length
   const openNew = () => {
     close(false)
-    setNewOpen(true)
+    openNewTool()
   }
   const choose = (i: number) => (i === NEW ? openNew() : pick(tools[i].slug))
 
@@ -101,7 +101,7 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
           <ChevronDown aria-hidden className={cn('size-16 shrink-0 text-muted transition-transform duration-200 motion-reduce:transition-none', open && 'rotate-180')} />
         </button>
         {open && (
-          <div className="absolute left-0 top-full z-30 mt-8 w-320 rounded-20 border border-line-strong bg-surface p-8 motion-safe:animate-enter">
+          <div className="absolute left-0 top-full z-30 mt-8 max-h-640 w-320 overflow-y-auto rounded-20 border border-line-strong bg-surface p-8 motion-safe:animate-enter">
             <ul
               ref={listRef}
               id={listId}
@@ -160,7 +160,7 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
           </div>
         )}
       </div>
-      <NewToolDialog open={newOpen} onOpenChange={setNewOpen} />
+      <NewToolDialog />
     </>
   )
 }

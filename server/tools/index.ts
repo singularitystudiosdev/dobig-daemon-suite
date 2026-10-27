@@ -6,7 +6,7 @@ import { tool as dmca } from './dmca.ts'
 import { tool as hack } from './hack.ts'
 import { tool as pulse } from './pulse.ts'
 import { tool as rank } from './rank.ts'
-import { tool as sponsor } from './sponsor.ts'
+import { tool as contentCreator } from './content-creator.ts'
 import type { ToolModule } from './types.ts'
 
 /** Every tool that runs through the run engine. thumbnail-daemon is separate: its generation is /api/variants and
@@ -18,6 +18,6 @@ export const toolModules: Record<Exclude<DaemonSlug, 'thumbnail-daemon'>, ToolMo
   'dmca-daemon': dmca,
   'hack-daemon': hack,
   'rank-daemon': rank,
-  'sponsor-daemon': sponsor,
+  'content-creator-daemon': contentCreator,
   'pulse-daemon': pulse,
 }

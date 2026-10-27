@@ -558,9 +558,17 @@ async function run(ctx: RunContext, target: RobloxTarget): Promise<void> {
       body: 'Roblox Rights Manager has no public API. DMCA Daemon prepares the evidence and the notice; you file it in Creator Hub under Intellectual Property.',
     },
   ]
+  if (hits.length === 0) {
+    // An empty list is a result: say it plainly, with what was compared, and never imply that skipped games are cleared.
+    const skipped = notCompared.length ? ` ${notCompared.length} of them had no image that could be fetched, so they are not cleared.` : ''
+    notices.unshift({
+      lead: 'No copies found. Nothing to file.',
+      body: `Compared ${imagesCompared} images across ${pool80.length} games.${skipped} A game with many look-alikes is a better first try.`,
+    })
+  }
   ctx.summary({
     items,
-    sortLabel: 'Identical images first, then near-identical, then by similarity',
+    sortLabel: hits.length === 0 ? 'No copies found. Nothing to file' : 'Identical images first, then near-identical, then by similarity',
     groups: [
       { id: 'identical', label: 'Identical image' },
       { id: 'near', label: 'Near-identical image' },
@@ -644,7 +652,7 @@ async function run(ctx: RunContext, target: RobloxTarget): Promise<void> {
     if (hadPrior) finding.isNew = !seenBefore.has(id)
     ctx.finding(finding)
   }
-  ctx.step('write', 'Preparing evidence and notice drafts', 'done', hits.length ? `${ordered.length} candidates listed. Nothing is filed; filing is yours to do in Creator Hub.` : `Searched ${pool80.length} games, compared ${imagesCompared} images, no match above the weak threshold`)
+  ctx.step('write', 'Preparing evidence and notice drafts', 'done', hits.length ? `${ordered.length} candidates listed. Nothing is filed; filing is yours to do in Creator Hub.` : `Searched ${pool80.length} games, compared ${imagesCompared} images, no match above the weak threshold. Nothing to file.`)
 }
 
 function cache(c: FpCache, k: string): boolean {

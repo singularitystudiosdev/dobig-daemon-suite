@@ -496,6 +496,14 @@ let schedDaemonId
   await R.engine.store.flush()
   const mode = fs.statSync(path.join(d, 'requests.json')).mode & 0o777
   check('requests: requests.json is mode 0600 (it holds contact details)', mode === 0o600, mode.toString(8))
+  // automation requests carry the tool they are about
+  const auto = await rc('POST', '/api/requests', { ...good, kind: 'automation', tool: 'dmca-daemon', message: 'Please send the DMCA takedowns for my game automatically.' })
+  check('requests: an automation request keeps its kind and tool', auto.status === 201 && auto.json.request.kind === 'automation' && auto.json.request.tool === 'dmca-daemon')
+  check('requests: new-tool requests have kind new-tool and no tool', ok.json.request.kind === 'new-tool' && ok.json.request.tool === null)
+  const noTool = await rc('POST', '/api/requests', { ...good, kind: 'automation' })
+  const badTool = await rc('POST', '/api/requests', { ...good, kind: 'automation', tool: 'nope-daemon' })
+  const newTools = await Promise.all(['content-creator-daemon', 'rank-daemon', 'pulse-daemon'].map((t) => rc('POST', '/api/requests', { ...good, kind: 'automation', tool: t, message: `Automate ${t} for my game please.` })))
+  check('requests: automation needs a real tool slug (400 otherwise), the new tools are accepted', noTool.status === 400 && badTool.status === 400 && /not in the toolkit/.test(badTool.json.message) && newTools.every((r) => r.status === 201 || r.status === 429))
   let limited = 0
   for (let i = 0; i < 6; i++) if ((await rc('POST', '/api/requests', good)).status === 429) limited++
   check('requests: more than 5 in 10 minutes is a 429 rate-limited', limited >= 2 && (await rc('POST', '/api/requests', good)).json.code === 'rate-limited')
@@ -523,9 +531,11 @@ let schedDaemonId
   const sent = await wc('POST', '/api/requests', good)
   check('requests: a webhook 200 marks the request delivered', sent.json.request.delivered === true && hooks.length === 1)
   check('requests: the webhook gets text and content with the message, contact and game', hooks[0].text === hooks[0].content && hooks[0].text.includes(good.message) && hooks[0].text.includes('dev@example.com') && hooks[0].text.includes('Game: https://www.roblox.com/games/1/x'))
+  const autoHook = await wc('POST', '/api/requests', { ...good, kind: 'automation', tool: 'thumbnail-daemon', message: 'Please auto-upload and optimize my thumbnails.' })
+  check('requests: the webhook text names an automation request and its tool', autoHook.status === 201 && hooks[1].text.startsWith('Automation request: thumbnail-daemon'))
   hookStatus = 500
   const failed = await wc('POST', '/api/requests', { ...good, message: 'The webhook is down for this one, save it anyway.' })
-  check('requests: a webhook failure still saves the request, delivered false', failed.status === 201 && failed.json.request.delivered === false && (await wc('GET', '/api/requests')).json.requests.length === 2)
+  check('requests: a webhook failure still saves the request, delivered false', failed.status === 201 && failed.json.request.delivered === false && (await wc('GET', '/api/requests')).json.requests.length === 3)
   await W.close()
   await new Promise((r) => hook.close(r))
 }
