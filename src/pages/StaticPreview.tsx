@@ -10,7 +10,7 @@ import { ToolSwitcher } from '@/demo/shell/ToolSwitcher'
    shows what the tool does, and gives the three commands that run the real thing. It has no fake input and no sample
    results. */
 
-const COMMANDS = [`git clone ${REPO_URL}.git`, 'cd dobig-daemon-suite && npm install', 'npm run dev:keychain']
+const COMMANDS = [`git clone ${REPO_URL}`, 'cd dobig-daemon-suite && npm install', 'npm run dev:keychain']
 
 function CopyBlock({ text }: { text: string }) {
   const [done, setDone] = useState(false)
@@ -25,7 +25,7 @@ function CopyBlock({ text }: { text: string }) {
   }
   return (
     <div className="flex items-center justify-between gap-8 rounded-8 border border-line bg-raised py-4 pl-12 pr-4">
-      <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-label text-ink">{text}</code>
+      <code className="min-w-0 break-all font-mono text-label text-ink">{text}</code>
       <button type="button" onClick={copy} aria-label={`Copy: ${text}`} className="state-layer inline-flex size-32 shrink-0 items-center justify-center rounded-8 text-muted">
         {done ? <Check aria-hidden className="size-16 text-live" /> : <Copy aria-hidden className="size-16" />}
       </button>
