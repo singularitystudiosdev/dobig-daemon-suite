@@ -75,7 +75,6 @@ export function GeminiDialog({ open, onOpenChange }: { open: boolean; onOpenChan
             <>
               <KeyValue label="Key on the server" value={<Badge tone={status.geminiKey ? 'live' : 'muted'}>{status.geminiKey ? 'Yes' : 'No'}</Badge>} />
               <KeyValue label="Key in this browser" value={<Badge tone={saved ? 'live' : 'muted'}>{saved ? 'Saved' : 'None'}</Badge>} />
-              <KeyValue label="Recorded sets available" value={<span className="tabular">{status.recorded.length} thumbnails</span>} />
               <KeyValue label="Model" value={status.model} mono />
             </>
           ) : statusFailed ? (

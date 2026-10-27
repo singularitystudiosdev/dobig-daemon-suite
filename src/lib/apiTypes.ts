@@ -52,8 +52,6 @@ export interface StatusResponse {
   geminiKey: boolean
   /** Model id the server asks for. */
   model: string
-  /** Gallery image ids that have a recorded Nano Banana 2.1 set on disk. */
-  recorded: string[]
   /** Variants generated per gallery thumbnail. */
   perThumb: number
 }
@@ -62,22 +60,18 @@ export interface VariantRequest {
   gallery: GalleryThumb[]
   /** Defaults to the server's perThumb (3). */
   perThumb?: number
-  /** Skip the disk cache of earlier live results and generate again. */
-  fresh?: boolean
   /** Generate only these tiles (retry). Ignored tiles are not emitted. */
   only?: { thumbId: string; index: number }[]
 }
-
-/** Where a finished variant came from. */
-export type VariantSource = 'live' | 'recorded' | 'cache'
 
 export type VariantFailure = 'no-key' | 'blocked' | 'no-image' | 'rate-limited' | 'timeout' | 'upstream'
 
 /** NDJSON events, one JSON object per line, from POST /api/variants. */
 export type VariantEvent =
-  | { type: 'start'; total: number; mode: 'live' | 'recorded' | 'unavailable'; model: string }
+  /** 'live': a key is available and every tile is a fresh call to the model. 'unavailable': no key anywhere, nothing is generated. */
+  | { type: 'start'; total: number; mode: 'live' | 'unavailable'; model: string }
   | { type: 'working'; thumbId: string; index: number }
-  | { type: 'done'; thumbId: string; index: number; src: string; source: VariantSource; ms: number }
+  | { type: 'done'; thumbId: string; index: number; src: string; ms: number }
   | { type: 'failed'; thumbId: string; index: number; reason: VariantFailure; message: string }
   | { type: 'end'; done: number; failed: number }
 

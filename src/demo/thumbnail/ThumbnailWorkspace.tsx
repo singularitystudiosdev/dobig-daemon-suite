@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
-import { Download, Images, Info, RefreshCw } from 'lucide-react'
+import { Download, Images, RefreshCw } from 'lucide-react'
 import { Badge, Button, Dialog, EmptyState, Panel, ProgressBar, useToast } from '@/components/ui'
 import { navigate } from '@/lib/router'
 import { streamVariants } from '@/lib/api'
@@ -15,8 +15,6 @@ import { OriginalFrame, VariantFrame } from './VariantFrame'
 
 const COST_PER_VARIANT_USD = 0.034
 const MODEL_NAME = 'Nano Banana 2.1'
-/** The one game with a recorded real Nano Banana 2.1 set in public/recorded. */
-const RECORDED_DEMO_LINK = 'https://www.roblox.com/games/107778070777162/Steal-An-Egg'
 
 interface Zoom {
   thumbId: string
@@ -28,7 +26,7 @@ function extOf(src: string) {
   return m ? `.${m[1].toLowerCase()}` : ''
 }
 
-export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, openGemini, addGame }: WorkspaceProps) {
+export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, openGemini }: WorkspaceProps) {
   const charge = chargeProp ?? (() => true)
   const thumbs = entry.gallery
   const total = thumbs.length * VARIANTS_PER_THUMB
@@ -40,14 +38,13 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
   const toast = useToast()
 
   const run = useCallback(
-    (opts: { initial: boolean; fresh?: boolean; only?: { thumbId: string; index: number }[] }) => {
+    (opts: { initial: boolean; only?: { thumbId: string; index: number }[] }) => {
       const ac = new AbortController()
       controllers.current.add(ac)
       const scope = opts.only ? opts.only.map((o) => tileKey(o.thumbId, o.index)) : allKeys
       const pending = new Set(scope)
       dispatch({ type: 'queue', keys: scope })
       const request: VariantRequest = { gallery: entry.gallery, perThumb: VARIANTS_PER_THUMB }
-      if (opts.fresh) request.fresh = true
       if (opts.only) request.only = opts.only
       let failedSeen = 0
       let unavailable = false
@@ -59,7 +56,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
           ac.abort()
           refund(scope.length)
           if (opts.initial) dispatch({ type: 'unavailable' })
-          else dispatch({ type: 'fail', keys: scope, reason: 'no-key', message: 'No Gemini key and no recorded set for this thumbnail.' })
+          else dispatch({ type: 'fail', keys: scope, reason: 'no-key', message: 'Add a Gemini API key to generate this thumbnail.' })
           return
         }
         if (e.type === 'done' || e.type === 'failed') {
@@ -133,7 +130,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
       toast.push({ title: 'Not enough credits', description: `Regenerating all needs ${total} credits. Add credits from the top bar.`, tone: 'warn' })
       return
     }
-    run({ initial: false, fresh: true })
+    run({ initial: false })
   }
   const restartWithKey = () => {
     if (!charge(total)) {
@@ -155,7 +152,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
       <Panel title="Generating for this game needs a Gemini key">
         <div className="flex flex-col gap-16">
           <p className="max-w-prose text-body text-muted">
-            There is no recorded set for this game, so each variant is a live call to {MODEL_NAME}. That costs about $0.034 per variant, and this run needs <span className="tabular text-ink">{total}</span> variants, roughly <span className="tabular text-ink">${cost}</span>, billed to your own Gemini account. Your {total} credits were returned.
+            {MODEL_NAME} makes each variant live when you press the button. Nothing is pre-made or stored. It needs a Gemini API key with billing enabled, at about $0.034 per variant. This run is <span className="tabular text-ink">{total}</span> variants, roughly <span className="tabular text-ink">${cost}</span>. Your {total} credits were returned.
           </p>
           <div className="flex flex-wrap gap-8">
             {geminiKey ? (
@@ -167,18 +164,13 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
                 Add Gemini key
               </Button>
             )}
-            {addGame && (
-              <Button variant="normal" onClick={() => addGame(RECORDED_DEMO_LINK)}>
-                Replay the recorded Steal An Egg run
-              </Button>
-            )}
           </div>
         </div>
       </Panel>
     )
   }
 
-  const live = state.mode === 'live' || state.liveSeen
+  const live = state.mode === 'live'
   const zoomThumb = zoom ? thumbs.find((t) => t.id === zoom.thumbId) : undefined
   const zoomTile = zoom ? state.tiles[tileKey(zoom.thumbId, zoom.index)] : undefined
   const zoomN = zoom ? thumbs.findIndex((t) => t.id === zoom.thumbId) + 1 : 0
@@ -207,12 +199,6 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
             {total} variants from {thumbs.length} {thumbs.length === 1 ? 'thumbnail' : 'thumbnails'}, {VARIANTS_PER_THUMB} each. <span className="text-muted">{MODEL_NAME}</span>
           </p>
           <p className="text-label text-muted">Prompt: &ldquo;{VARIANT_PROMPT}&rdquo; with the thumbnail attached.</p>
-          {state.mode === 'recorded' && (
-            <p className="flex items-start gap-8 rounded-8 bg-accent-soft px-12 py-8 text-label text-accent-ink">
-              <Info aria-hidden className="mt-2 size-16 shrink-0" />
-              Recorded run: replaying real {MODEL_NAME} outputs saved for this game
-            </p>
-          )}
           {running && (
             <div className="flex items-center gap-12" role="status">
               <span className="tabular shrink-0 text-label text-accent-ink">{finished === 0 && counts.working === 0 ? 'Starting' : `Generating ${finished} of ${total}`}</span>

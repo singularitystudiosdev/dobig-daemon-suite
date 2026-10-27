@@ -33,7 +33,6 @@ export function AddGameCard({
   existingIds,
   inputRef,
   initialLink,
-  autoSubmit,
   focusOnMount,
   spend,
   onTopUp,
@@ -45,7 +44,6 @@ export function AddGameCard({
   existingIds: string[]
   inputRef: RefObject<HTMLInputElement | null>
   initialLink: string
-  autoSubmit: boolean
   focusOnMount: boolean
   spend: (n: number) => boolean
   onTopUp: () => void
@@ -58,7 +56,6 @@ export function AddGameCard({
   const [phase, setPhase] = useState<Phase>({ kind: 'idle' })
   const [wait, setWait] = useState(0)
   const alive = useRef(true)
-  const autoFired = useRef(false)
   const existing = useRef(existingIds)
   existing.current = existingIds
 
@@ -107,13 +104,6 @@ export function AddGameCard({
     },
     [inputRef, onExisting, slug],
   )
-
-  // Deep link: prefill and submit once. A ref survives the StrictMode remount, so it never charges twice.
-  useEffect(() => {
-    if (!autoSubmit || autoFired.current || !initialLink) return
-    autoFired.current = true
-    void submit(initialLink)
-  }, [autoSubmit, initialLink, submit])
 
   // Rate limit countdown.
   const retryAfter = phase.kind === 'error' ? phase.retryAfter : undefined

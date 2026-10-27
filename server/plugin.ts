@@ -1,17 +1,16 @@
-import fs from 'node:fs'
 import path from 'node:path'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { loadEnv, type Plugin, type ResolvedConfig } from 'vite'
 import { NANO_BANANA_MODEL, VARIANTS_PER_THUMB, type ApiError, type StatusResponse } from '../src/lib/apiTypes.ts'
 import { sendJson } from './http.ts'
 import { ResolveError, resolveGame } from './roblox.ts'
-import { CACHE_DIR, handleVariants, serveCachedImage, type ServerEnv } from './variants.ts'
+import { CACHE_DIR, handleVariants, serveGeneratedImage, type ServerEnv } from './variants.ts'
 
 const DEFAULT_BASE = 'https://generativelanguage.googleapis.com'
 
 /** JSON API under /api, mounted in both `vite` (dev) and `vite preview`. */
 export function apiPlugin(): Plugin {
-  let env: ServerEnv = { key: '', baseUrl: DEFAULT_BASE, recordedDir: '', cacheDir: '' }
+  let env: ServerEnv = { key: '', baseUrl: DEFAULT_BASE, cacheDir: '' }
 
   const configure = (config: ResolvedConfig) => {
     const file = loadEnv(config.mode, config.envDir || config.root, '')
@@ -19,8 +18,7 @@ export function apiPlugin(): Plugin {
     env = {
       key: pick('GEMINI_API_KEY'),
       baseUrl: (pick('GEMINI_BASE_URL') || DEFAULT_BASE).replace(/\/+$/, ''),
-      recordedDir: path.join(config.publicDir || path.join(config.root, 'public'), 'recorded'),
-      // DAEMON_CACHE_DIR lets tests keep their output out of the real cache, which beats recorded sets when it has a file.
+      // DAEMON_CACHE_DIR: where generated images are written; tests point it at a temp dir.
       cacheDir: pick('DAEMON_CACHE_DIR') ? path.resolve(pick('DAEMON_CACHE_DIR')) : path.join(config.root, CACHE_DIR),
     }
   }
@@ -52,25 +50,6 @@ function redact(text: string, key: string): string {
   return key ? text.split(key).join('[redacted]') : text
 }
 
-export function recordedIds(dir: string): string[] {
-  let files: string[]
-  try {
-    files = fs.readdirSync(dir)
-  } catch {
-    return []
-  }
-  const have = new Set(files)
-  const ids = new Set<string>()
-  for (const f of files) {
-    const m = /^(\d+)-0\.jpg$/.exec(f)
-    if (!m) continue
-    let all = true
-    for (let i = 1; i < VARIANTS_PER_THUMB; i++) if (!have.has(`${m[1]}-${i}.jpg`)) all = false
-    if (all) ids.add(m[1])
-  }
-  return [...ids].sort()
-}
-
 async function route(req: IncomingMessage, res: ServerResponse, env: ServerEnv): Promise<void> {
   const u = new URL(req.url ?? '/', 'http://localhost')
   const p = u.pathname.replace(/\/+$/, '')
@@ -82,7 +61,6 @@ async function route(req: IncomingMessage, res: ServerResponse, env: ServerEnv):
     const body: StatusResponse = {
       geminiKey: env.key.length > 0,
       model: NANO_BANANA_MODEL,
-      recorded: recordedIds(env.recordedDir),
       perThumb: VARIANTS_PER_THUMB,
     }
     return sendJson(res, 200, body)
@@ -111,7 +89,7 @@ async function route(req: IncomingMessage, res: ServerResponse, env: ServerEnv):
   const img = /^\/api\/img\/([^/]+)$/.exec(p)
   if (img) {
     if (method !== 'GET' && method !== 'HEAD') return methodNotAllowed('GET')
-    return serveCachedImage(req, res, env, decodeURIComponent(img[1]))
+    return serveGeneratedImage(req, res, env, decodeURIComponent(img[1]))
   }
 
   sendJson(res, 404, { ok: false, code: 'not-found', message: 'No such API endpoint.' } satisfies ApiError)

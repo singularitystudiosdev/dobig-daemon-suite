@@ -33,8 +33,6 @@ export interface WorkspaceProps {
   charge?: (credits: number) => boolean
   /** Opens the shell's Gemini key dialog. Only the thumbnail workspace needs it. */
   openGemini?: () => void
-  /** Add another game to the dashboard by link, as if the user had pasted it and pressed the tool's button. */
-  addGame?: (link: string) => void
   /** Update the status line under this game in the right-hand list. */
   report: (status: EntryStatus) => void
 }

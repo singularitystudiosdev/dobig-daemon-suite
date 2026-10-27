@@ -41,13 +41,8 @@ function Dashboard({ slug }: { slug: DaemonSlug }) {
   const [geminiOpen, setGeminiOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const reporters = useRef(new Map<string, (s: EntryStatus) => void>())
-  // A link to resolve: from the URL (#/demo/<tool>?game=...&auto=1) or handed over by a workspace via addGame().
-  // A new nonce remounts the input card, which re-runs its once-per-mount auto submit.
-  const [request, setRequest] = useState(() => ({ game: query.get('game') ?? '', auto: query.get('auto') === '1', nonce: 0 }))
-  const addByLink = useCallback((link: string) => {
-    setRequest((r) => ({ game: link, auto: true, nonce: r.nonce + 1 }))
-    setAdding(true)
-  }, [])
+  // #/demo/<tool>?game=<link or id> only prefills the input once. It never submits by itself.
+  const [initialLink, setInitialLink] = useState(() => query.get('game') ?? '')
 
   const showCard = adding || entries.length === 0
 
@@ -60,6 +55,7 @@ function Dashboard({ slug }: { slug: DaemonSlug }) {
     setEntries((list) => (list.some((e) => e.id === entry.id) ? list : [...list, entry]))
     setSelectedId(entry.id)
     setAdding(false)
+    setInitialLink('')
   }, [])
 
   const selectExisting = useCallback(
@@ -115,13 +111,11 @@ function Dashboard({ slug }: { slug: DaemonSlug }) {
           {showCard && (
             <div>
               <AddGameCard
-                key={request.nonce}
                 slug={slug}
                 balance={credits.balance}
                 existingIds={entries.map((e) => e.id)}
                 inputRef={inputRef}
-                initialLink={request.game}
-                autoSubmit={request.auto}
+                initialLink={initialLink}
                 focusOnMount={adding}
                 spend={credits.spend}
                 onTopUp={topUp}
@@ -140,7 +134,6 @@ function Dashboard({ slug }: { slug: DaemonSlug }) {
                 refund={credits.refund}
                 charge={credits.spend}
                 openGemini={() => setGeminiOpen(true)}
-                addGame={addByLink}
                 report={reporterFor(entry.id)}
               />
             </div>

@@ -12,8 +12,9 @@ import {
   type VariantRequest,
 } from '../src/lib/apiTypes.ts'
 import { GeminiError, generateVariant, sniff } from './gemini.ts'
-import { BodyError, readJson, sendJson, sleep, startNdjson } from './http.ts'
+import { BodyError, readJson, sendJson, startNdjson } from './http.ts'
 
+/** Default output directory for generated images; /api/img serves them to the browser. */
 export const CACHE_DIR = '.cache/variants'
 const MAX_BODY = 256 * 1024
 const CONCURRENCY = 3
@@ -25,7 +26,7 @@ export interface ServerEnv {
   /** Server-side Gemini key (env). Never logged or sent to the client. */
   key: string
   baseUrl: string
-  recordedDir: string
+  /** Where generated images are written (and served from by /api/img). Never read to skip a generation. */
   cacheDir: string
 }
 
@@ -39,7 +40,7 @@ function invalid(res: ServerResponse, message: string, status = 400): void {
 }
 
 /** Validates the body; returns an error message or the parsed request. */
-export function parseVariantRequest(raw: unknown): { error: string } | { gallery: GalleryThumb[]; perThumb: number; fresh: boolean; tiles: Tile[] } {
+export function parseVariantRequest(raw: unknown): { error: string } | { gallery: GalleryThumb[]; perThumb: number; tiles: Tile[] } {
   if (!raw || typeof raw !== 'object') return { error: 'Send a JSON object with a gallery array.' }
   const body = raw as Partial<VariantRequest>
   if (!Array.isArray(body.gallery) || body.gallery.length < 1 || body.gallery.length > 12) {
@@ -83,26 +84,12 @@ export function parseVariantRequest(raw: unknown): { error: string } | { gallery
     }
     tiles = tiles.filter((t) => want.has(`${t.thumb.id}-${t.index}`))
   }
-  return { gallery, perThumb, fresh: body.fresh === true, tiles }
+  return { gallery, perThumb, tiles }
 }
 
 const KEY_SHAPE = /^[A-Za-z0-9_-]{6,256}$/
 
-/** 2200-5200 ms, derived from thumbId+index (FNV-1a) so a tile always takes the same time. */
-export function recordedHoldMs(thumbId: string, index: number): number {
-  let h = 0x811c9dc5
-  for (const c of `${thumbId}:${index}`) {
-    h ^= c.charCodeAt(0)
-    h = Math.imul(h, 0x01000193) >>> 0
-  }
-  return 2200 + (h % 3001)
-}
-
-function hasRecorded(env: ServerEnv, thumbId: string, index: number): boolean {
-  return fs.existsSync(path.join(env.recordedDir, `${thumbId}-${index}.jpg`))
-}
-
-/** `?v=` busts the immutable browser cache when a fresh run overwrites the same filename. */
+/** `?v=` busts the immutable browser cache when a new generation overwrites the same filename. */
 function imgSrc(env: ServerEnv, name: string): string {
   let v = 0
   try {
@@ -111,18 +98,6 @@ function imgSrc(env: ServerEnv, name: string): string {
     /* served without a version */
   }
   return `/api/img/${name}?v=${v}`
-}
-
-function findCached(env: ServerEnv, thumbId: string, index: number): string | null {
-  for (const ext of ['jpg', 'png', 'webp']) {
-    const name = `${thumbId}-${index}.${ext}`
-    try {
-      if (fs.statSync(path.join(env.cacheDir, name)).size > 0) return name
-    } catch {
-      /* not there */
-    }
-  }
-  return null
 }
 
 async function downloadThumb(url: string, signal: AbortSignal): Promise<{ mime: string; base64: string }> {
@@ -156,9 +131,9 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
   const header = req.headers['x-gemini-key']
   const headerKey = (Array.isArray(header) ? header[0] : header)?.trim() ?? ''
   const apiKey = headerKey && KEY_SHAPE.test(headerKey) ? headerKey : env.key
-  const { tiles, fresh } = parsed
-  const allRecorded = tiles.length > 0 && tiles.every((t) => hasRecorded(env, t.thumb.id, t.index))
-  const mode: 'live' | 'recorded' | 'unavailable' = apiKey ? 'live' : allRecorded ? 'recorded' : 'unavailable'
+  const { tiles } = parsed
+  // Every tile is a fresh call to the model; with no key anywhere nothing is generated.
+  const mode: 'live' | 'unavailable' = apiKey ? 'live' : 'unavailable'
 
   const out = startNdjson(req, res)
   const emit = (e: VariantEvent) => out.write(e)
@@ -185,15 +160,12 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
   const run = async (t: Tile): Promise<void> => {
     if (out.signal.aborted) return
     const started = Date.now()
-    const ok = (src: string, source: 'live' | 'recorded' | 'cache', ms = Date.now() - started) => {
+    const ok = (src: string) => {
       done++
-      emit({ type: 'done', thumbId: t.thumb.id, index: t.index, src, source, ms })
+      emit({ type: 'done', thumbId: t.thumb.id, index: t.index, src, ms: Date.now() - started })
     }
     emit({ type: 'working', thumbId: t.thumb.id, index: t.index })
     try {
-      const cached = fresh ? null : findCached(env, t.thumb.id, t.index)
-      if (cached) return ok(imgSrc(env, cached), 'cache')
-
       if (mode === 'live') {
         const image = await thumbOf(t.thumb)
         const result = await generateVariant({
@@ -208,17 +180,10 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
         fs.mkdirSync(env.cacheDir, { recursive: true })
         const tmp = path.join(env.cacheDir, `.${name}.${process.pid}.${Date.now()}.tmp`)
         fs.writeFileSync(tmp, result.bytes)
-        // A fresh run replaces any older file of another extension so the cache has one truth.
+        // A fresh run replaces any older file of another extension so the output directory has one file per tile.
         for (const ext of ['jpg', 'png', 'webp']) if (ext !== EXT[result.mime]) fs.rmSync(path.join(env.cacheDir, `${t.thumb.id}-${t.index}.${ext}`), { force: true })
         fs.renameSync(tmp, path.join(env.cacheDir, name))
-        return ok(imgSrc(env, name), 'live')
-      }
-
-      if (mode === 'recorded' && hasRecorded(env, t.thumb.id, t.index)) {
-        // Pace the replay like a real generation so the pending state is visible; stable per tile.
-        const hold = recordedHoldMs(t.thumb.id, t.index)
-        await sleep(hold, out.signal)
-        return ok(`/recorded/${t.thumb.id}-${t.index}.jpg`, 'recorded', hold)
+        return ok(imgSrc(env, name))
       }
 
       fail(t, 'no-key', 'Add a Gemini API key to generate variants for this game.')
@@ -248,7 +213,7 @@ function redact(text: string, key: string): string {
   return key ? text.split(key).join('[redacted]') : text
 }
 
-export function serveCachedImage(req: IncomingMessage, res: ServerResponse, env: ServerEnv, file: string): void {
+export function serveGeneratedImage(req: IncomingMessage, res: ServerResponse, env: ServerEnv, file: string): void {
   const m = /^[0-9]+-[0-9]+\.(jpg|png|webp)$/.exec(file)
   if (!m) return sendJson(res, 404, { ok: false, code: 'not-found', message: 'No such image.' } satisfies ApiError)
   let data: Buffer

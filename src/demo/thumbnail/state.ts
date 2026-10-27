@@ -1,4 +1,4 @@
-import type { VariantEvent, VariantFailure, VariantSource } from '@/lib/apiTypes'
+import type { VariantEvent, VariantFailure } from '@/lib/apiTypes'
 
 /* Tile state for the Thumbnail workspace. Every variant frame exists from the first render as 'queued';
    NDJSON events move it to working, then done or failed. */
@@ -6,17 +6,15 @@ import type { VariantEvent, VariantFailure, VariantSource } from '@/lib/apiTypes
 export interface Tile {
   status: 'queued' | 'working' | 'done' | 'failed'
   src?: string
-  source?: VariantSource
   reason?: VariantFailure
   message?: string
 }
 
 export interface TilesState {
   tiles: Record<string, Tile>
-  mode: 'live' | 'recorded' | null
-  /** A finished variant came from a live Gemini call. */
-  liveSeen: boolean
-  /** The server has no key and no recording for this game. */
+  /** The start event's mode: every tile is a fresh live call to the model. */
+  mode: 'live' | null
+  /** The server has no Gemini key anywhere, so nothing is generated. */
   unavailable: boolean
 }
 
@@ -30,7 +28,7 @@ export type TilesAction =
 export const tileKey = (thumbId: string, index: number) => `${thumbId}:${index}`
 
 export function initTiles(keys: string[]): TilesState {
-  return { tiles: Object.fromEntries(keys.map((k) => [k, { status: 'queued' } as Tile])), mode: null, liveSeen: false, unavailable: false }
+  return { tiles: Object.fromEntries(keys.map((k) => [k, { status: 'queued' } as Tile])), mode: null, unavailable: false }
 }
 
 export function tilesReducer(state: TilesState, action: TilesAction): TilesState {
@@ -63,7 +61,7 @@ export function tilesReducer(state: TilesState, action: TilesAction): TilesState
         if (cur.status === 'done' || cur.status === 'failed') return state
         return { ...state, tiles: { ...state.tiles, [key]: { status: 'working' } } }
       }
-      if (e.type === 'done') return { ...state, liveSeen: state.liveSeen || e.source === 'live', tiles: { ...state.tiles, [key]: { status: 'done', src: e.src, source: e.source } } }
+      if (e.type === 'done') return { ...state, tiles: { ...state.tiles, [key]: { status: 'done', src: e.src } } }
       return { ...state, tiles: { ...state.tiles, [key]: { status: 'failed', reason: e.reason, message: e.message } } }
     }
   }
