@@ -1,0 +1,89 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./theme.css";
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-color: var(--color-accent-ink);
+  }
+  html {
+    background: var(--color-canvas);
+    scrollbar-color: var(--color-raised) var(--color-canvas);
+  }
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    color: var(--color-ink);
+    background: var(--color-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  button:not(:disabled), [role="button"]:not([aria-disabled="true"]) { cursor: pointer; }
+  /* 2px ring at 3:1 (SC 2.4.13); keyboard focus is never animated. */
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+  ::selection { background: var(--color-accent-soft); }
+}
+
+/* Tabular figures for every live number. */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* M3 state layer: hover 8%, press 10% of the content color (design-web Button). */
+@utility state-layer {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 150ms var(--ease-standard);
+    pointer-events: none;
+  }
+  &:hover::before { opacity: var(--state-layer-hover); }
+  &:active::before { opacity: var(--state-layer-press); }
+}
+
+@utility scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-raised) transparent;
+}
+
+/* Hatching marks modelled or estimated values: it encodes data, not decoration. */
+@utility hatch {
+  background-image: repeating-linear-gradient(135deg, color-mix(in oklab, currentColor 40%, transparent) 0 2px, transparent 2px 6px);
+}
+
+/* Stage rail cells keep a readable minimum and scroll sideways on narrow screens. */
+@utility auto-cols-stage {
+  grid-auto-columns: minmax(136px, 1fr);
+}
+
+/* Run stage body: visualization plus a fixed side column. */
+@utility grid-cols-stage {
+  grid-template-columns: minmax(0, 1fr) 360px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "note": "Approved exceptions: src/data/games.ts holds Roblox game names and descriptions verbatim from games.roblox.com, so their emoji are platform data, not UI bullets.",
+  "overrides": [
+    { "files": ["src/data/games.ts"], "allow": ["emoji-bullet"] }
+  ]
+}
