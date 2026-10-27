@@ -18,6 +18,8 @@ function fsAllow(): string[] {
 }
 
 export default defineConfig({
+  // `/` in dev and local builds; the Pages workflow sets VITE_BASE=/<repo>/ for a project site.
+  base: process.env.VITE_BASE || '/',
   plugins: [react(), tailwindcss(), apiPlugin()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },

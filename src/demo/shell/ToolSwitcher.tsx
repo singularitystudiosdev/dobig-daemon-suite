@@ -8,6 +8,7 @@ import { useBalance } from '@/lib/credits'
 import { navigate } from '@/lib/router'
 import { useOnClickOutside } from '@/lib/hooks'
 import { cn } from '@/lib/cn'
+import { STATIC_PREVIEW } from '@/lib/static'
 import { NewToolDialog } from './NewToolDialog'
 
 /* The tool frame, top left of the dashboard: the current tool's art, its name and a chevron.
@@ -17,6 +18,7 @@ import { NewToolDialog } from './NewToolDialog'
 
 function Credits({ slug }: { slug: DaemonSlug }) {
   const n = useBalance(slug)
+  if (STATIC_PREVIEW) return <span className="text-micro text-muted">Runs on your machine</span>
   return (
     <span className="tabular inline-flex items-center gap-4 text-micro text-muted">
       <Zap aria-hidden className="size-12" />

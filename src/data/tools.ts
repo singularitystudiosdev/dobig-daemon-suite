@@ -1,4 +1,6 @@
 import type { DaemonSlug } from './daemons'
+// Explicit .ts: the server imports this file in Node, which needs the extension.
+import { asset } from '../lib/static.ts'
 
 /* The toolkit catalogue: what the hub, the detail page and the demo dashboard all read.
    Art is 16:9 (960x540 WebP in /public/tools). Credits live on the server, per tool; the numbers here are the
@@ -37,7 +39,7 @@ export const tools: ToolMeta[] = [
     slug: 'creator-dox',
     name: 'Creator Dox',
     blurb: 'Find the people behind any game.',
-    art: '/tools/creator-dox.webp',
+    art: asset('/tools/creator-dox.webp'),
     description: [
       'Creator Dox answers one question: how do you reach the people behind this game? It finds the game owner, the leaders of the owning group, every Discord server tied to the game, and every public channel they published: X / Twitter, YouTube, Twitch, TikTok, Instagram, link pages and websites, plus an email only when one is written out in their own text.',
       'Contacts are ordered with the best way to reach someone first. Each one shows exactly where it was found, with the link and a short quote, and is marked as linked by the owner, a verified Discord invite, or an unconfirmed search match.',
@@ -60,7 +62,7 @@ export const tools: ToolMeta[] = [
     slug: 'thumbnail-daemon',
     name: 'Thumbnail Daemon',
     blurb: 'Fresh angles on every thumbnail you ship.',
-    art: '/tools/thumbnail-daemon.webp',
+    art: asset('/tools/thumbnail-daemon.webp'),
     description: [
       'Thumbnail Daemon reads every thumbnail on your game page. When you press the button it asks Nano Banana 2.1 for three new takes on each one, each from a novel perspective.',
       'Its daemon only watches your gallery for new or changed thumbnails. It never generates by itself and never spends credits on its own.',
@@ -83,7 +85,7 @@ export const tools: ToolMeta[] = [
     slug: 'discord-daemon',
     name: 'Discord Daemon',
     blurb: 'What your community actually thinks.',
-    art: '/tools/discord-daemon.webp',
+    art: asset('/tools/discord-daemon.webp'),
     description: [
       'Discord Daemon reads recent messages in a community server your own bot has joined and flags sentiment by counting people, not messages, so one loud poster cannot swing the result.',
       'Topics are ranked by how much negative sentiment they carry, and every quote is a short excerpt from your own server.',
@@ -106,7 +108,7 @@ export const tools: ToolMeta[] = [
     slug: 'description-daemon',
     name: 'Description Daemon',
     blurb: 'Descriptions that earn more Home clicks.',
-    art: '/tools/description-daemon.webp',
+    art: asset('/tools/description-daemon.webp'),
     description: [
       'Description Daemon reads your live Roblox description and drafts new versions of it. Roblox has no description A/B test, so the drafts are suggestions you apply yourself.',
       'Every draft is linted for misleading claims, giveaway wording and keyword stuffing before you see it.',
@@ -129,7 +131,7 @@ export const tools: ToolMeta[] = [
     slug: 'dmca-daemon',
     name: 'DMCA Daemon',
     blurb: 'Find and remove copies of your assets.',
-    art: '/tools/dmca-daemon.webp',
+    art: asset('/tools/dmca-daemon.webp'),
     description: [
       'DMCA Daemon searches Roblox for experiences that look like copies of your game and links each one so you can check it yourself. It prepares the evidence and a draft notice.',
       'Filing is always a human step: Roblox Rights Manager has no public API, and a wrong takedown carries legal liability.',
@@ -152,7 +154,7 @@ export const tools: ToolMeta[] = [
     slug: 'hack-daemon',
     name: 'Hack Daemon',
     blurb: 'Catch exploits before your players do.',
-    art: '/tools/hack-daemon.webp',
+    art: asset('/tools/hack-daemon.webp'),
     description: [
       'Hack Daemon searches YouTube for videos advertising exploits for your game, filters out the bait, and groups what is real by vulnerability class.',
       'Each group is mapped to the game system it abuses, with a plain-language server-side fix for your developers. Briefs name the class of problem, never working code.',

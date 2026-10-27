@@ -11,6 +11,20 @@ npm run dev:keychain   # same, with an OpenRouter key read from the macOS keycha
 npm run build          # typecheck + production build
 ```
 
+## GitHub Pages preview
+
+The interface is published at https://singularitystudiosdev.github.io/dobig-daemon-suite/ by
+`.github/workflows/pages.yml` on every push to `main`. Pages only hosts static files, so that site is a browsable
+preview: the hub, every tool page and the dashboard frames load, and each dashboard says it needs the local server and
+shows the commands to run it. Nothing there is simulated and no request ever goes to an API. The tools themselves run
+only with the local server above.
+
+To build the same static site locally:
+
+```
+VITE_BASE=/dobig-daemon-suite/ VITE_STATIC_PREVIEW=1 npm run build   # output in dist/
+```
+
 ## The flow
 
 1. `#/` the hub: "Roblox Daemon Toolkit" and one 16:9 tile per tool.

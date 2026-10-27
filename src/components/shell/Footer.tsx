@@ -1,3 +1,5 @@
+import { asset } from '@/lib/static'
+
 /* The dobig.com footer, reduced: logo and one line on the left, the Studio links on the right,
    the company line at the bottom. */
 const studioLinks = [
@@ -13,7 +15,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-page flex-col gap-32 px-24 py-48 md:flex-row md:justify-between">
         <div className="flex flex-col gap-12">
           <a href="#/" className="flex items-center gap-12 rounded-8">
-            <img src="/brand/icon.png" alt="" width={40} height={40} className="size-40 rounded-8" />
+            <img src={asset('/brand/icon.png')} alt="" width={40} height={40} className="size-40 rounded-8" />
             <span className="text-title font-bold text-ink">Roblox Daemon Toolkit</span>
           </a>
           <p className="max-w-prose text-label text-muted">Autonomous growth and protection tools for live operated Roblox games.</p>

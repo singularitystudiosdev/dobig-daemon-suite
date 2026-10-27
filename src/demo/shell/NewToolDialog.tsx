@@ -3,6 +3,7 @@ import { CircleCheck, MessageSquareText, Rocket, Send, Users, type LucideIcon } 
 import { Badge, Button, Dialog, Field, TextInput } from '@/components/ui'
 import type { ToolRequest } from '@/lib/apiTypes'
 import { ApiFailure, listToolRequests, sendToolRequest } from '@/lib/api'
+import { asset } from '@/lib/static'
 import { ago } from './time'
 
 /* "New tool": what the forward deployed engineers do, and a form that sends them a request. The request is saved by
@@ -91,7 +92,7 @@ export function NewToolDialog({ open, onOpenChange }: { open: boolean; onOpenCha
     >
       <div className="grid gap-24 md:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-16">
-          <img src="/tools/build-it.webp" alt="" width={960} height={540} className="aspect-video w-full rounded-8 object-cover" />
+          <img src={asset('/tools/build-it.webp')} alt="" width={960} height={540} className="aspect-video w-full rounded-8 object-cover" />
           <h3 className="text-label font-medium text-ink">How it works</h3>
           <ol className="flex flex-col gap-16">
             {STEPS.map((s, i) => (

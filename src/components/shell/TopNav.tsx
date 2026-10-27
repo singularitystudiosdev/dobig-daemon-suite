@@ -1,10 +1,12 @@
+import { asset } from '@/lib/static'
+
 /* The dobig.com navbar, simplified: black, sticky, logo and wordmark on the left that link home. */
 export function TopNav() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-canvas">
       <div className="mx-auto flex h-80 max-w-page items-center justify-between gap-24 px-24">
         <a href="#/" className="flex min-w-0 items-center gap-12 rounded-8" aria-label="Roblox Daemon Toolkit home">
-          <img src="/brand/icon.png" alt="" width={44} height={44} className="size-44 shrink-0 rounded-8" />
+          <img src={asset('/brand/icon.png')} alt="" width={44} height={44} className="size-44 shrink-0 rounded-8" />
           <span className="truncate text-title font-bold text-ink">Roblox Daemon Toolkit</span>
         </a>
       </div>
