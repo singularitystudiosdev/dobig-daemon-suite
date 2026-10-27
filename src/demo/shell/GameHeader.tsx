@@ -13,7 +13,7 @@ export function GameHeader({ entry }: { entry: GameEntry }) {
   const long = info.description.length > 260 || info.description.split('\n').length > 4
   return (
     <Panel bodyClassName="flex flex-col gap-24 p-24 md:flex-row">
-      <div className="aspect-video w-full shrink-0 overflow-hidden rounded-8 bg-raised md:w-320">
+      <div className="aspect-video w-full shrink-0 self-start overflow-hidden rounded-8 bg-raised md:w-320">
         {cover && <img src={cover} alt={`${info.name} cover`} width={320} height={180} className="size-full object-cover" />}
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-16">

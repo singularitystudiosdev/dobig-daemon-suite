@@ -47,8 +47,8 @@ export const tools: ToolMeta[] = [
     inputLabel: 'Roblox game link',
     inputHint: 'Paste a roblox.com/games link to find the creators covering it.',
     runVerb: 'Find creators',
-    startCredits: 30,
-    topUp: 30,
+    startCredits: 5000,
+    topUp: 2500,
     resultsTitle: 'Creators ranked by partnership fit',
     thinking: ['Searching public videos about the game', 'Reading channel statistics', 'Detecting paid placements', 'Scoring audience credibility', 'Ranking partnership fit'],
   },
@@ -61,7 +61,7 @@ export const tools: ToolMeta[] = [
       'Thumbnail Daemon reads every thumbnail on your game page and asks Nano Banana 2.1 for three new takes on each one, each from a different perspective.',
       'Drop the variants into Roblox thumbnail personalization and let the bandit find the winner for each player segment.',
     ],
-    steps: ['Fetches every gallery thumbnail on your game', 'Generates 3 variants of each with Nano Banana 2.1', 'Shows originals beside their variants', 'Costs 1 credit per variant'],
+    steps: ['Fetches every gallery thumbnail on your game', 'Generates 3 variants of each with Nano Banana 2.1', 'Shows originals beside their variants', 'Costs 250 credits per variant'],
     facts: [
       { label: 'Model', value: 'Nano Banana 2.1' },
       { label: 'Per thumbnail', value: '3 variants, 16:9' },
@@ -69,8 +69,8 @@ export const tools: ToolMeta[] = [
     inputLabel: 'Roblox game link',
     inputHint: 'Paste a roblox.com/games link. Every thumbnail on the page is used.',
     runVerb: 'Generate',
-    startCredits: 60,
-    topUp: 60,
+    startCredits: 10000,
+    topUp: 5000,
     resultsTitle: 'Variants',
     thinking: [],
   },
@@ -91,8 +91,8 @@ export const tools: ToolMeta[] = [
     inputLabel: 'Roblox game link',
     inputHint: 'Paste a roblox.com/games link to read its community.',
     runVerb: 'Summarise',
-    startCredits: 30,
-    topUp: 30,
+    startCredits: 5000,
+    topUp: 2500,
     resultsTitle: 'Community topics by urgency',
     thinking: ['Connecting to the community server', 'Backfilling seven days of history', 'Counting people and excluding raids', 'Clustering topics', 'Ranking by urgency'],
   },
@@ -113,8 +113,8 @@ export const tools: ToolMeta[] = [
     inputLabel: 'Roblox game link',
     inputHint: 'Paste a roblox.com/games link to rewrite its description.',
     runVerb: 'Draft variants',
-    startCredits: 30,
-    topUp: 30,
+    startCredits: 5000,
+    topUp: 2500,
     resultsTitle: 'Drafts ranked by predicted lift',
     thinking: ['Reading the live description', 'Drafting three variants', 'Linting for Roblox policy', 'Estimating play-through lift'],
   },
@@ -135,8 +135,8 @@ export const tools: ToolMeta[] = [
     inputLabel: 'Roblox game link',
     inputHint: 'Paste a roblox.com/games link of a game you own.',
     runVerb: 'Scan for copies',
-    startCredits: 30,
-    topUp: 30,
+    startCredits: 5000,
+    topUp: 2500,
     resultsTitle: 'Matches by severity',
     thinking: ['Fingerprinting registered assets', 'Crawling candidate experiences', 'Comparing hashes', 'Capturing evidence', 'Sorting into lanes'],
   },
@@ -157,8 +157,8 @@ export const tools: ToolMeta[] = [
     inputLabel: 'Roblox game link',
     inputHint: 'Paste a roblox.com/games link of a game you operate.',
     runVerb: 'Scan for exploits',
-    startCredits: 30,
-    topUp: 30,
+    startCredits: 5000,
+    topUp: 2500,
     resultsTitle: 'Exploits by severity',
     thinking: ['Composing the watchlist query', 'Crawling public videos', 'Filtering bait and malware', 'Clustering real exploits', 'Mapping to game systems', 'Writing developer briefs'],
   },
@@ -166,9 +166,13 @@ export const tools: ToolMeta[] = [
 
 export const toolsBySlug: Record<DaemonSlug, ToolMeta> = Object.fromEntries(tools.map((t) => [t.slug, t])) as Record<DaemonSlug, ToolMeta>
 
-/** Credits one run costs. Thumbnails scale with the gallery; every other tool is flat. */
+/** Credits per Nano Banana 2.1 variant. */
+export const CREDITS_PER_VARIANT = 250
+
+/** Credits one run costs. Thumbnails scale with the gallery (3 variants each); the other tools are flat per run,
+ *  and a daemon's scheduled rerun costs the same as a manual one. */
 export function runCost(slug: DaemonSlug, galleryCount = 0, perThumb = 3): number {
-  if (slug === 'thumbnail-daemon') return Math.max(1, galleryCount) * perThumb
-  if (slug === 'hack-daemon' || slug === 'dmca-daemon') return 3
-  return 2
+  if (slug === 'thumbnail-daemon') return Math.max(1, galleryCount) * perThumb * CREDITS_PER_VARIANT
+  if (slug === 'hack-daemon' || slug === 'dmca-daemon') return 1500
+  return 1000
 }
