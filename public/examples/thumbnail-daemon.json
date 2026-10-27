@@ -1,0 +1,204 @@
+{
+  "tool": "thumbnail-daemon",
+  "capturedAt": "2026-10-27T21:58:47.846Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "/examples/thumbnail-daemon/original.jpg",
+      "caption": "Original"
+    },
+    {
+      "url": "/examples/thumbnail-daemon/variant-1.jpg",
+      "caption": "Variant"
+    }
+  ],
+  "heroNote": "One real Steal An Egg gallery thumbnail and one of three variants Nano Banana made from it with the prompt \"Make a variant of this thumbnail with a novel perspective\".",
+  "summary": {
+    "items": [
+      {
+        "label": "Thumbnails now",
+        "value": "4"
+      },
+      {
+        "label": "New since last check",
+        "value": "First check"
+      },
+      {
+        "label": "Removed since last check",
+        "value": "First check"
+      },
+      {
+        "label": "Last checked",
+        "value": "2026-10-27 21:58 UTC"
+      }
+    ],
+    "sortLabel": "Newest first",
+    "notes": [
+      "This is the first check, so every thumbnail is marked Known and becomes the baseline for the next one."
+    ]
+  },
+  "findings": [
+    {
+      "id": "thumb:119722099122044",
+      "badge": {
+        "label": "Known",
+        "tone": "muted"
+      },
+      "title": "Gallery thumbnail 1",
+      "snippet": [
+        {
+          "text": "First seen 2026-10-27 21:58 UTC"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "First seen",
+          "value": "2026-10-27 21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Unchanged",
+        "tone": "muted"
+      },
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "detail": {
+        "kind": "thumbnail",
+        "thumbId": "119722099122044",
+        "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+        "isNew": false,
+        "firstSeen": "2026-10-27T21:58:47.297Z",
+        "position": 1
+      },
+      "isNew": false
+    },
+    {
+      "id": "thumb:110759685501997",
+      "badge": {
+        "label": "Known",
+        "tone": "muted"
+      },
+      "title": "Gallery thumbnail 2",
+      "snippet": [
+        {
+          "text": "First seen 2026-10-27 21:58 UTC"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "2"
+        },
+        {
+          "label": "First seen",
+          "value": "2026-10-27 21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Unchanged",
+        "tone": "muted"
+      },
+      "url": "https://tr.rbxcdn.com/180DAY-9e8482a46f2c4ce339d87e70f66ff51c/768/432/Image/Jpeg/noFilter",
+      "detail": {
+        "kind": "thumbnail",
+        "thumbId": "110759685501997",
+        "url": "https://tr.rbxcdn.com/180DAY-9e8482a46f2c4ce339d87e70f66ff51c/768/432/Image/Jpeg/noFilter",
+        "isNew": false,
+        "firstSeen": "2026-10-27T21:58:47.297Z",
+        "position": 2
+      },
+      "isNew": false
+    },
+    {
+      "id": "thumb:77977678889221",
+      "badge": {
+        "label": "Known",
+        "tone": "muted"
+      },
+      "title": "Gallery thumbnail 3",
+      "snippet": [
+        {
+          "text": "First seen 2026-10-27 21:58 UTC"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "3"
+        },
+        {
+          "label": "First seen",
+          "value": "2026-10-27 21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Unchanged",
+        "tone": "muted"
+      },
+      "url": "https://tr.rbxcdn.com/180DAY-04e6a9bf2d608f21f8e7a55e052e1ab5/768/432/Image/Jpeg/noFilter",
+      "detail": {
+        "kind": "thumbnail",
+        "thumbId": "77977678889221",
+        "url": "https://tr.rbxcdn.com/180DAY-04e6a9bf2d608f21f8e7a55e052e1ab5/768/432/Image/Jpeg/noFilter",
+        "isNew": false,
+        "firstSeen": "2026-10-27T21:58:47.297Z",
+        "position": 3
+      },
+      "isNew": false
+    },
+    {
+      "id": "thumb:132866968789973",
+      "badge": {
+        "label": "Known",
+        "tone": "muted"
+      },
+      "title": "Gallery thumbnail 4",
+      "snippet": [
+        {
+          "text": "First seen 2026-10-27 21:58 UTC"
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "4"
+        },
+        {
+          "label": "First seen",
+          "value": "2026-10-27 21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Unchanged",
+        "tone": "muted"
+      },
+      "url": "https://tr.rbxcdn.com/180DAY-7a23736a6f01247910e0ac1a4918abbb/768/432/Image/Jpeg/noFilter",
+      "detail": {
+        "kind": "thumbnail",
+        "thumbId": "132866968789973",
+        "url": "https://tr.rbxcdn.com/180DAY-7a23736a6f01247910e0ac1a4918abbb/768/432/Image/Jpeg/noFilter",
+        "isNew": false,
+        "firstSeen": "2026-10-27T21:58:47.297Z",
+        "position": 4
+      },
+      "isNew": false
+    }
+  ],
+  "variants": {
+    "original": "/examples/thumbnail-daemon/original.jpg",
+    "items": [
+      "/examples/thumbnail-daemon/variant-1.jpg",
+      "/examples/thumbnail-daemon/variant-2.jpg",
+      "/examples/thumbnail-daemon/variant-3.jpg"
+    ],
+    "prompt": "Make a variant of this thumbnail with a novel perspective"
+  }
+}

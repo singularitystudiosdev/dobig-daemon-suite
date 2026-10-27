@@ -1,0 +1,851 @@
+{
+  "tool": "description-daemon",
+  "capturedAt": "2026-10-27T21:58:45.689Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    }
+  ],
+  "heroNote": "Steal An Egg: the game's real description and metadata, checked against Roblox's content rules.",
+  "summary": {
+    "items": [
+      {
+        "label": "Live description",
+        "value": "346 characters"
+      },
+      {
+        "label": "Drafts",
+        "value": "3"
+      },
+      {
+        "label": "Passed lint",
+        "value": "3 of 3",
+        "tone": "live"
+      },
+      {
+        "label": "Competitors read",
+        "value": "10"
+      },
+      {
+        "label": "Iteration",
+        "value": "1"
+      },
+      {
+        "label": "Measured",
+        "value": "Not connected",
+        "tone": "muted"
+      }
+    ],
+    "sortLabel": "Best lint score first",
+    "notices": [
+      {
+        "lead": "Metadata policy",
+        "body": "Roblox demotes misleading metadata, giveaway or Robux promises and keyword spam, so every draft is linted for those before you see it."
+      }
+    ],
+    "notes": [
+      "Roblox has no description A/B test: publish one draft, measure over a full week, then compare.",
+      "Measured is not connected: an Open Cloud key with analytics read access adds your real last 14 days of Home play-through and enables Publish to Roblox. Everything else here works without it.",
+      "The live description scores 7 of 8 on the same lint. A lint score counts passed checks and does not predict play-through or clicks.",
+      "Competitor phrasing, counted over 10 real descriptions: Length: median 532 characters (shortest 186, longest 908) across 10 descriptions. 6 of 10 open with an emoji. 3 of 10 open with a greeting such as \"Welcome to\"."
+    ]
+  },
+  "findings": [
+    {
+      "id": "desc:1:A",
+      "badge": {
+        "label": "Best draft",
+        "tone": "live"
+      },
+      "title": "Variant A: tightened",
+      "snippet": [
+        {
+          "text": "Steal An Egg is a tycoon simulation where you steal eggs from pets and other players, hatch eggs to collect rare pets, and earn money from your pets."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Characters",
+          "value": "328"
+        },
+        {
+          "label": "Lint score",
+          "value": "8 of 8"
+        },
+        {
+          "label": "Unverified claims",
+          "value": "0"
+        },
+        {
+          "label": "Iteration",
+          "value": "1"
+        }
+      ],
+      "status": {
+        "label": "Draft",
+        "tone": "muted"
+      },
+      "states": {
+        "published": {
+          "label": "Published",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.roblox.com/games/107778070777162",
+      "detail": {
+        "kind": "description",
+        "iteration": 1,
+        "variant": "A",
+        "text": [
+          {
+            "text": "Steal An Egg is a tycoon simulation where you steal eggs from pets and other players, hatch eggs to collect rare pets, and earn money from your pets.\nUpgrade your treadmill and base, and train on the treadmill to gain Speed.\nDiscover rarer eggs, pets, sizes, and mutations.\nSupports Desktop, Console, Mobile, and Tablet players."
+          }
+        ],
+        "chars": 328,
+        "limit": 1000,
+        "whatChanged": "The live copy is restated in shorter, plainer sentences with the summary moved to the top, and the welcome greeting and emoji bullets are removed while every listed fact is kept.",
+        "lint": [
+          {
+            "id": "giveaway",
+            "title": "No giveaway or Robux reward wording",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No giveaway, gift card or Robux-reward phrases found."
+          },
+          {
+            "id": "stuffing",
+            "title": "No keyword stuffing",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No repeated-word runs, comma-stuffed lines or tag lists found."
+          },
+          {
+            "id": "caps",
+            "title": "No ALL CAPS shouting",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "4% of letters are capitals (limit 20%), no shouted runs."
+          },
+          {
+            "id": "punctuation",
+            "title": "No punctuation spam",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No runs of repeated punctuation; 0 exclamation marks in total."
+          },
+          {
+            "id": "long-lines",
+            "title": "No over-long lines",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "Longest line is 149 characters (limit 180)."
+          },
+          {
+            "id": "limit",
+            "title": "Within the 1,000 character limit",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "328 of 1,000 characters used."
+          },
+          {
+            "id": "first-line",
+            "title": "First line summarises the game",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "The first line is 28 words and states what the game is."
+          },
+          {
+            "id": "emoji",
+            "title": "Sensible emoji use",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "0 emoji in 328 characters (budget 16), none in runs of 4 or more."
+          }
+        ],
+        "lintScore": {
+          "passed": 8,
+          "total": 8
+        },
+        "blocked": false,
+        "unverifiedClaims": [],
+        "diffAgainstLive": [
+          {
+            "text": "🥚 Welcome to Steal An Egg!\n\nHow to Play:\n🥚 Steal ",
+            "kind": "removed"
+          },
+          {
+            "text": "Steal An Egg is a tycoon simulation where you steal ",
+            "kind": "added"
+          },
+          {
+            "text": "eggs from pets ",
+            "kind": "same"
+          },
+          {
+            "text": "🐣 Hatch ",
+            "kind": "removed"
+          },
+          {
+            "text": "and other players, hatch ",
+            "kind": "added"
+          },
+          {
+            "text": "eggs to collect rare ",
+            "kind": "same"
+          },
+          {
+            "text": "pets\n💰 Earn ",
+            "kind": "removed"
+          },
+          {
+            "text": "pets, and earn ",
+            "kind": "added"
+          },
+          {
+            "text": "money from your ",
+            "kind": "same"
+          },
+          {
+            "text": "pets\n⬆️ ",
+            "kind": "removed"
+          },
+          {
+            "text": "pets.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Upgrade your treadmill and ",
+            "kind": "same"
+          },
+          {
+            "text": "base\n🏃 Train ",
+            "kind": "removed"
+          },
+          {
+            "text": "base, and train ",
+            "kind": "added"
+          },
+          {
+            "text": "on the treadmill to gain ",
+            "kind": "same"
+          },
+          {
+            "text": "Speed\n🥷 Steal eggs from other players\n✨ ",
+            "kind": "removed"
+          },
+          {
+            "text": "Speed.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Discover rarer eggs, pets, sizes, and ",
+            "kind": "same"
+          },
+          {
+            "text": "mutations!\n\n🎮 ",
+            "kind": "removed"
+          },
+          {
+            "text": "mutations.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Supports Desktop, Console, Mobile, and Tablet ",
+            "kind": "same"
+          },
+          {
+            "text": "players",
+            "kind": "removed"
+          },
+          {
+            "text": "players.",
+            "kind": "added"
+          }
+        ],
+        "liveText": "🥚 Welcome to Steal An Egg!\n\nHow to Play:\n🥚 Steal eggs from pets\n🐣 Hatch eggs to collect rare pets\n💰 Earn money from your pets\n⬆️ Upgrade your treadmill and base\n🏃 Train on the treadmill to gain Speed\n🥷 Steal eggs from other players\n✨ Discover rarer eggs, pets, sizes, and mutations!\n\n🎮 Supports Desktop, Console, Mobile, and Tablet players",
+        "competitorsUsed": [
+          {
+            "name": "Don't Steal My Eggs!",
+            "url": "https://www.roblox.com/games/135675416428111"
+          },
+          {
+            "name": "Pet Store Tycoon",
+            "url": "https://www.roblox.com/games/118845698633260"
+          },
+          {
+            "name": "[🎃] Steal Eggs Together",
+            "url": "https://www.roblox.com/games/94314344309921"
+          },
+          {
+            "name": "Break and Steal an Egg",
+            "url": "https://www.roblox.com/games/114326934417838"
+          },
+          {
+            "name": "Pet Store Tycoon 2",
+            "url": "https://www.roblox.com/games/13278651209"
+          },
+          {
+            "name": "Gym Star Simulator 🏋️",
+            "url": "https://www.roblox.com/games/70906625936847"
+          },
+          {
+            "name": "steal a strange egg",
+            "url": "https://www.roblox.com/games/104406816691097"
+          },
+          {
+            "name": "Zoo Tycoon 🥚🐲",
+            "url": "https://www.roblox.com/games/1128650291"
+          },
+          {
+            "name": "Animal Simulator",
+            "url": "https://www.roblox.com/games/5712833750"
+          },
+          {
+            "name": "My Axolotl Tycoon",
+            "url": "https://www.roblox.com/games/16802032810"
+          }
+        ],
+        "guard": {
+          "competitorsChecked": 10,
+          "sharedPhrases": 0,
+          "attempts": 1
+        },
+        "universeId": 10563114921
+      },
+      "isNew": false
+    },
+    {
+      "id": "desc:1:B",
+      "badge": {
+        "label": "Passes lint",
+        "tone": "accent"
+      },
+      "title": "Variant B: restructured",
+      "snippet": [
+        {
+          "text": "Steal An Egg is a tycoon simulation where you steal eggs, hatch pets, and grow your base on Desktop, Console, Mobile, or Tablet."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Characters",
+          "value": "354"
+        },
+        {
+          "label": "Lint score",
+          "value": "8 of 8"
+        },
+        {
+          "label": "Unverified claims",
+          "value": "0"
+        },
+        {
+          "label": "Iteration",
+          "value": "1"
+        }
+      ],
+      "status": {
+        "label": "Draft",
+        "tone": "muted"
+      },
+      "states": {
+        "published": {
+          "label": "Published",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.roblox.com/games/107778070777162",
+      "detail": {
+        "kind": "description",
+        "iteration": 1,
+        "variant": "B",
+        "text": [
+          {
+            "text": "Steal An Egg is a tycoon simulation where you steal eggs, hatch pets, and grow your base on Desktop, Console, Mobile, or Tablet.\n\nSteal eggs from pets and from other players.\nHatch eggs to collect rare pets.\nEarn money from your pets.\nUpgrade your treadmill and base.\nTrain on the treadmill to gain Speed.\nDiscover rarer eggs, pets, sizes, and mutations."
+          }
+        ],
+        "chars": 354,
+        "limit": 1000,
+        "whatChanged": "The same facts are split into a one-sentence summary and six short feature lines that each open with a different verb, with the platform support folded into the summary so the list stays scannable on a phone.",
+        "lint": [
+          {
+            "id": "giveaway",
+            "title": "No giveaway or Robux reward wording",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No giveaway, gift card or Robux-reward phrases found."
+          },
+          {
+            "id": "stuffing",
+            "title": "No keyword stuffing",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No repeated-word runs, comma-stuffed lines or tag lists found."
+          },
+          {
+            "id": "caps",
+            "title": "No ALL CAPS shouting",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "5% of letters are capitals (limit 20%), no shouted runs."
+          },
+          {
+            "id": "punctuation",
+            "title": "No punctuation spam",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No runs of repeated punctuation; 0 exclamation marks in total."
+          },
+          {
+            "id": "long-lines",
+            "title": "No over-long lines",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "Longest line is 128 characters (limit 180)."
+          },
+          {
+            "id": "limit",
+            "title": "Within the 1,000 character limit",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "354 of 1,000 characters used."
+          },
+          {
+            "id": "first-line",
+            "title": "First line summarises the game",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "The first line is 23 words and states what the game is."
+          },
+          {
+            "id": "emoji",
+            "title": "Sensible emoji use",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "0 emoji in 354 characters (budget 17), none in runs of 4 or more."
+          }
+        ],
+        "lintScore": {
+          "passed": 8,
+          "total": 8
+        },
+        "blocked": false,
+        "unverifiedClaims": [],
+        "diffAgainstLive": [
+          {
+            "text": "🥚 Welcome to Steal An Egg!\n\nHow to Play:\n🥚 ",
+            "kind": "removed"
+          },
+          {
+            "text": "Steal An Egg is a tycoon simulation where you steal eggs, hatch pets, and grow your base on Desktop, Console, Mobile, or Tablet.\n\n",
+            "kind": "added"
+          },
+          {
+            "text": "Steal eggs from pets ",
+            "kind": "same"
+          },
+          {
+            "text": "🐣 ",
+            "kind": "removed"
+          },
+          {
+            "text": "and from other players.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Hatch eggs to collect rare ",
+            "kind": "same"
+          },
+          {
+            "text": "pets\n💰 ",
+            "kind": "removed"
+          },
+          {
+            "text": "pets.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Earn money from your ",
+            "kind": "same"
+          },
+          {
+            "text": "pets\n⬆️ ",
+            "kind": "removed"
+          },
+          {
+            "text": "pets.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Upgrade your treadmill and ",
+            "kind": "same"
+          },
+          {
+            "text": "base\n🏃 ",
+            "kind": "removed"
+          },
+          {
+            "text": "base.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Train on the treadmill to gain ",
+            "kind": "same"
+          },
+          {
+            "text": "Speed\n🥷 Steal eggs from other players\n✨ ",
+            "kind": "removed"
+          },
+          {
+            "text": "Speed.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Discover rarer eggs, pets, sizes, and ",
+            "kind": "same"
+          },
+          {
+            "text": "mutations!\n\n🎮 Supports Desktop, Console, Mobile, and Tablet players",
+            "kind": "removed"
+          },
+          {
+            "text": "mutations.",
+            "kind": "added"
+          }
+        ],
+        "liveText": "🥚 Welcome to Steal An Egg!\n\nHow to Play:\n🥚 Steal eggs from pets\n🐣 Hatch eggs to collect rare pets\n💰 Earn money from your pets\n⬆️ Upgrade your treadmill and base\n🏃 Train on the treadmill to gain Speed\n🥷 Steal eggs from other players\n✨ Discover rarer eggs, pets, sizes, and mutations!\n\n🎮 Supports Desktop, Console, Mobile, and Tablet players",
+        "competitorsUsed": [
+          {
+            "name": "Don't Steal My Eggs!",
+            "url": "https://www.roblox.com/games/135675416428111"
+          },
+          {
+            "name": "Pet Store Tycoon",
+            "url": "https://www.roblox.com/games/118845698633260"
+          },
+          {
+            "name": "[🎃] Steal Eggs Together",
+            "url": "https://www.roblox.com/games/94314344309921"
+          },
+          {
+            "name": "Break and Steal an Egg",
+            "url": "https://www.roblox.com/games/114326934417838"
+          },
+          {
+            "name": "Pet Store Tycoon 2",
+            "url": "https://www.roblox.com/games/13278651209"
+          },
+          {
+            "name": "Gym Star Simulator 🏋️",
+            "url": "https://www.roblox.com/games/70906625936847"
+          },
+          {
+            "name": "steal a strange egg",
+            "url": "https://www.roblox.com/games/104406816691097"
+          },
+          {
+            "name": "Zoo Tycoon 🥚🐲",
+            "url": "https://www.roblox.com/games/1128650291"
+          },
+          {
+            "name": "Animal Simulator",
+            "url": "https://www.roblox.com/games/5712833750"
+          },
+          {
+            "name": "My Axolotl Tycoon",
+            "url": "https://www.roblox.com/games/16802032810"
+          }
+        ],
+        "guard": {
+          "competitorsChecked": 10,
+          "sharedPhrases": 0,
+          "attempts": 1
+        },
+        "universeId": 10563114921
+      },
+      "isNew": false
+    },
+    {
+      "id": "desc:1:C",
+      "badge": {
+        "label": "Passes lint",
+        "tone": "accent"
+      },
+      "title": "Variant C: experimental",
+      "snippet": [
+        {
+          "text": "Start by stealing eggs from pets, then hatch them to collect rare pets."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Characters",
+          "value": "327"
+        },
+        {
+          "label": "Lint score",
+          "value": "8 of 8"
+        },
+        {
+          "label": "Unverified claims",
+          "value": "0"
+        },
+        {
+          "label": "Iteration",
+          "value": "1"
+        }
+      ],
+      "status": {
+        "label": "Draft",
+        "tone": "muted"
+      },
+      "states": {
+        "published": {
+          "label": "Published",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.roblox.com/games/107778070777162",
+      "detail": {
+        "kind": "description",
+        "iteration": 1,
+        "variant": "C",
+        "text": [
+          {
+            "text": "Start by stealing eggs from pets, then hatch them to collect rare pets.\nYour pets earn money, and you use it to upgrade your treadmill and base.\nTrain on the treadmill to gain Speed, then try stealing eggs from other players.\nLong term, chase rarer eggs, pets, sizes, and mutations.\nPlay on Desktop, Console, Mobile, or Tablet."
+          }
+        ],
+        "chars": 327,
+        "limit": 1000,
+        "whatChanged": "The copy opens with the first actions a player takes and then moves through the longer progression loop, reordering the live facts into a sequence instead of a feature list, with no new mechanics added.",
+        "lint": [
+          {
+            "id": "giveaway",
+            "title": "No giveaway or Robux reward wording",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No giveaway, gift card or Robux-reward phrases found."
+          },
+          {
+            "id": "stuffing",
+            "title": "No keyword stuffing",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No repeated-word runs, comma-stuffed lines or tag lists found."
+          },
+          {
+            "id": "caps",
+            "title": "No ALL CAPS shouting",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "4% of letters are capitals (limit 20%), no shouted runs."
+          },
+          {
+            "id": "punctuation",
+            "title": "No punctuation spam",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "No runs of repeated punctuation; 0 exclamation marks in total."
+          },
+          {
+            "id": "long-lines",
+            "title": "No over-long lines",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "Longest line is 80 characters (limit 180)."
+          },
+          {
+            "id": "limit",
+            "title": "Within the 1,000 character limit",
+            "passed": true,
+            "blocking": true,
+            "flags": [],
+            "reason": "327 of 1,000 characters used."
+          },
+          {
+            "id": "first-line",
+            "title": "First line summarises the game",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "The first line is 13 words and states what the game is."
+          },
+          {
+            "id": "emoji",
+            "title": "Sensible emoji use",
+            "passed": true,
+            "blocking": false,
+            "flags": [],
+            "reason": "0 emoji in 327 characters (budget 16), none in runs of 4 or more."
+          }
+        ],
+        "lintScore": {
+          "passed": 8,
+          "total": 8
+        },
+        "blocked": false,
+        "unverifiedClaims": [],
+        "diffAgainstLive": [
+          {
+            "text": "🥚 Welcome to Steal An Egg!\n\nHow to Play:\n🥚 Steal eggs from pets\n🐣 Hatch eggs ",
+            "kind": "removed"
+          },
+          {
+            "text": "Start by stealing eggs from pets, then hatch them ",
+            "kind": "added"
+          },
+          {
+            "text": "to collect rare ",
+            "kind": "same"
+          },
+          {
+            "text": "pets\n💰 Earn money from your pets ⬆️ Upgrade ",
+            "kind": "removed"
+          },
+          {
+            "text": "pets.\nYour pets earn money, and you use it to upgrade ",
+            "kind": "added"
+          },
+          {
+            "text": "your treadmill and ",
+            "kind": "same"
+          },
+          {
+            "text": "base\n🏃 ",
+            "kind": "removed"
+          },
+          {
+            "text": "base.\n",
+            "kind": "added"
+          },
+          {
+            "text": "Train on the treadmill to gain ",
+            "kind": "same"
+          },
+          {
+            "text": "Speed\n🥷 Steal ",
+            "kind": "removed"
+          },
+          {
+            "text": "Speed, then try stealing ",
+            "kind": "added"
+          },
+          {
+            "text": "eggs from other ",
+            "kind": "same"
+          },
+          {
+            "text": "players\n✨ Discover ",
+            "kind": "removed"
+          },
+          {
+            "text": "players.\nLong term, chase ",
+            "kind": "added"
+          },
+          {
+            "text": "rarer eggs, pets, sizes, and ",
+            "kind": "same"
+          },
+          {
+            "text": "mutations!\n\n🎮 Supports ",
+            "kind": "removed"
+          },
+          {
+            "text": "mutations.\nPlay on ",
+            "kind": "added"
+          },
+          {
+            "text": "Desktop, Console, Mobile, ",
+            "kind": "same"
+          },
+          {
+            "text": "and Tablet players",
+            "kind": "removed"
+          },
+          {
+            "text": "or Tablet.",
+            "kind": "added"
+          }
+        ],
+        "liveText": "🥚 Welcome to Steal An Egg!\n\nHow to Play:\n🥚 Steal eggs from pets\n🐣 Hatch eggs to collect rare pets\n💰 Earn money from your pets\n⬆️ Upgrade your treadmill and base\n🏃 Train on the treadmill to gain Speed\n🥷 Steal eggs from other players\n✨ Discover rarer eggs, pets, sizes, and mutations!\n\n🎮 Supports Desktop, Console, Mobile, and Tablet players",
+        "competitorsUsed": [
+          {
+            "name": "Don't Steal My Eggs!",
+            "url": "https://www.roblox.com/games/135675416428111"
+          },
+          {
+            "name": "Pet Store Tycoon",
+            "url": "https://www.roblox.com/games/118845698633260"
+          },
+          {
+            "name": "[🎃] Steal Eggs Together",
+            "url": "https://www.roblox.com/games/94314344309921"
+          },
+          {
+            "name": "Break and Steal an Egg",
+            "url": "https://www.roblox.com/games/114326934417838"
+          },
+          {
+            "name": "Pet Store Tycoon 2",
+            "url": "https://www.roblox.com/games/13278651209"
+          },
+          {
+            "name": "Gym Star Simulator 🏋️",
+            "url": "https://www.roblox.com/games/70906625936847"
+          },
+          {
+            "name": "steal a strange egg",
+            "url": "https://www.roblox.com/games/104406816691097"
+          },
+          {
+            "name": "Zoo Tycoon 🥚🐲",
+            "url": "https://www.roblox.com/games/1128650291"
+          },
+          {
+            "name": "Animal Simulator",
+            "url": "https://www.roblox.com/games/5712833750"
+          },
+          {
+            "name": "My Axolotl Tycoon",
+            "url": "https://www.roblox.com/games/16802032810"
+          }
+        ],
+        "guard": {
+          "competitorsChecked": 10,
+          "sharedPhrases": 0,
+          "attempts": 1
+        },
+        "universeId": 10563114921
+      },
+      "isNew": false
+    }
+  ]
+}

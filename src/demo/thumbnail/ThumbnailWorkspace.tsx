@@ -282,6 +282,7 @@ function Workspace({ entry, daemon, runId, report, onChanged, openKeyDialog }: W
   const zoomTile = zoom ? state.tiles[tileKey(zoom.thumbId, zoom.index)] : undefined
   const zoomN = zoom ? thumbs.findIndex((t) => t.id === zoom.thumbId) + 1 : 0
   const missingCost = missing.length * CREDITS_PER_VARIANT
+  const totalCost = total * CREDITS_PER_VARIANT
 
   return (
     <Panel
@@ -293,18 +294,18 @@ function Workspace({ entry, daemon, runId, report, onChanged, openKeyDialog }: W
               {state.provider ? `Live, ${PROVIDER_NAME[state.provider]}` : 'Live'}
             </Badge>
           )}
-          {!busy && missing.length > 0 && (
+          {!busy && (
             <>
               <span className="tabular text-label text-muted">
-                {missing.length} variants, {fmtInt(missingCost)} credits
+                {missing.length > 0 ? missing.length : total} variants, {fmtInt(missing.length > 0 ? missingCost : totalCost)} credits
               </span>
-              <Button variant="primary" icon={Sparkles} onClick={generateMissing}>
-                Generate variants
+              <Button variant="primary" icon={Sparkles} onClick={missing.length > 0 ? generateMissing : regenerateAll}>
+                {missing.length > 0 ? 'Generate variants' : 'Generate new variants'}
               </Button>
             </>
           )}
-          {!busy && anyDone && (
-            <Button variant="ghost" size="sm" icon={RefreshCw} onClick={regenerateAll} title={`${fmtInt(total * CREDITS_PER_VARIANT)} credits`}>
+          {!busy && missing.length > 0 && anyDone && (
+            <Button variant="ghost" size="sm" icon={RefreshCw} onClick={regenerateAll} title={`${fmtInt(totalCost)} credits`}>
               Regenerate all
             </Button>
           )}

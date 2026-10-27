@@ -1,14 +1,18 @@
-import { useId, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { ChevronDown, ExternalLink, SearchX, ShieldAlert } from 'lucide-react'
-import { Badge, EmptyState, Panel, Sparkline, StatPill } from '@/components/ui'
+import { Badge, EmptyState, Panel, Sparkline, StatPill, useToast } from '@/components/ui'
 import type { DaemonSlug } from '@/data/daemons'
+import { getMarks, setMark } from '@/lib/api'
 import { cn } from '@/lib/cn'
 import type { Finding, RunSummary } from '@/lib/runTypes'
+import { STATIC_PREVIEW } from '@/lib/static'
 import { detailViews } from './details/index'
 
 /* The findings of one run, in the order the server sent them (it sends display order; the summary says how it is
    sorted). Each row is a button that expands into a plain bordered detail region rendered by the tool's detail view.
-   The first 12 rows show, the rest sit behind "Show more". Row state (what the user marked) is local UI state. */
+   The first 12 rows show, the rest sit behind "Show more". Row state (what the user marked) is saved per daemon on the
+   server (/api/daemons/:id/marks), loaded when the list mounts, and written optimistically. The static Pages preview
+   ('example' daemon, or STATIC_PREVIEW) has no server and keeps it in memory only. */
 
 const PAGE = 12
 
@@ -36,6 +40,36 @@ export function FindingsList({
   const [showAll, setShowAll] = useState(false)
   const [states, setStates] = useState<Record<string, string>>({})
   const baseId = useId()
+  const toast = useToast()
+  const persists = daemonId !== 'example' && !STATIC_PREVIEW
+  const live = useRef({ daemonId, persists })
+  live.current = { daemonId, persists }
+  const toastRef = useRef(toast)
+  toastRef.current = toast
+
+  // Saved marks load on mount and when the daemon changes. A mark the user sets before the answer arrives wins.
+  useEffect(() => {
+    setStates({})
+    if (!persists) return
+    let cancelled = false
+    getMarks(daemonId)
+      .then((saved) => {
+        if (!cancelled) setStates((prev) => ({ ...saved, ...prev }))
+      })
+      .catch(() => {
+        /* the list works without saved marks; saving a new one reports its own failure */
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [daemonId, persists])
+
+  const saveMark = useCallback((findingId: string, next: string) => {
+    setStates((prev) => ({ ...prev, [findingId]: next }))
+    const { daemonId: id, persists: save } = live.current
+    if (!save) return
+    setMark(id, findingId, next).catch(() => toastRef.current.push({ tone: 'warn', title: 'Could not save that mark' }))
+  }, [])
 
   const groups = summary?.groups
   const filtered = group === 'all' ? findings : findings.filter((f) => f.group === group)
@@ -173,7 +207,7 @@ export function FindingsList({
                   )}
                   {expanded && (
                     <div id={panelId} role="region" aria-label={`${f.title} detail`} className="mb-12 rounded-8 border border-line p-16">
-                      <View finding={f} detail={f.detail} state={state} act={(next) => setStates((prev) => ({ ...prev, [f.id]: next }))} tool={tool} daemonId={daemonId} />
+                      <View finding={f} detail={f.detail} state={state} act={(next) => saveMark(f.id, next)} tool={tool} daemonId={daemonId} />
                     </div>
                   )}
                 </li>

@@ -1,0 +1,2444 @@
+{
+  "tool": "rank-daemon",
+  "capturedAt": "2026-10-27T21:58:25.830Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    }
+  ],
+  "heroNote": "Steal An Egg: 14 search phrases checked for where the game ranks on Roblox.",
+  "summary": {
+    "items": [
+      {
+        "label": "Phrases searched",
+        "value": "14",
+        "tone": "ink"
+      },
+      {
+        "label": "In the top 3",
+        "value": "8",
+        "tone": "live"
+      },
+      {
+        "label": "In the top 10",
+        "value": "9",
+        "tone": "accent"
+      },
+      {
+        "label": "Dropped",
+        "value": "0",
+        "tone": "ink"
+      },
+      {
+        "label": "Climbed",
+        "value": "0",
+        "tone": "ink"
+      },
+      {
+        "label": "Not found",
+        "value": "1",
+        "tone": "ink"
+      }
+    ],
+    "sortLabel": "Biggest drops first",
+    "notes": [
+      "Roblox search results can differ by player (device, country, personalisation). Positions are read without a login, so they show what a visitor who is not signed in sees.",
+      "A position counts regular results only. Sponsored results are shown where they sat but never counted, and each phrase is read up to the first 100 games.",
+      "Dropped counts phrases that fell or left the first 100.",
+      "This is the first read of this game, so there is nothing to compare with yet. The next run shows what moved."
+    ]
+  },
+  "findings": [
+    {
+      "id": "rank:egg stealing game",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "egg stealing game",
+      "snippet": [
+        {
+          "text": "First read. Position 1 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "You lead"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=egg%20stealing%20game",
+      "detail": {
+        "kind": "rank",
+        "phrase": "egg stealing game",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 1,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 107725109349532,
+            "universeId": 10766350628,
+            "name": "Steal An Egg ROLEPLAY",
+            "url": "https://www.roblox.com/games/107725109349532",
+            "playing": 2407,
+            "likeRatio": 0.7662796567390207,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 78933302895115,
+            "universeId": 10757498504,
+            "name": "Steal An Anime Egg",
+            "url": "https://www.roblox.com/games/78933302895115",
+            "playing": 983,
+            "likeRatio": 0.9706438730470118,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 89678439944901,
+            "universeId": 10765950109,
+            "name": "Steal A Baddie Egg!",
+            "url": "https://www.roblox.com/games/89678439944901",
+            "playing": 1118,
+            "likeRatio": 0.8706713780918728,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 104406816691097,
+            "universeId": 10769020044,
+            "name": "steal a strange egg",
+            "url": "https://www.roblox.com/games/104406816691097",
+            "playing": 2324,
+            "likeRatio": 0.8729189789123196,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 77250171438194,
+            "universeId": 10760645243,
+            "name": "Steal a Dino Egg",
+            "url": "https://www.roblox.com/games/77250171438194",
+            "playing": 295,
+            "likeRatio": 0.8586088939566705,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 117651507112562,
+            "universeId": 10767483594,
+            "name": "Steal a Car Egg",
+            "url": "https://www.roblox.com/games/117651507112562",
+            "playing": 134,
+            "likeRatio": 0.9071022727272727,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 99183404085821,
+            "universeId": 10718240577,
+            "name": "[🎃] Steal Fish Eggs",
+            "url": "https://www.roblox.com/games/99183404085821",
+            "playing": 281,
+            "likeRatio": 0.9824909079030467,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 126016859830524,
+            "universeId": 10757504146,
+            "name": "Steal A Brainrot Egg",
+            "url": "https://www.roblox.com/games/126016859830524",
+            "playing": 385,
+            "likeRatio": 0.9289127837514934,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 95219522950423,
+            "universeId": 10765490955,
+            "name": "Steal a Hacker Egg 🌮",
+            "url": "https://www.roblox.com/games/95219522950423",
+            "playing": 561,
+            "likeRatio": 0.9041769041769042,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 70640255604878,
+            "universeId": 10649255304,
+            "name": "Pull An Egg",
+            "url": "https://www.roblox.com/games/70640255604878",
+            "playing": 822,
+            "likeRatio": 0.8748300595377619,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 1
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=egg%20stealing%20game"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:hatch eggs",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "hatch eggs",
+      "snippet": [
+        {
+          "text": "First read. Position 1 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "You lead"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=hatch%20eggs",
+      "detail": {
+        "kind": "rank",
+        "phrase": "hatch eggs",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 1,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 118480767876223,
+            "universeId": 10770675563,
+            "name": "[🎃] HATCH THE RARE EGG",
+            "url": "https://www.roblox.com/games/118480767876223",
+            "playing": 1786,
+            "likeRatio": 0.89937106918239,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 124216119978534,
+            "universeId": 10035204815,
+            "name": "[💫] Ride A Pet",
+            "url": "https://www.roblox.com/games/124216119978534",
+            "playing": 12030,
+            "likeRatio": 0.9624693300756784,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 114326934417838,
+            "universeId": 10765288803,
+            "name": "Break and Steal an Egg",
+            "url": "https://www.roblox.com/games/114326934417838",
+            "playing": 66527,
+            "likeRatio": 0.9734901581410041,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 75396613949606,
+            "universeId": 10078469975,
+            "name": "Hatch Puppies! 🐶",
+            "url": "https://www.roblox.com/games/75396613949606",
+            "playing": 48,
+            "likeRatio": 0.9777991165738429,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 121694347343435,
+            "universeId": 8687770965,
+            "name": "Hatch A Pet 🐈",
+            "url": "https://www.roblox.com/games/121694347343435",
+            "playing": 1,
+            "likeRatio": 0.932349323493235,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 97289366402005,
+            "universeId": 10769384180,
+            "name": "[🎃] Fake an Egg",
+            "url": "https://www.roblox.com/games/97289366402005",
+            "playing": 31471,
+            "likeRatio": 0.8892972693153876,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 89678439944901,
+            "universeId": 10765950109,
+            "name": "Steal A Baddie Egg!",
+            "url": "https://www.roblox.com/games/89678439944901",
+            "playing": 1118,
+            "likeRatio": 0.8706713780918728,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 108197862936567,
+            "universeId": 10765051511,
+            "name": "Be a Lucky Egg and Hatch",
+            "url": "https://www.roblox.com/games/108197862936567",
+            "playing": 43,
+            "likeRatio": 0.8830645161290323,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 75163335659953,
+            "universeId": 10767821764,
+            "name": "Dig and Hatch an Egg",
+            "url": "https://www.roblox.com/games/75163335659953",
+            "playing": 6,
+            "likeRatio": 0.9107806691449815,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 135675416428111,
+            "universeId": 10767566226,
+            "name": "Don't Steal My Eggs!",
+            "url": "https://www.roblox.com/games/135675416428111",
+            "playing": 4984,
+            "likeRatio": 0.9501333227205795,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 1
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=hatch%20eggs"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:rare pets",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "rare pets",
+      "snippet": [
+        {
+          "text": "First read. Position 1 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "You lead"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=rare%20pets",
+      "detail": {
+        "kind": "rank",
+        "phrase": "rare pets",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 1,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 124216119978534,
+            "universeId": 10035204815,
+            "name": "[💫] Ride A Pet",
+            "url": "https://www.roblox.com/games/124216119978534",
+            "playing": 12050,
+            "likeRatio": 0.9624689415272486,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 115491448901009,
+            "universeId": 10771231637,
+            "name": "RARE HATCHERS 0.0001% [NEW!]",
+            "url": "https://www.roblox.com/games/115491448901009",
+            "playing": 966,
+            "likeRatio": 0.7951807228915663,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 118480767876223,
+            "universeId": 10770675563,
+            "name": "[🎃] HATCH THE RARE EGG",
+            "url": "https://www.roblox.com/games/118480767876223",
+            "playing": 1786,
+            "likeRatio": 0.89937106918239,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 109203247742910,
+            "universeId": 10763764817,
+            "name": "[UPDATE] Swing For Eggs",
+            "url": "https://www.roblox.com/games/109203247742910",
+            "playing": 2015,
+            "likeRatio": 0.8418929712460064,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 135675416428111,
+            "universeId": 10767566226,
+            "name": "Don't Steal My Eggs!",
+            "url": "https://www.roblox.com/games/135675416428111",
+            "playing": 5004,
+            "likeRatio": 0.9501333227205795,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 109983668079237,
+            "universeId": 7709344486,
+            "name": "[💀] Steal a Brainrot",
+            "url": "https://www.roblox.com/games/109983668079237",
+            "playing": 354387,
+            "likeRatio": 0.8513323356330137,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 90081898103017,
+            "universeId": 10747139038,
+            "name": "Run For Pets!",
+            "url": "https://www.roblox.com/games/90081898103017",
+            "playing": 46,
+            "likeRatio": 0.7573643410852713,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 96645548064314,
+            "universeId": 9091133975,
+            "name": "[🎃] Catch And Tame!",
+            "url": "https://www.roblox.com/games/96645548064314",
+            "playing": 1095,
+            "likeRatio": 0.9802167860221076,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 101410388086820,
+            "universeId": 9693515126,
+            "name": "[Evolve] Pet Capture Adventur",
+            "url": "https://www.roblox.com/games/101410388086820",
+            "playing": 303,
+            "likeRatio": 0.8458405611282902,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 135729108619936,
+            "universeId": 8881105040,
+            "name": "[🎃] Build A Pet Factory",
+            "url": "https://www.roblox.com/games/135729108619936",
+            "playing": 592,
+            "likeRatio": 0.9822250907061122,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 1
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=rare%20pets"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:steal an egg",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Steal An Egg",
+      "snippet": [
+        {
+          "text": "First read. Position 1 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "You lead"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=Steal%20An%20Egg",
+      "detail": {
+        "kind": "rank",
+        "phrase": "Steal An Egg",
+        "source": "name",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 1,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 78933302895115,
+            "universeId": 10757498504,
+            "name": "Steal An Anime Egg",
+            "url": "https://www.roblox.com/games/78933302895115",
+            "playing": 983,
+            "likeRatio": 0.9706438730470118,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 109983668079237,
+            "universeId": 7709344486,
+            "name": "[💀] Steal a Brainrot",
+            "url": "https://www.roblox.com/games/109983668079237",
+            "playing": 354387,
+            "likeRatio": 0.8513323356330137,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 104406816691097,
+            "universeId": 10769020044,
+            "name": "steal a strange egg",
+            "url": "https://www.roblox.com/games/104406816691097",
+            "playing": 2227,
+            "likeRatio": 0.8727777777777778,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 95219522950423,
+            "universeId": 10765490955,
+            "name": "Steal a Hacker Egg 🌮",
+            "url": "https://www.roblox.com/games/95219522950423",
+            "playing": 583,
+            "likeRatio": 0.9041769041769042,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 107725109349532,
+            "universeId": 10766350628,
+            "name": "Steal An Egg ROLEPLAY",
+            "url": "https://www.roblox.com/games/107725109349532",
+            "playing": 2407,
+            "likeRatio": 0.7662796567390207,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 126016859830524,
+            "universeId": 10757504146,
+            "name": "Steal A Brainrot Egg",
+            "url": "https://www.roblox.com/games/126016859830524",
+            "playing": 385,
+            "likeRatio": 0.9289127837514934,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 99183404085821,
+            "universeId": 10718240577,
+            "name": "[🎃] Steal Fish Eggs",
+            "url": "https://www.roblox.com/games/99183404085821",
+            "playing": 281,
+            "likeRatio": 0.9824909079030467,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 117651507112562,
+            "universeId": 10767483594,
+            "name": "Steal a Car Egg",
+            "url": "https://www.roblox.com/games/117651507112562",
+            "playing": 134,
+            "likeRatio": 0.9071022727272727,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 71285230255088,
+            "universeId": 10769626057,
+            "name": "Push to Steal an Egg",
+            "url": "https://www.roblox.com/games/71285230255088",
+            "playing": 510,
+            "likeRatio": 0.9078341013824884,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 88621643806464,
+            "universeId": 10765637531,
+            "name": "🦅[Event]+1 Wings for steal an egg",
+            "url": "https://www.roblox.com/games/88621643806464",
+            "playing": 262,
+            "likeRatio": 0.8496932515337423,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 1
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=Steal%20An%20Egg"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:steal egg",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "steal egg",
+      "snippet": [
+        {
+          "text": "First read. Position 1 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "You lead"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=steal%20egg",
+      "detail": {
+        "kind": "rank",
+        "phrase": "steal egg",
+        "source": "name-variant",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 1,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 94314344309921,
+            "universeId": 10767172060,
+            "name": "[🎃] Steal Eggs Together",
+            "url": "https://www.roblox.com/games/94314344309921",
+            "playing": 794,
+            "likeRatio": 0.8927320490367776,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 112590853923988,
+            "universeId": 10765494608,
+            "name": "Steal An Evil Egg 😈",
+            "url": "https://www.roblox.com/games/112590853923988",
+            "playing": 722,
+            "likeRatio": 0.9186717998075072,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 78043072776767,
+            "universeId": 10771804357,
+            "name": "Fly Tesla Roadster To Steal Eggs",
+            "url": "https://www.roblox.com/games/78043072776767",
+            "playing": 1628,
+            "likeRatio": 0.8807947019867549,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 77250171438194,
+            "universeId": 10760645243,
+            "name": "Steal a Dino Egg",
+            "url": "https://www.roblox.com/games/77250171438194",
+            "playing": 295,
+            "likeRatio": 0.8586088939566705,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 95219522950423,
+            "universeId": 10765490955,
+            "name": "Steal a Hacker Egg 🌮",
+            "url": "https://www.roblox.com/games/95219522950423",
+            "playing": 583,
+            "likeRatio": 0.9041769041769042,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 114326934417838,
+            "universeId": 10765288803,
+            "name": "Break and Steal an Egg",
+            "url": "https://www.roblox.com/games/114326934417838",
+            "playing": 65466,
+            "likeRatio": 0.9734901581410041,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 78933302895115,
+            "universeId": 10757498504,
+            "name": "Steal An Anime Egg",
+            "url": "https://www.roblox.com/games/78933302895115",
+            "playing": 983,
+            "likeRatio": 0.9706438730470118,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 74781744378322,
+            "universeId": 10767841885,
+            "name": "Steal Eggs on a Dino! 🦖",
+            "url": "https://www.roblox.com/games/74781744378322",
+            "playing": 701,
+            "likeRatio": 0.8682170542635659,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 74023858073178,
+            "universeId": 10766620257,
+            "name": "[🎃] Bike For Egg!",
+            "url": "https://www.roblox.com/games/74023858073178",
+            "playing": 11706,
+            "likeRatio": 0.9522367594126722,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 85738654635245,
+            "universeId": 10765490774,
+            "name": "[🎃]Climb For Animals Eggs🥚",
+            "url": "https://www.roblox.com/games/85738654635245",
+            "playing": 16135,
+            "likeRatio": 0.9876691036785447,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 1
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=steal%20egg"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:steal eggs",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "steal eggs",
+      "snippet": [
+        {
+          "text": "First read. Position 1 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "1"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "You lead"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=steal%20eggs",
+      "detail": {
+        "kind": "rank",
+        "phrase": "steal eggs",
+        "source": "description",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 1,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 94314344309921,
+            "universeId": 10767172060,
+            "name": "[🎃] Steal Eggs Together",
+            "url": "https://www.roblox.com/games/94314344309921",
+            "playing": 794,
+            "likeRatio": 0.8931230836618484,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 15448459363,
+            "universeId": 5330384814,
+            "name": "[🎃] Ride & Steal Eggs",
+            "url": "https://www.roblox.com/games/15448459363",
+            "playing": 22,
+            "likeRatio": 0.8840937114673243,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 77250171438194,
+            "universeId": 10760645243,
+            "name": "Steal a Dino Egg",
+            "url": "https://www.roblox.com/games/77250171438194",
+            "playing": 290,
+            "likeRatio": 0.8586088939566705,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 135675416428111,
+            "universeId": 10767566226,
+            "name": "Don't Steal My Eggs!",
+            "url": "https://www.roblox.com/games/135675416428111",
+            "playing": 4984,
+            "likeRatio": 0.9501333227205795,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 95219522950423,
+            "universeId": 10765490955,
+            "name": "Steal a Hacker Egg 🌮",
+            "url": "https://www.roblox.com/games/95219522950423",
+            "playing": 583,
+            "likeRatio": 0.9041769041769042,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 78933302895115,
+            "universeId": 10757498504,
+            "name": "Steal An Anime Egg",
+            "url": "https://www.roblox.com/games/78933302895115",
+            "playing": 983,
+            "likeRatio": 0.9706438730470118,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 134679507313109,
+            "universeId": 10758397570,
+            "name": "Steal an Egg for Squishy Dumplings!",
+            "url": "https://www.roblox.com/games/134679507313109",
+            "playing": 2313,
+            "likeRatio": 0.9734622404182903,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 112590853923988,
+            "universeId": 10765494608,
+            "name": "Steal An Evil Egg 😈",
+            "url": "https://www.roblox.com/games/112590853923988",
+            "playing": 722,
+            "likeRatio": 0.9186717998075072,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 78043072776767,
+            "universeId": 10771804357,
+            "name": "Fly Tesla Roadster To Steal Eggs",
+            "url": "https://www.roblox.com/games/78043072776767",
+            "playing": 1628,
+            "likeRatio": 0.8807947019867549,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 107725109349532,
+            "universeId": 10766350628,
+            "name": "Steal An Egg ROLEPLAY",
+            "url": "https://www.roblox.com/games/107725109349532",
+            "playing": 2403,
+            "likeRatio": 0.7662796567390207,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 1
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=steal%20eggs"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:egg hatching tycoon",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "egg hatching tycoon",
+      "snippet": [
+        {
+          "text": "First read. Position 2 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "2"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "1.8K"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=egg%20hatching%20tycoon",
+      "detail": {
+        "kind": "rank",
+        "phrase": "egg hatching tycoon",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 2,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 118480767876223,
+            "universeId": 10770675563,
+            "name": "[🎃] HATCH THE RARE EGG",
+            "url": "https://www.roblox.com/games/118480767876223",
+            "playing": 1786,
+            "likeRatio": 0.89937106918239,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 112241277471797,
+            "universeId": 10767912502,
+            "name": "[🎃] Trading Tycoon",
+            "url": "https://www.roblox.com/games/112241277471797",
+            "playing": 1952,
+            "likeRatio": 0.9373578037312301,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 1128650291,
+            "universeId": 465016798,
+            "name": "Zoo Tycoon 🥚🐲",
+            "url": "https://www.roblox.com/games/1128650291",
+            "playing": 1769,
+            "likeRatio": 0.8497295851409752,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 12912731475,
+            "universeId": 4518160318,
+            "name": "Mansion Tycoon 🌴🏠",
+            "url": "https://www.roblox.com/games/12912731475",
+            "playing": 2950,
+            "likeRatio": 0.9704917203152593,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 76137189788863,
+            "universeId": 7082423811,
+            "name": "🌊 Raft Tycoon",
+            "url": "https://www.roblox.com/games/76137189788863",
+            "playing": 887,
+            "likeRatio": 0.9511027236325825,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 10253248401,
+            "universeId": 3754482795,
+            "name": "Elemental Powers Tycoon",
+            "url": "https://www.roblox.com/games/10253248401",
+            "playing": 1521,
+            "likeRatio": 0.8884929224814707,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 1554960397,
+            "universeId": 605887098,
+            "name": "Car Dealership Tycoon  [🎃]",
+            "url": "https://www.roblox.com/games/1554960397",
+            "playing": 4128,
+            "likeRatio": 0.9291111144802074,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 97289366402005,
+            "universeId": 10769384180,
+            "name": "[🎃] Fake an Egg",
+            "url": "https://www.roblox.com/games/97289366402005",
+            "playing": 31471,
+            "likeRatio": 0.8892972693153876,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 89726090098716,
+            "universeId": 7513137511,
+            "name": "Grow An Egg",
+            "url": "https://www.roblox.com/games/89726090098716",
+            "playing": 2,
+            "likeRatio": 0.9510611377688654,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 112769340066823,
+            "universeId": 10768321406,
+            "name": "Save The Egg",
+            "url": "https://www.roblox.com/games/112769340066823",
+            "playing": 973,
+            "likeRatio": 0.9449956229938722,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 2
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=egg%20hatching%20tycoon"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:steal pets",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "steal pets",
+      "snippet": [
+        {
+          "text": "First read. Position 2 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "2"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "167"
+        }
+      ],
+      "status": {
+        "label": "Top 3",
+        "tone": "live"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=steal%20pets",
+      "detail": {
+        "kind": "rank",
+        "phrase": "steal pets",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 2,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 134655615213640,
+            "universeId": 10757545671,
+            "name": "Steal A Pet",
+            "url": "https://www.roblox.com/games/134655615213640",
+            "playing": 167,
+            "likeRatio": 0.827076677316294,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 665087,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 95168737547508,
+            "universeId": 10769315427,
+            "name": "[🎃] Steal A Pet And Ride It!",
+            "url": "https://www.roblox.com/games/95168737547508",
+            "playing": 12801,
+            "likeRatio": 0.9336275375110327,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 132016691802922,
+            "universeId": 10356701370,
+            "name": "Build a Base and Steal 😈",
+            "url": "https://www.roblox.com/games/132016691802922",
+            "playing": 724,
+            "likeRatio": 0.9521316816981962,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 115857984676006,
+            "universeId": 10768347287,
+            "name": "[UPD🎃] Slash and Steal Pets",
+            "url": "https://www.roblox.com/games/115857984676006",
+            "playing": 89,
+            "likeRatio": 0.8970588235294118,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 99679692310083,
+            "universeId": 10766056678,
+            "name": "Steal Animal Egg",
+            "url": "https://www.roblox.com/games/99679692310083",
+            "playing": 1081,
+            "likeRatio": 0.9378380451877709,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 120397576477008,
+            "universeId": 10766541915,
+            "name": "Evolve To Steal Animals!",
+            "url": "https://www.roblox.com/games/120397576477008",
+            "playing": 2755,
+            "likeRatio": 0.8090659340659341,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 115604538384269,
+            "universeId": 10766841770,
+            "name": "[🎃BOSS] Break Eggs to Steal Pets!",
+            "url": "https://www.roblox.com/games/115604538384269",
+            "playing": 472,
+            "likeRatio": 0.8696599825632084,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 80844740579381,
+            "universeId": 10737127681,
+            "name": "Hide ur Secret Base",
+            "url": "https://www.roblox.com/games/80844740579381",
+            "playing": 164,
+            "likeRatio": 0.9054548898289033,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 109983668079237,
+            "universeId": 7709344486,
+            "name": "[💀] Steal a Brainrot",
+            "url": "https://www.roblox.com/games/109983668079237",
+            "playing": 423388,
+            "likeRatio": 0.8513323356330137,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 124216119978534,
+            "universeId": 10035204815,
+            "name": "[💫] Ride A Pet",
+            "url": "https://www.roblox.com/games/124216119978534",
+            "playing": 12030,
+            "likeRatio": 0.9624689415272486,
+            "sponsored": false,
+            "position": 11
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 2
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=steal%20pets"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:pet simulator",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "pet simulator",
+      "snippet": [
+        {
+          "text": "First read. Position 8 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "8"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "135"
+        }
+      ],
+      "status": {
+        "label": "Top 10",
+        "tone": "accent"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=pet%20simulator",
+      "detail": {
+        "kind": "rank",
+        "phrase": "pet simulator",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 8,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 1599679393,
+            "universeId": 619296292,
+            "name": "Pet Simulator!",
+            "url": "https://www.roblox.com/games/1599679393",
+            "playing": 96,
+            "likeRatio": 0.8919978364379243,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 18901165922,
+            "universeId": 6401952734,
+            "name": "Pets RNG! ✨",
+            "url": "https://www.roblox.com/games/18901165922",
+            "playing": 194,
+            "likeRatio": 0.9000549262999946,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 137104776717298,
+            "universeId": 10763542566,
+            "name": "[✏️ DOODLE!] SIM Pets: The LEGACY",
+            "url": "https://www.roblox.com/games/137104776717298",
+            "playing": 451,
+            "likeRatio": 0.8715277777777778,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 119551017039800,
+            "universeId": 7890157944,
+            "name": "[🍭 Board] Pets Game: Revival",
+            "url": "https://www.roblox.com/games/119551017039800",
+            "playing": 1,
+            "likeRatio": 0.8264342774146696,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 97901225948091,
+            "universeId": 10769645339,
+            "name": "[🏦BANK!] PET X: REBORN! ✨",
+            "url": "https://www.roblox.com/games/97901225948091",
+            "playing": 135,
+            "likeRatio": 0.9545454545454546,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 136820974241588,
+            "universeId": 7508340849,
+            "name": "[MINING ⛏️] Pet REVAMPED!🔥",
+            "url": "https://www.roblox.com/games/136820974241588",
+            "playing": 5,
+            "likeRatio": 0.8399285926807498,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 107425310197604,
+            "universeId": 7302956307,
+            "name": "Pet Evolution🌟",
+            "url": "https://www.roblox.com/games/107425310197604",
+            "playing": 0,
+            "likeRatio": 0.8731225296442687,
+            "sponsored": false,
+            "position": 10
+          },
+          {
+            "placeId": 74629631798007,
+            "universeId": 10759638075,
+            "name": "[🍀] Pets Universe! 🎃",
+            "url": "https://www.roblox.com/games/74629631798007",
+            "playing": 4931,
+            "likeRatio": 0.9841823056300268,
+            "sponsored": false,
+            "position": 11
+          },
+          {
+            "placeId": 6331132338,
+            "universeId": 2341107266,
+            "name": "Pet Swarm Simulator",
+            "url": "https://www.roblox.com/games/6331132338",
+            "playing": 14,
+            "likeRatio": 0.8457354266234278,
+            "sponsored": false,
+            "position": 12
+          },
+          {
+            "placeId": 73275665439299,
+            "universeId": 10768322898,
+            "name": "[🎃] Spin A Pet",
+            "url": "https://www.roblox.com/games/73275665439299",
+            "playing": 592,
+            "likeRatio": 0.8358585858585859,
+            "sponsored": false,
+            "position": 13
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 8
+          }
+        ],
+        "scanned": 40,
+        "adsSeen": 0,
+        "pages": 1,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=pet%20simulator"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:pets",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "pets",
+      "snippet": [
+        {
+          "text": "First read. Position 36 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "36"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "837"
+        }
+      ],
+      "status": {
+        "label": "Top 100",
+        "tone": "muted"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=pets",
+      "detail": {
+        "kind": "rank",
+        "phrase": "pets",
+        "source": "description",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 36,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 120397576477008,
+            "universeId": 10766541915,
+            "name": "Evolve To Steal Animals!",
+            "url": "https://www.roblox.com/games/120397576477008",
+            "playing": 2782,
+            "likeRatio": 0.8090659340659341,
+            "sponsored": false,
+            "position": 31
+          },
+          {
+            "placeId": 120038828993910,
+            "universeId": 8188085194,
+            "name": "Catchy [🎃Pets]",
+            "url": "https://www.roblox.com/games/120038828993910",
+            "playing": 129,
+            "likeRatio": 0.9238814016172506,
+            "sponsored": false,
+            "position": 32
+          },
+          {
+            "placeId": 91232956735357,
+            "universeId": 6631166683,
+            "name": "My Pet Rock",
+            "url": "https://www.roblox.com/games/91232956735357",
+            "playing": 97,
+            "likeRatio": 0.6205300312463835,
+            "sponsored": false,
+            "position": 33
+          },
+          {
+            "placeId": 131228480457082,
+            "universeId": 10638570149,
+            "name": "🐾 Pet Hospital RP",
+            "url": "https://www.roblox.com/games/131228480457082",
+            "playing": 10,
+            "likeRatio": 0.7997416020671835,
+            "sponsored": false,
+            "position": 34
+          },
+          {
+            "placeId": 130963513547122,
+            "universeId": 10771729010,
+            "name": "Rescue Your Pet!🐶",
+            "url": "https://www.roblox.com/games/130963513547122",
+            "playing": 837,
+            "likeRatio": 0.6168831168831169,
+            "sponsored": false,
+            "position": 35
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 36
+          },
+          {
+            "placeId": 83412491910547,
+            "universeId": 10767256978,
+            "name": "Pet Ride Speed Clicker 🐶⚡",
+            "url": "https://www.roblox.com/games/83412491910547",
+            "playing": 132,
+            "likeRatio": 0.7685459940652819,
+            "sponsored": false,
+            "position": 37
+          },
+          {
+            "placeId": 83847197909679,
+            "universeId": 10053091404,
+            "name": "My Pet Farm",
+            "url": "https://www.roblox.com/games/83847197909679",
+            "playing": 91,
+            "likeRatio": 0.9770101609984689,
+            "sponsored": false,
+            "position": 38
+          },
+          {
+            "placeId": 96539133045244,
+            "universeId": 9625497943,
+            "name": "[🐅] My ZOO",
+            "url": "https://www.roblox.com/games/96539133045244",
+            "playing": 40,
+            "likeRatio": 0.9194302942093773,
+            "sponsored": false,
+            "position": 39
+          },
+          {
+            "placeId": 5712833750,
+            "universeId": 2023680558,
+            "name": "Animal Simulator",
+            "url": "https://www.roblox.com/games/5712833750",
+            "playing": 2451,
+            "likeRatio": 0.8359559181811584,
+            "sponsored": false,
+            "position": 40
+          },
+          {
+            "placeId": 5254674128,
+            "universeId": 1840326425,
+            "name": "Pet Store Tycoon",
+            "url": "https://www.roblox.com/games/5254674128",
+            "playing": 11,
+            "likeRatio": 0.8395712300858835,
+            "sponsored": false,
+            "position": 41
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 36
+          }
+        ],
+        "scanned": 80,
+        "adsSeen": 0,
+        "pages": 2,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=pets"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:tycoon",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "tycoon",
+      "snippet": [
+        {
+          "text": "First read. Position 40 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "40"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "79"
+        }
+      ],
+      "status": {
+        "label": "Top 100",
+        "tone": "muted"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=tycoon",
+      "detail": {
+        "kind": "rank",
+        "phrase": "tycoon",
+        "source": "genre",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 40,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 5312327368,
+            "universeId": 1860435730,
+            "name": "Super Hero Tycoon",
+            "url": "https://www.roblox.com/games/5312327368",
+            "playing": 238,
+            "likeRatio": 0.8044804620185366,
+            "sponsored": false,
+            "position": 35
+          },
+          {
+            "placeId": 10224049386,
+            "universeId": 3746418487,
+            "name": "House Tycoon 2",
+            "url": "https://www.roblox.com/games/10224049386",
+            "playing": 1103,
+            "likeRatio": 0.8177870734535203,
+            "sponsored": false,
+            "position": 36
+          },
+          {
+            "placeId": 7180042682,
+            "universeId": 2788648141,
+            "name": "🎃 Military Tycoon ®",
+            "url": "https://www.roblox.com/games/7180042682",
+            "playing": 1768,
+            "likeRatio": 0.9138443869899538,
+            "sponsored": false,
+            "position": 37
+          },
+          {
+            "placeId": 119263815547952,
+            "universeId": 10768458048,
+            "name": "Army Commander Tycoon [UPDATE 4]",
+            "url": "https://www.roblox.com/games/119263815547952",
+            "playing": 4640,
+            "likeRatio": 0.9291898842691814,
+            "sponsored": false,
+            "position": 38
+          },
+          {
+            "placeId": 15475670557,
+            "universeId": 5340023777,
+            "name": "Goddess Tycoon 👸🔱",
+            "url": "https://www.roblox.com/games/15475670557",
+            "playing": 79,
+            "likeRatio": 0.8398888818738557,
+            "sponsored": false,
+            "position": 39
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 40
+          },
+          {
+            "placeId": 15352028692,
+            "universeId": 5295169598,
+            "name": "Ultimate Home Tycoon 🏠",
+            "url": "https://www.roblox.com/games/15352028692",
+            "playing": 308,
+            "likeRatio": 0.9751294656446027,
+            "sponsored": false,
+            "position": 41
+          },
+          {
+            "placeId": 86538385467253,
+            "universeId": 6830856257,
+            "name": "Luxury Plane Tycoon 🛫",
+            "url": "https://www.roblox.com/games/86538385467253",
+            "playing": 74,
+            "likeRatio": 0.9174111840217329,
+            "sponsored": false,
+            "position": 42
+          },
+          {
+            "placeId": 17277889388,
+            "universeId": 5910910774,
+            "name": "Gun Armory Tycoon",
+            "url": "https://www.roblox.com/games/17277889388",
+            "playing": 255,
+            "likeRatio": 0.9237189058230273,
+            "sponsored": false,
+            "position": 43
+          },
+          {
+            "placeId": 5532528538,
+            "universeId": 1933694061,
+            "name": "God Tycoon",
+            "url": "https://www.roblox.com/games/5532528538",
+            "playing": 40,
+            "likeRatio": 0.7804293608489413,
+            "sponsored": false,
+            "position": 44
+          },
+          {
+            "placeId": 1554960397,
+            "universeId": 605887098,
+            "name": "Car Dealership Tycoon  [🎃]",
+            "url": "https://www.roblox.com/games/1554960397",
+            "playing": 4128,
+            "likeRatio": 0.9291111144802074,
+            "sponsored": false,
+            "position": 45
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 40
+          }
+        ],
+        "scanned": 80,
+        "adsSeen": 0,
+        "pages": 2,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=tycoon"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:treadmill",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "treadmill",
+      "snippet": [
+        {
+          "text": "First read. Position 46 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "46"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "201"
+        }
+      ],
+      "status": {
+        "label": "Top 100",
+        "tone": "muted"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=treadmill",
+      "detail": {
+        "kind": "rank",
+        "phrase": "treadmill",
+        "source": "description",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 46,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 105553804282308,
+            "universeId": 10261367016,
+            "name": "Speed Training⚡",
+            "url": "https://www.roblox.com/games/105553804282308",
+            "playing": 592,
+            "likeRatio": 0.9552702422861876,
+            "sponsored": false,
+            "position": 41
+          },
+          {
+            "placeId": 70906625936847,
+            "universeId": 6443367640,
+            "name": "Gym Star Simulator 🏋️",
+            "url": "https://www.roblox.com/games/70906625936847",
+            "playing": 4995,
+            "likeRatio": 0.9246311703714353,
+            "sponsored": false,
+            "position": 42
+          },
+          {
+            "placeId": 83210609656841,
+            "universeId": 9855971499,
+            "name": "[🌌]Run On Treadmill For Brainrots",
+            "url": "https://www.roblox.com/games/83210609656841",
+            "playing": 0,
+            "likeRatio": 0.7684729064039408,
+            "sponsored": false,
+            "position": 43
+          },
+          {
+            "placeId": 84315667725978,
+            "universeId": 10627471292,
+            "name": "🏖️ +1 Speed Beach Keyboard Escape",
+            "url": "https://www.roblox.com/games/84315667725978",
+            "playing": 2564,
+            "likeRatio": 0.9232804232804233,
+            "sponsored": false,
+            "position": 44
+          },
+          {
+            "placeId": 96589898149075,
+            "universeId": 8941471408,
+            "name": "[x10] Train to be the Fastest [WEEKEND]",
+            "url": "https://www.roblox.com/games/96589898149075",
+            "playing": 201,
+            "likeRatio": 0.8551674982181041,
+            "sponsored": false,
+            "position": 45
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 665087,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 46
+          },
+          {
+            "placeId": 97763632177952,
+            "universeId": 10748738219,
+            "name": "+999 Speed Fast Game!",
+            "url": "https://www.roblox.com/games/97763632177952",
+            "playing": 16,
+            "likeRatio": 0.6120218579234973,
+            "sponsored": false,
+            "position": 47
+          },
+          {
+            "placeId": 136651591711191,
+            "universeId": 6449635131,
+            "name": "💪 Get Strong and Race!",
+            "url": "https://www.roblox.com/games/136651591711191",
+            "playing": 21,
+            "likeRatio": 0.9586399313220505,
+            "sponsored": false,
+            "position": 48
+          },
+          {
+            "placeId": 74023858073178,
+            "universeId": 10766620257,
+            "name": "[🎃] Bike For Egg!",
+            "url": "https://www.roblox.com/games/74023858073178",
+            "playing": 11706,
+            "likeRatio": 0.9522149185481567,
+            "sponsored": false,
+            "position": 49
+          },
+          {
+            "placeId": 86004121458829,
+            "universeId": 8922130419,
+            "name": "+9999 BEST GOLDEN SPEED",
+            "url": "https://www.roblox.com/games/86004121458829",
+            "playing": 141,
+            "likeRatio": 0.7676767676767676,
+            "sponsored": false,
+            "position": 50
+          },
+          {
+            "placeId": 117319933787281,
+            "universeId": 7388573452,
+            "name": "WORKOUT SIMULATOR",
+            "url": "https://www.roblox.com/games/117319933787281",
+            "playing": 3,
+            "likeRatio": 0.9707455052696838,
+            "sponsored": false,
+            "position": 51
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 46
+          }
+        ],
+        "scanned": 80,
+        "adsSeen": 0,
+        "pages": 2,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=treadmill"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:simulation",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "simulation",
+      "snippet": [
+        {
+          "text": "First read. Position 54 in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "54"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "58"
+        }
+      ],
+      "status": {
+        "label": "Top 100",
+        "tone": "muted"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=simulation",
+      "detail": {
+        "kind": "rank",
+        "phrase": "simulation",
+        "source": "genre",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": 54,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 118315378611589,
+            "universeId": 10765751583,
+            "name": "Voltline: Realistic E-Scooter Simulator [Beta]",
+            "url": "https://www.roblox.com/games/118315378611589",
+            "playing": 473,
+            "likeRatio": 0.8404805432227735,
+            "sponsored": false,
+            "position": 49
+          },
+          {
+            "placeId": 9049840490,
+            "universeId": 3405618667,
+            "name": "Sonic Speed Simulator",
+            "url": "https://www.roblox.com/games/9049840490",
+            "playing": 2751,
+            "likeRatio": 0.9203607255812558,
+            "sponsored": false,
+            "position": 50
+          },
+          {
+            "placeId": 81016010957338,
+            "universeId": 10697943549,
+            "name": "+1 Superpower Destruction",
+            "url": "https://www.roblox.com/games/81016010957338",
+            "playing": 489,
+            "likeRatio": 0.8947906026557712,
+            "sponsored": false,
+            "position": 51
+          },
+          {
+            "placeId": 113279432715097,
+            "universeId": 7937696923,
+            "name": "Suburban Weather Simulator",
+            "url": "https://www.roblox.com/games/113279432715097",
+            "playing": 360,
+            "likeRatio": 0.7953573610262675,
+            "sponsored": false,
+            "position": 52
+          },
+          {
+            "placeId": 99108011067552,
+            "universeId": 9761523353,
+            "name": "🚨Checkout Chaos",
+            "url": "https://www.roblox.com/games/99108011067552",
+            "playing": 58,
+            "likeRatio": 0.816156462585034,
+            "sponsored": false,
+            "position": 53
+          },
+          {
+            "placeId": 107778070777162,
+            "universeId": 10563114921,
+            "name": "Steal An Egg",
+            "url": "https://www.roblox.com/games/107778070777162",
+            "playing": 678549,
+            "likeRatio": 0.9164114875077799,
+            "sponsored": false,
+            "position": 54
+          },
+          {
+            "placeId": 98100179608264,
+            "universeId": 8104504677,
+            "name": "[🎃] Dispatch: Police Simulator",
+            "url": "https://www.roblox.com/games/98100179608264",
+            "playing": 301,
+            "likeRatio": 0.9384120471816868,
+            "sponsored": false,
+            "position": 55
+          },
+          {
+            "placeId": 4898233867,
+            "universeId": 1673554668,
+            "name": "[🎃] School Bus Sim",
+            "url": "https://www.roblox.com/games/4898233867",
+            "playing": 699,
+            "likeRatio": 0.8181911946720104,
+            "sponsored": false,
+            "position": 56
+          },
+          {
+            "placeId": 2906928767,
+            "universeId": 1050830474,
+            "name": "[GHOST TRAIN!] Ro-Scale Central Railroad Train Sim",
+            "url": "https://www.roblox.com/games/2906928767",
+            "playing": 104,
+            "likeRatio": 0.8300649734199645,
+            "sponsored": false,
+            "position": 57
+          },
+          {
+            "placeId": 18199234764,
+            "universeId": 6170013953,
+            "name": "Snake Simulator",
+            "url": "https://www.roblox.com/games/18199234764",
+            "playing": 209,
+            "likeRatio": 0.6908531149922414,
+            "sponsored": false,
+            "position": 58
+          },
+          {
+            "placeId": 2866967438,
+            "universeId": 1037979853,
+            "name": "[🍄] Fishing Simulator!",
+            "url": "https://www.roblox.com/games/2866967438",
+            "playing": 361,
+            "likeRatio": 0.9215322628690708,
+            "sponsored": false,
+            "position": 59
+          }
+        ],
+        "aroundKind": "around",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": 54
+          }
+        ],
+        "scanned": 80,
+        "adsSeen": 0,
+        "pages": 2,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=simulation"
+      },
+      "isNew": false
+    },
+    {
+      "id": "rank:collect pets",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "collect pets",
+      "snippet": [
+        {
+          "text": "First read. Not in the first 100 results."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Position",
+          "value": "100+"
+        },
+        {
+          "label": "Before",
+          "value": "None"
+        },
+        {
+          "label": "Players above",
+          "value": "Not available"
+        }
+      ],
+      "status": {
+        "label": "Not in top 100",
+        "tone": "muted"
+      },
+      "url": "https://www.roblox.com/discover/?Keyword=collect%20pets",
+      "detail": {
+        "kind": "rank",
+        "phrase": "collect pets",
+        "source": "model",
+        "status": "first",
+        "gameName": "Steal An Egg",
+        "position": null,
+        "previous": null,
+        "hadPrevious": false,
+        "everFound": false,
+        "change": null,
+        "around": [
+          {
+            "placeId": 8884433153,
+            "universeId": 3359505957,
+            "name": "Collect All Pets!",
+            "url": "https://www.roblox.com/games/8884433153",
+            "playing": 2454,
+            "likeRatio": 0.9273074558707298,
+            "sponsored": false,
+            "position": 1
+          },
+          {
+            "placeId": 8737899170,
+            "universeId": 3317771874,
+            "name": "🎉 [PSX] Pet Simulator 99! 🐾",
+            "url": "https://www.roblox.com/games/8737899170",
+            "playing": 68916,
+            "likeRatio": 0.9474183470325035,
+            "sponsored": false,
+            "position": 2
+          },
+          {
+            "placeId": 73125893126963,
+            "universeId": 10770021080,
+            "name": "Adopt Your Animal!",
+            "url": "https://www.roblox.com/games/73125893126963",
+            "playing": 7123,
+            "likeRatio": 0.8675660792951542,
+            "sponsored": false,
+            "position": 3
+          },
+          {
+            "placeId": 120038828993910,
+            "universeId": 8188085194,
+            "name": "Catchy [🎃Pets]",
+            "url": "https://www.roblox.com/games/120038828993910",
+            "playing": 129,
+            "likeRatio": 0.9238814016172506,
+            "sponsored": false,
+            "position": 4
+          },
+          {
+            "placeId": 6284583030,
+            "universeId": 2316994223,
+            "name": "Pet Simulator X! 🐾",
+            "url": "https://www.roblox.com/games/6284583030",
+            "playing": 710,
+            "likeRatio": 0.9143870461161662,
+            "sponsored": false,
+            "position": 5
+          },
+          {
+            "placeId": 9731376817,
+            "universeId": 3608594708,
+            "name": "✨Collect The Body",
+            "url": "https://www.roblox.com/games/9731376817",
+            "playing": 1822,
+            "likeRatio": 0.9650624691341889,
+            "sponsored": false,
+            "position": 6
+          },
+          {
+            "placeId": 78842730158876,
+            "universeId": 10767717500,
+            "name": "[🎃 NEW!] Collect Cat Cards!",
+            "url": "https://www.roblox.com/games/78842730158876",
+            "playing": 2729,
+            "likeRatio": 0.9144395308594501,
+            "sponsored": false,
+            "position": 7
+          },
+          {
+            "placeId": 107425310197604,
+            "universeId": 7302956307,
+            "name": "Pet Evolution🌟",
+            "url": "https://www.roblox.com/games/107425310197604",
+            "playing": 0,
+            "likeRatio": 0.8731225296442687,
+            "sponsored": false,
+            "position": 8
+          },
+          {
+            "placeId": 96946169195393,
+            "universeId": 10766541672,
+            "name": "Hatch and Collect Pets",
+            "url": "https://www.roblox.com/games/96946169195393",
+            "playing": 0,
+            "likeRatio": 0.875,
+            "sponsored": false,
+            "position": 9
+          },
+          {
+            "placeId": 134655615213640,
+            "universeId": 10757545671,
+            "name": "Steal A Pet",
+            "url": "https://www.roblox.com/games/134655615213640",
+            "playing": 175,
+            "likeRatio": 0.827076677316294,
+            "sponsored": false,
+            "position": 10
+          }
+        ],
+        "aroundKind": "top",
+        "passed": [],
+        "passedKnown": false,
+        "history": [
+          {
+            "at": "2026-10-27T21:58:10.412Z",
+            "position": null
+          }
+        ],
+        "scanned": 100,
+        "adsSeen": 0,
+        "pages": 3,
+        "fetchedAt": "2026-10-27T21:58:10.412Z",
+        "searchUrl": "https://www.roblox.com/discover/?Keyword=collect%20pets"
+      },
+      "isNew": false
+    }
+  ]
+}

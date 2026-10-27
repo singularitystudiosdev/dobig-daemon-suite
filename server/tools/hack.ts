@@ -643,6 +643,7 @@ async function analyze(ctx: RunContext): Promise<void> {
   ]
   const notes = [
     `Searched ${okQueries} of ${plan.length} YouTube queries for "${clean}" with words such as script, hack, auto farm, dupe, no key and mod menu. ${kept.length} videos from ${widened ? 'all dates' : `the last ${WINDOW_DAYS} days`} were classified: ${counts.promo} exploit promos, ${counts.bait} bait, ${counts.discussion} discussion or news, ${counts.unrelated} unrelated${counts.unclassified ? `, ${counts.unclassified} unclassified` : ''}.${counts.older ? ` ${counts.older} promos were dropped after their watch page showed they are older than ${WINDOW_DAYS} days.` : ''}`,
+    `YouTube search returns a sample of the most relevant and newest videos, not every video, and this run read ${searched} distinct ${searched === 1 ? 'video' : 'videos'} in total.`,
     counts.promo === 0 ? `No exploit promo videos for "${clean}" were found in this search window.` : '',
     firstRun ? 'This is the first run for this game, so every video counts as new. Later runs mark only videos not seen before.' : '',
   ].filter(Boolean)

@@ -55,11 +55,27 @@ export interface PlannedQuery {
   sort: 'date' | 'relevance'
 }
 
-/** Six newest-first queries (where a cheat release shows up first) and two by relevance (the ones with lasting reach). */
+export const MAX_QUERIES = 11
+
+/** Other ways people write the game name, each built only from its real words: joined, initials. */
+export function nameVariants(clean: string): string[] {
+  const words = clean.split(/\s+/).filter(Boolean)
+  const out: string[] = []
+  if (words.length >= 2) out.push(words.join(''))
+  const initials = words.map((w) => w.match(/\p{L}/u)?.[0] ?? '').join('').toUpperCase()
+  if (words.length >= 3 && initials.length >= 3) out.push(initials)
+  const seen = new Set([clean.toLowerCase()])
+  return out.filter((v) => !seen.has(v.toLowerCase()) && seen.add(v.toLowerCase())).slice(0, 3)
+}
+
+/** Six newest-first queries (where a cheat release shows up first) and two by relevance (the ones with lasting reach),
+    then up to two name-variant queries (mixed sorts), 10 at most. */
 export function buildQueries(clean: string): PlannedQuery[] {
   const date = ['script', 'hack', 'auto farm', 'dupe', 'executor no key', 'mod menu'].map((w) => ({ q: `${clean} ${w} roblox`, sort: 'date' as const }))
   const rel = ['script hack exploit', 'exploit god mode tp'].map((w) => ({ q: `${clean} ${w} roblox`, sort: 'relevance' as const }))
-  return [...date, ...rel]
+  const variants = nameVariants(clean).map((v, i): PlannedQuery => (i % 2 === 0 ? { q: `${v} script roblox`, sort: 'date' } : { q: `${v} exploit roblox`, sort: 'relevance' }))
+  const seen = new Set<string>()
+  return [...date, ...rel, ...variants].filter((p) => !seen.has(p.q.toLowerCase()) && seen.add(p.q.toLowerCase())).slice(0, MAX_QUERIES)
 }
 
 /* ---- sanitising ---- */

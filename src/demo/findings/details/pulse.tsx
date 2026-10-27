@@ -25,7 +25,7 @@ function Block({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
-export default function PulseDetailView({ detail: d }: DetailViewProps<PulseDetail>) {
+export default function PulseDetailView({ detail: d, daemonId }: DetailViewProps<PulseDetail>) {
   const pts = d.history.filter((p): p is { t: string; v: number } => p.v !== null)
   const show = (v: number) => (d.unit === '' ? fmtInt(v) : d.unit === ' ms' ? `${Math.round(v)}${d.unit}` : `${v.toFixed(1)}${d.unit}`)
   const low = pts.length ? Math.min(...pts.map((p) => p.v)) : 0
@@ -96,7 +96,7 @@ export default function PulseDetailView({ detail: d }: DetailViewProps<PulseDeta
           )}
         </div>
       </div>
-      <AutomateCta slug="pulse-daemon" game={d.gameName} variant="line" />
+      {daemonId !== 'example' && <AutomateCta slug="pulse-daemon" game={d.gameName} variant="line" />}
     </div>
   )
 }

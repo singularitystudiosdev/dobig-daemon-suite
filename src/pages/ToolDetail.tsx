@@ -1,17 +1,33 @@
 import { ViewTransition } from 'react'
 import { ArrowLeft, Play, SearchX } from 'lucide-react'
 import { demoHref, markNav, navigate } from '@/lib/router'
-import { isDaemonSlug } from '@/data/daemons'
+import { isDaemonSlug, type DaemonSlug } from '@/data/daemons'
+import { daemonsBySlug } from '@/data/daemons'
 import { toolsBySlug } from '@/data/tools'
-import { EmptyState } from '@/components/ui'
+import { EmptyState, Skeleton } from '@/components/ui'
+import { ToolHero } from '@/components/ToolHero'
+import { useExample } from '@/lib/example'
 
 /* Facts are a local pill pair (same look as StatPill) because StatPill never wraps and some values
    are a full phrase that must fit a 390px card.
 
-   A tool's detail page: the tile's art lands in a big card on the left under the same shared name
-   the hub gave it, then the description rises in on the right once the morph is under way. */
+   A tool's detail page: the hub card's icon lands in a card on the left under the same shared name
+   the hub gave it, with a real picture from the game's world under it, then the description rises in on the right once
+   the morph is under way. */
 
 const DESC_DELAY = 200
+
+function Picture({ slug }: { slug: DaemonSlug }) {
+  const { example, loading } = useExample(slug)
+  if (loading) return <Skeleton className="mt-16 aspect-video w-full" />
+  if (!example || example.hero.length === 0) return null
+  return (
+    <figure className="mt-16">
+      <ToolHero images={example.hero} />
+      <figcaption className="mt-8 text-micro text-muted">{example.heroNote}</figcaption>
+    </figure>
+  )
+}
 
 export default function ToolDetail({ slug }: { slug: string }) {
   const tool = isDaemonSlug(slug) ? toolsBySlug[slug] : null
@@ -24,16 +40,24 @@ export default function ToolDetail({ slug }: { slug: string }) {
     )
   }
 
+  const Icon = daemonsBySlug[tool.slug].icon
+
   return (
     <main id="main-content" tabIndex={-1} className="mx-auto max-w-page px-24 pb-96 pt-32">
       <div className="grid grid-cols-1 items-start gap-32 lg:grid-cols-2 lg:gap-48">
-        <div className="rounded-20 border border-line bg-surface p-16 lg:sticky lg:top-96">
-          <ViewTransition name={`tool-${tool.slug}`} share="tool-morph" default="none">
-            <div className="aspect-video overflow-hidden rounded-8 bg-raised">
-              <img src={tool.art} alt="" width={960} height={540} decoding="async" className="size-full object-cover" />
+        <div className="rounded-20 border border-line bg-surface p-24 lg:sticky lg:top-96">
+          <div className="flex items-center gap-16">
+            <ViewTransition name={`tool-${tool.slug}`} share="tool-morph" default="none">
+              <div className="flex size-48 shrink-0 items-center justify-center rounded-8 bg-raised text-accent-ink">
+                <Icon aria-hidden className="size-24" />
+              </div>
+            </ViewTransition>
+            <div className="min-w-0">
+              <p className="text-title font-bold text-ink">{tool.name}</p>
+              <p className="text-label text-muted">{tool.blurb}</p>
             </div>
-          </ViewTransition>
-          <p className="mt-16 text-center text-title font-bold text-ink">{tool.name}</p>
+          </div>
+          <Picture slug={tool.slug} />
           <div className="mt-16 flex flex-col gap-8">
             {tool.facts.map((f) => (
               <div key={f.label} className="flex flex-col gap-4 rounded-8 bg-raised px-12 py-8 sm:flex-row sm:items-center sm:justify-between sm:gap-8">

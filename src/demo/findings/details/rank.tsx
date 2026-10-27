@@ -62,7 +62,7 @@ function GameLink({ n }: { n: RankNeighbor }) {
   )
 }
 
-export default function RankDetailView({ detail: d }: DetailViewProps<RankDetail>) {
+export default function RankDetailView({ detail: d, daemonId }: DetailViewProps<RankDetail>) {
   const spark = d.history.map((h) => RANK_DEPTH + 1 - (h.position ?? RANK_DEPTH + 1))
   const sparkLabel = `Position history, oldest to newest: ${d.history.map((h) => short(h.position)).join(', ')}. A higher line is a better position.`
   return (
@@ -169,7 +169,7 @@ export default function RankDetailView({ detail: d }: DetailViewProps<RankDetail
         <span className="max-w-prose text-micro text-subtle">Roblox may order results differently for a signed-in player, so what you see there can differ from this read.</span>
       </div>
 
-      <AutomateCta slug="rank-daemon" game={d.gameName} variant="line" />
+      {daemonId !== 'example' && <AutomateCta slug="rank-daemon" game={d.gameName} variant="line" />}
     </div>
   )
 }

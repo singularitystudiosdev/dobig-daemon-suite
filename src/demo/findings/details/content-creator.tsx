@@ -61,7 +61,7 @@ export default function ContentCreatorDetailView({ detail: d, state, act, daemon
 
   // The row remembers a mark only for this page visit; the server remembers it across visits and runs. Pick it up once.
   useEffect(() => {
-    if (hydrated.current || state !== undefined) return
+    if (hydrated.current || state !== undefined || daemonId === 'example') return
     hydrated.current = true
     const ctl = new AbortController()
     fetch(`/api/content-creator/marks?daemon=${encodeURIComponent(daemonId)}`, { signal: ctl.signal, headers: { accept: 'application/json' } })
@@ -76,6 +76,8 @@ export default function ContentCreatorDetailView({ detail: d, state, act, daemon
 
   const mark = (next: ContentCreatorMark) => {
     act(next)
+    // The read-only example on the Pages site has no server to save to: the mark stays on the page.
+    if (daemonId === 'example') return
     fetch('/api/content-creator/mark', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -212,7 +214,7 @@ export default function ContentCreatorDetailView({ detail: d, state, act, daemon
         <p className="max-w-prose text-micro text-subtle">Your marks are kept when this tool runs again. Nothing is sent to the creator or to YouTube.</p>
       </Block>
 
-      <AutomateCta slug="content-creator-daemon" game={d.game} variant="line" />
+      {daemonId !== 'example' && <AutomateCta slug="content-creator-daemon" game={d.game} variant="line" />}
     </div>
   )
 }

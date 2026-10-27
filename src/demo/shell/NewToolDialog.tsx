@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { CircleCheck, MessageSquareText, Rocket, Send, Users, type LucideIcon } from 'lucide-react'
-import { Badge, Button, Dialog, Field, TextInput } from '@/components/ui'
+import { CircleCheck, Copy, MessageSquareText, Rocket, Send, Users, Wrench, type LucideIcon } from 'lucide-react'
+import { Badge, Button, Dialog, Field, TextInput, useToast } from '@/components/ui'
+import { ToolHero } from '@/components/ToolHero'
+import { daemonsBySlug, type DaemonSlug } from '@/data/daemons'
 import { automation, toolsBySlug } from '@/data/tools'
 import type { ToolRequest } from '@/lib/apiTypes'
-import { ApiFailure, listToolRequests, sendToolRequest } from '@/lib/api'
-import { asset } from '@/lib/static'
+import { ApiFailure, getStatus, listToolRequests, sendToolRequest } from '@/lib/api'
+import { useExample } from '@/lib/example'
 import { closeNewTool, useNewToolState } from './newTool'
 import { ago } from './time'
 
@@ -34,6 +36,18 @@ const IDEAS = [
   { label: 'Retention digest', text: 'Send my team a weekly digest of retention, session length and top complaints across Roblox analytics and Discord.' },
 ]
 
+/** The panel's picture: a real image from the game's world for an automation request, a quiet icon panel otherwise. */
+function Hero({ slug }: { slug: DaemonSlug | null }) {
+  const { example } = useExample(slug)
+  if (slug && example && example.hero.length > 0) return <ToolHero images={example.hero} />
+  const Icon = slug ? daemonsBySlug[slug].icon : Wrench
+  return (
+    <div className="flex aspect-video w-full items-center justify-center rounded-8 bg-raised text-accent-ink">
+      <Icon aria-hidden className="size-48" />
+    </div>
+  )
+}
+
 export function NewToolDialog() {
   const { open, preset } = useNewToolState()
   const [message, setMessage] = useState('')
@@ -43,10 +57,24 @@ export function NewToolDialog() {
   const [error, setError] = useState<string | null>(null)
   const [sent, setSent] = useState<ToolRequest | null>(null)
   const [past, setPast] = useState<ToolRequest[]>([])
+  const [delivery, setDelivery] = useState<'unknown' | 'webhook' | 'none'>('unknown')
+  const toast = useToast()
   const messageRef = useRef<HTMLTextAreaElement>(null)
 
   const tool = preset.kind === 'automation' && preset.tool ? toolsBySlug[preset.tool] : null
   const auto = tool ? automation[tool.slug] : null
+
+  // Whether anyone receives a request: the server knows whether a team webhook is configured.
+  useEffect(() => {
+    if (!open) return
+    let live = true
+    getStatus()
+      .then((s) => live && setDelivery(s.requestsWebhook === true ? 'webhook' : s.requestsWebhook === false ? 'none' : 'unknown'))
+      .catch(() => live && setDelivery('unknown'))
+    return () => {
+      live = false
+    }
+  }, [open])
 
   useEffect(() => {
     if (!open) return
@@ -104,7 +132,6 @@ export function NewToolDialog() {
   }
 
   const steps = tool ? AUTOMATE_STEPS : NEW_STEPS
-  const hero = tool ? tool.art : asset('/tools/build-it.webp')
 
   return (
     <Dialog
@@ -116,7 +143,7 @@ export function NewToolDialog() {
     >
       <div className="grid gap-24 md:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-16">
-          <img src={hero} alt="" width={960} height={540} className="aspect-video w-full rounded-8 object-cover" />
+          <Hero slug={tool ? tool.slug : null} />
           <h3 className="text-label font-medium text-ink">How it works</h3>
           <ol className="flex flex-col gap-16">
             {steps.map((s, i) => (
@@ -140,14 +167,34 @@ export function NewToolDialog() {
             <div role="status" className="flex flex-col gap-12 rounded-8 border border-line p-16">
               <div className="flex items-center gap-8">
                 <CircleCheck aria-hidden className="size-20 text-live" />
-                <p className="text-body font-bold text-ink">{sent.delivered ? 'Sent to the engineering team' : 'Request saved'}</p>
+                <p className="text-body font-bold text-ink">{sent.delivered ? 'Sent to the engineering team' : 'Saved on this machine'}</p>
               </div>
-              <p className="text-label text-muted">
-                {sent.delivered ? 'An engineer has it now. ' : 'It is in the request queue. '}
-                We will use <span className="break-all font-medium text-ink">{sent.contact}</span> to get back to you.
-              </p>
+              {sent.delivered ? (
+                <p className="text-label text-muted">
+                  An engineer has it now. We will use <span className="break-all font-medium text-ink">{sent.contact}</span> to get back to you.
+                </p>
+              ) : (
+                <p className="text-label text-muted">
+                  Nothing has been sent to anyone yet: no team inbox is connected to this server. Copy the request and send it to your engineer yourself, or connect a Slack or Discord webhook (REQUESTS_WEBHOOK_URL) so requests are delivered.
+                </p>
+              )}
               <p className="whitespace-pre-line border-t border-line pt-12 text-micro text-muted">{sent.message}</p>
               <div className="flex flex-wrap gap-8">
+                {!sent.delivered && (
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    icon={Copy}
+                    onClick={() =>
+                      void navigator.clipboard
+                        .writeText(`${sent.message}\n\nGame: ${sent.game ?? 'none given'}\nReach me at: ${sent.contact}`)
+                        .then(() => toast.push({ title: 'Request copied', tone: 'ok' }))
+                        .catch(() => toast.push({ title: 'Could not copy', description: 'Select the text and copy it by hand.', tone: 'warn' }))
+                    }
+                  >
+                    Copy request
+                  </Button>
+                )}
                 <Button size="sm" variant="normal" onClick={() => setSent(null)}>
                   Send another request
                 </Button>
@@ -196,6 +243,9 @@ export function NewToolDialog() {
               <Button type="submit" variant="primary" size="lg" icon={Send} loading={sending}>
                 Send to the engineers
               </Button>
+              {delivery === 'none' && (
+                <p className="text-micro text-muted">No team inbox is connected to this server yet, so a request is only saved here until a webhook is set up (REQUESTS_WEBHOOK_URL).</p>
+              )}
             </form>
           )}
 

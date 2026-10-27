@@ -221,7 +221,7 @@ export function DaemonBar({
           )}
         </div>
       )}
-      <p className="text-micro text-muted">{tool.daemonNote}</p>
+      <p className="text-micro text-muted">{tool.daemonNote} Reruns happen while the app is running on this machine; the login agent in the README keeps it running after a restart.</p>
 
       <div className="flex flex-wrap items-center justify-between gap-x-12 gap-y-4 border-t border-line pt-12">
         <p className="min-w-0 max-w-prose text-micro text-muted">{automation[slug].pitch}</p>

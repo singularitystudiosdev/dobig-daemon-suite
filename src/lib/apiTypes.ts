@@ -59,6 +59,10 @@ export interface StatusResponse {
   model: string
   /** Variants generated per gallery thumbnail. */
   perThumb: number
+  /** True when the server forwards tool requests to a webhook (REQUESTS_WEBHOOK_URL). Absent on older servers. */
+  requestsWebhook?: boolean
+  /** True when the server needs an access code (API_ACCESS_CODE). Absent on older servers. */
+  accessRequired?: boolean
 }
 
 export interface VariantRequest {

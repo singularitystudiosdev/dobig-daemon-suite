@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, ViewTransition, type KeyboardEvent } from 'react'
 import { ChevronDown, LayoutGrid, Plus, Zap } from 'lucide-react'
 import { tools, toolsBySlug } from '@/data/tools'
-import type { DaemonSlug } from '@/data/daemons'
+import { daemonsBySlug, type DaemonSlug } from '@/data/daemons'
 import { Skeleton } from '@/components/ui'
 import { fmtInt } from '@/lib/format'
 import { useBalance } from '@/lib/credits'
@@ -16,6 +16,16 @@ import { openNewTool } from './newTool'
    Opens a listbox of every tool with their credits left, then a "New tool" row that opens the panel for building
    custom tooling with the forward deployed engineers. Arrows, Home, End, Enter, Escape and Tab work;
    Escape and picking return focus to the button. */
+
+/** The tool's icon in a quiet raised square: what stands in for a picture in the menu and the top bar. */
+function ToolIcon({ slug, className }: { slug: DaemonSlug; className?: string }) {
+  const Icon = daemonsBySlug[slug].icon
+  return (
+    <span aria-hidden className={cn('flex size-36 shrink-0 items-center justify-center rounded-8 bg-raised text-accent-ink', className)}>
+      <Icon className="size-20" />
+    </span>
+  )
+}
 
 function Credits({ slug }: { slug: DaemonSlug }) {
   const n = useBalance(slug)
@@ -95,7 +105,7 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
           className="state-layer flex max-w-full min-w-0 items-center gap-12 rounded-8 py-4 pl-4 pr-12"
         >
           <ViewTransition name={`tool-${slug}`} share="tool-morph" default="none">
-            <img src={tool.art} alt="" width={64} height={36} className="hidden h-36 w-64 shrink-0 rounded-8 object-cover sm:block" />
+            <ToolIcon slug={slug} className="hidden sm:flex" />
           </ViewTransition>
           <span className="min-w-0 truncate text-body font-bold text-ink">{tool.name}</span>
           <ChevronDown aria-hidden className={cn('size-16 shrink-0 text-muted transition-transform duration-200 motion-reduce:transition-none', open && 'rotate-180')} />
@@ -122,7 +132,7 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
                   onPointerMove={() => setActive(i)}
                   className={cn('flex cursor-pointer items-center gap-12 rounded-8 p-8', i === active && 'bg-raised', t.slug === slug && 'text-accent-ink')}
                 >
-                  <img src={t.art} alt="" width={64} height={36} loading="lazy" className="h-36 w-64 shrink-0 rounded-8 object-cover" />
+                  <ToolIcon slug={t.slug} />
                   <span className="flex min-w-0 flex-1 flex-col">
                     <span className={cn('truncate text-label font-medium', t.slug === slug ? 'text-accent-ink' : 'text-ink')}>{t.name}</span>
                     <Credits slug={t.slug} />

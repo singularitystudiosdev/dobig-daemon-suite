@@ -1,0 +1,469 @@
+{
+  "tool": "hack-daemon",
+  "capturedAt": "2026-10-27T21:59:10.558Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    }
+  ],
+  "heroNote": "Steal An Egg: the game whose YouTube exploit promotions this run searched. Titles of the promo videos are withheld here.",
+  "summary": {
+    "items": [
+      {
+        "label": "Videos searched",
+        "value": "113"
+      },
+      {
+        "label": "Exploit promos",
+        "value": "67",
+        "tone": "danger"
+      },
+      {
+        "label": "Bait filtered",
+        "value": "2"
+      },
+      {
+        "label": "Clusters",
+        "value": "14"
+      },
+      {
+        "label": "First run",
+        "value": "67 videos"
+      }
+    ],
+    "sortLabel": "Sorted by severity",
+    "notices": [
+      {
+        "lead": "Client anti-tamper does not fix server trust",
+        "body": "Never trust the client. Roblox runs player code on the player's machine, so a cheat can call your RemoteEvents and RemoteFunctions with any values. Validate every argument on the server, and check distance, cooldowns and ownership there. Keep the authoritative state on the server."
+      },
+      {
+        "lead": "About this data",
+        "body": "Public YouTube results read on 2026-10-27 21:57 UTC. Videos were classified by anthropic/claude-haiku-5.5, which can be wrong; the confidence of each cluster is shown on its row. Severity follows a fixed rule, printed on every cluster. Links go to the video pages only; nothing from a video description is kept or followed."
+      }
+    ],
+    "notes": [
+      "Searched 11 of 11 YouTube queries for \"Steal An Egg\" with words such as script, hack, auto farm, dupe, no key and mod menu. 80 videos from the last 45 days were classified: 67 exploit promos, 2 bait, 3 discussion or news, 4 unrelated. 4 promos were dropped after their watch page showed they are older than 45 days.",
+      "YouTube search returns a sample of the most relevant and newest videos, not every video, and this run read 113 distinct videos in total.",
+      "This is the first run for this game, so every video counts as new. Later runs mark only videos not seen before."
+    ]
+  },
+  "findings": [
+    {
+      "id": "hack:currency-item-spawn:hatching",
+      "badge": {
+        "label": "CRIT",
+        "tone": "danger"
+      },
+      "title": "Currency/item spawn on hatching",
+      "snippet": [
+        {
+          "text": "Video titles advertise working glitches that supposedly hand out free Divines, a rare in-game currency or item, and describe them as game breaking. The claims suggest a way to gain rare hatching rewards without earning them through normal play."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Videos",
+          "value": "3"
+        },
+        {
+          "label": "Total views",
+          "value": "122K"
+        },
+        {
+          "label": "First seen",
+          "value": "about Oct 25, 2026"
+        },
+        {
+          "label": "Latest",
+          "value": "about Oct 26, 2026"
+        }
+      ],
+      "status": {
+        "label": "Open",
+        "tone": "muted"
+      },
+      "states": {
+        "patched": {
+          "label": "Patched",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.youtube.com/watch?v=tzvxxee7D2k",
+      "detail": {
+        "kind": "hack",
+        "cls": "currency/item spawn",
+        "system": "hatching",
+        "severity": "CRIT",
+        "severityReason": "CRIT: the class is currency/item spawn, which mints value, so it is critical whatever the reach (122,134 views in total).",
+        "observed": "Video titles advertise working glitches that supposedly hand out free Divines, a rare in-game currency or item, and describe them as game breaking. The claims suggest a way to gain rare hatching rewards without earning them through normal play.",
+        "cause": "This is most likely a server-trust bug in the hatching or currency flow, such as a RemoteEvent handler that accepts client-supplied values like egg type, quantity, or reward amount without verifying them on the server. It could also come from missing checks that a hatch request is valid, such as ownership of the egg, available currency, or a cooldown between hatches. The hypothesis is that some reward or currency state is effectively client-owned.",
+        "fix": "Treat every RemoteEvent and RemoteFunction argument as untrusted and validate its type and allowed range on the server, rejecting anything outside the expected set of egg and pet identifiers. Have the server alone decide hatch outcomes, rewards, and currency changes, and never accept a reward amount or result from the client. Verify ownership of the egg, sufficient funds, distance to the egg or base, and a per-player cooldown before granting anything. Rate limit hatch and steal requests per player on the server and log anomalous bursts for review. Keep currency and pet data server-authoritative, and avoid relying on client-side Roblox network ownership for anything that affects rewards.",
+        "confidence": 0.87,
+        "firstSeen": "2026-10-25T21:57:49.670Z",
+        "latestSeen": "2026-10-26T21:58:08.657Z",
+        "totalViews": 122134,
+        "views14d": 122134,
+        "videos": [
+          {
+            "id": "tzvxxee7D2k",
+            "url": "https://www.youtube.com/watch?v=tzvxxee7D2k",
+            "title": "Title withheld in this public example",
+            "channel": "Mega Hatching - Roblox",
+            "channelId": "UCqI-s9en_dXehBZucsvk44g",
+            "channelUrl": "https://www.youtube.com/channel/UCqI-s9en_dXehBZucsvk44g",
+            "views": 94049,
+            "publishedText": "2d ago",
+            "publishedAt": "2026-10-25T21:57:49.670Z",
+            "exact": false
+          },
+          {
+            "id": "JKHUaxXhKqU",
+            "url": "https://www.youtube.com/watch?v=JKHUaxXhKqU",
+            "title": "Title withheld in this public example",
+            "channel": "Dqrkz",
+            "channelId": "UCAIMJ2KQEbQBuB5njvf2a8w",
+            "channelUrl": "https://www.youtube.com/channel/UCAIMJ2KQEbQBuB5njvf2a8w",
+            "views": 15111,
+            "publishedText": "1d ago",
+            "publishedAt": "2026-10-26T21:57:49.670Z",
+            "exact": false
+          },
+          {
+            "id": "WhNbicszHwU",
+            "url": "https://www.youtube.com/watch?v=WhNbicszHwU",
+            "title": "Title withheld in this public example",
+            "channel": "Mega Hatching - Roblox",
+            "channelId": "UCqI-s9en_dXehBZucsvk44g",
+            "channelUrl": "https://www.youtube.com/channel/UCqI-s9en_dXehBZucsvk44g",
+            "views": 12974,
+            "publishedText": "1d ago",
+            "publishedAt": "2026-10-26T21:58:08.657Z",
+            "exact": false
+          }
+        ],
+        "newVideoIds": [
+          "tzvxxee7D2k",
+          "JKHUaxXhKqU",
+          "WhNbicszHwU"
+        ],
+        "firstRun": true,
+        "briefSource": "model"
+      },
+      "isNew": false
+    },
+    {
+      "id": "hack:currency-item-spawn:general-gameplay",
+      "badge": {
+        "label": "CRIT",
+        "tone": "danger"
+      },
+      "title": "Currency/item spawn on general gameplay",
+      "snippet": [
+        {
+          "text": "The advertised cheats claim to give players an admin panel, the ability to spawn pets and eggs, free gamepasses, and unlimited boss rewards in Steal An Egg."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Videos",
+          "value": "2"
+        },
+        {
+          "label": "Total views",
+          "value": "58.5K"
+        },
+        {
+          "label": "First seen",
+          "value": "about Oct 23, 2026"
+        },
+        {
+          "label": "Latest",
+          "value": "about Oct 26, 2026"
+        }
+      ],
+      "status": {
+        "label": "Open",
+        "tone": "muted"
+      },
+      "states": {
+        "patched": {
+          "label": "Patched",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.youtube.com/watch?v=imoltzmuz_E",
+      "detail": {
+        "kind": "hack",
+        "cls": "currency/item spawn",
+        "system": "general gameplay",
+        "severity": "CRIT",
+        "severityReason": "CRIT: the class is currency/item spawn, which mints value, so it is critical whatever the reach (58,486 views in total).",
+        "observed": "The advertised cheats claim to give players an admin panel, the ability to spawn pets and eggs, free gamepasses, and unlimited boss rewards in Steal An Egg. The claims suggest that item and currency gains can be created on demand instead of earned through gameplay.",
+        "cause": "This looks like a server-trust bug where the server accepts client-supplied values for rewards, purchases, or item creation without checking them. Likely causes include a RemoteEvent or RemoteFunction handler that grants pets, eggs, money, or gamepass benefits based on arguments the client sent, a reward path that does not verify the player actually defeated a boss or hatched an egg, or client-owned state that the server simply believes. An admin-style panel suggests some privileged checks may be keyed to something a client can influence.",
+        "fix": "Treat every RemoteEvent and RemoteFunction argument as hostile: check its type and allowed range on the server, and never accept a pet, egg, amount, or reward identifier from the client as a final value. Grant rewards only from server-side events such as a verified hatch, a confirmed boss kill with a server-tracked damage record, or a completed server-validated trade. Verify ownership and distance on the server, for example that the player is near the egg or boss they claim to interact with, and enforce cooldowns and per-player rate limits on those remotes. Keep currency, pet inventory, and gamepass entitlements server-authoritative, granting gamepass benefits through MarketplaceService receipts and ownership checks rather than local flags. Where physics or pet objects are involved, keep network ownership on the server so clients cannot move or duplicate them.",
+        "confidence": 0.94,
+        "firstSeen": "2026-10-23T21:57:43.973Z",
+        "latestSeen": "2026-10-26T21:57:43.973Z",
+        "totalViews": 58486,
+        "views14d": 58486,
+        "videos": [
+          {
+            "id": "imoltzmuz_E",
+            "url": "https://www.youtube.com/watch?v=imoltzmuz_E",
+            "title": "Title withheld in this public example",
+            "channel": "Alex Scripts",
+            "channelId": "UCzvddM3EImtQ_5vRBmKSjLA",
+            "channelUrl": "https://www.youtube.com/channel/UCzvddM3EImtQ_5vRBmKSjLA",
+            "views": 32468,
+            "publishedText": "4d ago",
+            "publishedAt": "2026-10-23T21:57:43.973Z",
+            "exact": false
+          },
+          {
+            "id": "tNaQPaBaV3o",
+            "url": "https://www.youtube.com/watch?v=tNaQPaBaV3o",
+            "title": "Title withheld in this public example",
+            "channel": "YamashiP",
+            "channelId": "UC-fz6rX5l3MP13-4_vaUZPg",
+            "channelUrl": "https://www.youtube.com/channel/UC-fz6rX5l3MP13-4_vaUZPg",
+            "views": 26018,
+            "publishedText": "1d ago",
+            "publishedAt": "2026-10-26T21:57:43.973Z",
+            "exact": false
+          }
+        ],
+        "newVideoIds": [
+          "imoltzmuz_E",
+          "tNaQPaBaV3o"
+        ],
+        "firstRun": true,
+        "briefSource": "model"
+      },
+      "isNew": false
+    },
+    {
+      "id": "hack:currency-item-spawn:currency",
+      "badge": {
+        "label": "CRIT",
+        "tone": "danger"
+      },
+      "title": "Currency/item spawn on currency",
+      "snippet": [
+        {
+          "text": "The videos advertise giving a player unlimited money and unlocking every item or progression step in the game instantly, without earning them through normal play."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Videos",
+          "value": "1"
+        },
+        {
+          "label": "Total views",
+          "value": "55.9K"
+        },
+        {
+          "label": "First seen",
+          "value": "about Sep 27, 2026"
+        },
+        {
+          "label": "Latest",
+          "value": "about Sep 27, 2026"
+        }
+      ],
+      "status": {
+        "label": "Open",
+        "tone": "muted"
+      },
+      "states": {
+        "patched": {
+          "label": "Patched",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.youtube.com/watch?v=n6D2sAugKHk",
+      "detail": {
+        "kind": "hack",
+        "cls": "currency/item spawn",
+        "system": "currency",
+        "severity": "CRIT",
+        "severityReason": "CRIT: the class is currency/item spawn, which mints value, so it is critical whatever the reach (55,853 views in total).",
+        "observed": "The videos advertise giving a player unlimited money and unlocking every item or progression step in the game instantly, without earning them through normal play.",
+        "cause": "This is most likely a server-trust bug in the currency system: the server may accept client-supplied values for money gains, purchases, or unlocks, such as a RemoteEvent handler that adds currency or marks items as owned based on an amount or identifier the client sent. Missing checks that the player actually earned the reward, that the purchase cost was deducted server-side, or that the requested item exists and is unlocked would let a modified client grant itself resources. Currency or unlock state held on the client or in unverified leaderstats-style values would have the same effect.",
+        "fix": "Treat every RemoteEvent and RemoteFunction argument as untrusted: check its type, range, and that the referenced egg, pet, or upgrade actually exists. Keep all currency changes and unlock state authoritative on the server, so the client only requests actions and the server computes the reward or cost itself from its own records. Verify ownership and eligibility on the server before each grant, such as confirming the player is near the egg for a steal using server-side distance checks, and enforce cooldowns for steals and hatches. Rate limit remote calls per player and log or reject bursts of impossible gains. Avoid relying on client-side network ownership for anything that affects money or progression.",
+        "confidence": 0.95,
+        "firstSeen": "2026-09-27T21:58:08.657Z",
+        "latestSeen": "2026-09-27T21:58:08.657Z",
+        "totalViews": 55853,
+        "views14d": 0,
+        "videos": [
+          {
+            "id": "n6D2sAugKHk",
+            "url": "https://www.youtube.com/watch?v=n6D2sAugKHk",
+            "title": "Title withheld in this public example",
+            "channel": "rblxscripts",
+            "channelId": "UCyml5mJ3m5WOZnvuZp1TKeg",
+            "channelUrl": "https://www.youtube.com/channel/UCyml5mJ3m5WOZnvuZp1TKeg",
+            "views": 55853,
+            "publishedText": "1mo ago",
+            "publishedAt": "2026-09-27T21:58:08.657Z",
+            "exact": false
+          }
+        ],
+        "newVideoIds": [
+          "n6D2sAugKHk"
+        ],
+        "firstRun": true,
+        "briefSource": "model"
+      },
+      "isNew": false
+    },
+    {
+      "id": "hack:remote-abuse:egg-stealing",
+      "badge": {
+        "label": "HIGH",
+        "tone": "warn"
+      },
+      "title": "Remote abuse on egg stealing",
+      "snippet": [
+        {
+          "text": "The videos advertise automated egg stealing, instant steal, godmode, auto selling and placing eggs, and an auto event feature, all claimed to work without a key."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Videos",
+          "value": "36"
+        },
+        {
+          "label": "Total views",
+          "value": "1.8M"
+        },
+        {
+          "label": "First seen",
+          "value": "about Sep 27, 2026"
+        },
+        {
+          "label": "Latest",
+          "value": "about Oct 27, 2026"
+        }
+      ],
+      "status": {
+        "label": "Open",
+        "tone": "muted"
+      },
+      "states": {
+        "patched": {
+          "label": "Patched",
+          "tone": "live"
+        }
+      },
+      "url": "https://www.youtube.com/watch?v=z5pamCO50j8",
+      "detail": {
+        "kind": "hack",
+        "cls": "remote abuse",
+        "system": "egg stealing",
+        "severity": "HIGH",
+        "severityReason": "HIGH: remote abuse with 1,255,302 views over the last 14 days (the rule is more than 100,000).",
+        "observed": "The videos advertise automated egg stealing, instant steal, godmode, auto selling and placing eggs, and an auto event feature, all claimed to work without a key. The claims suggest a player could take eggs from others or from pets without the normal steal timing, distance, or ownership limits.",
+        "cause": "This is most likely a server-trust bug in the egg stealing flow, such as a RemoteEvent or RemoteFunction handler that accepts a client-supplied target, egg identifier, or completion signal and applies the steal without verifying it on the server. The claimed godmode and anti-hit features would suggest that health or damage state is also influenced by the client, and that steal actions may lack a server-side cooldown or per-player rate limit.",
+        "fix": "Validate every argument a steal-related RemoteEvent or RemoteFunction receives on the server, checking types, allowed ranges, and that referenced eggs and pets exist and belong to the expected owner. Check distance between the player's character and the target on the server before granting any steal, and enforce a server-side cooldown per player and per egg. Rate limit remote calls per player and drop or log excess requests. Keep money, egg ownership, pet state, and health server-authoritative, and avoid giving clients network ownership over anything that affects rewards or combat outcomes.",
+        "confidence": 0.94,
+        "firstSeen": "2026-09-27T21:58:01.624Z",
+        "latestSeen": "2026-10-27T15:57:41.397Z",
+        "totalViews": 1757297,
+        "views14d": 1255302,
+        "videos": [
+          {
+            "id": "z5pamCO50j8",
+            "url": "https://www.youtube.com/watch?v=z5pamCO50j8",
+            "title": "Title withheld in this public example",
+            "channel": "GlazeOnTop",
+            "channelId": "UCKTF94axz5AGbZ2LNtPfEuQ",
+            "channelUrl": "https://www.youtube.com/channel/UCKTF94axz5AGbZ2LNtPfEuQ",
+            "views": 267635,
+            "publishedText": "3w ago",
+            "publishedAt": "2026-10-03T17:06:21.000Z",
+            "exact": true,
+            "paidPromotion": false
+          },
+          {
+            "id": "mcOsHPe3VGs",
+            "url": "https://www.youtube.com/watch?v=mcOsHPe3VGs",
+            "title": "Title withheld in this public example",
+            "channel": "GlazeOnTop",
+            "channelId": "UCKTF94axz5AGbZ2LNtPfEuQ",
+            "channelUrl": "https://www.youtube.com/channel/UCKTF94axz5AGbZ2LNtPfEuQ",
+            "views": 136987,
+            "publishedText": "10d ago",
+            "publishedAt": "2026-10-17T17:22:30.000Z",
+            "exact": true,
+            "paidPromotion": false
+          },
+          {
+            "id": "QZFY-ot3yPE",
+            "url": "https://www.youtube.com/watch?v=QZFY-ot3yPE",
+            "title": "Title withheld in this public example",
+            "channel": "GlazeOnTop",
+            "channelId": "UCKTF94axz5AGbZ2LNtPfEuQ",
+            "channelUrl": "https://www.youtube.com/channel/UCKTF94axz5AGbZ2LNtPfEuQ",
+            "views": 119349,
+            "publishedText": "2w ago",
+            "publishedAt": "2026-10-10T17:29:28.000Z",
+            "exact": true,
+            "paidPromotion": false
+          }
+        ],
+        "newVideoIds": [
+          "z5pamCO50j8",
+          "mcOsHPe3VGs",
+          "QZFY-ot3yPE",
+          "m5HRULuS9D8",
+          "N8x9ozn80nU",
+          "44GBMF9J9DU",
+          "AHWKBxgk4UY",
+          "40oeRrxGQYQ",
+          "0SIk6-yIl1k",
+          "KVBzWvvTqa8",
+          "1KAbOSitCSY",
+          "sZ__N9U8Jl0",
+          "RSO4oLRl3EY",
+          "Q6aspT6eLME",
+          "9tfVhIKAHSk",
+          "sX5XQD53gDE",
+          "DsIl7SLfXFA",
+          "jTm1eILJb20",
+          "fZq2l_pqsQI",
+          "2ZMVYR8mwQs",
+          "8GJ7uAWd5s0",
+          "_62U6I2xdAM",
+          "8-cTrBhePcU",
+          "KuJOuJgVBPs",
+          "ZkQRzmUSVIE",
+          "z_QZwPBa0ss",
+          "r_wFzVFBJCY",
+          "S1gDFIvq3wY",
+          "bnM2KsoPP1s",
+          "34xrQsHRIOg",
+          "-LK7nDfLWN4",
+          "TEQTJD9M3yU",
+          "fGtrfhCZ9FM",
+          "MT-9kmiCf5I",
+          "C6C8VWaHaQQ",
+          "XJ31qqHqEHI"
+        ],
+        "firstRun": true,
+        "briefSource": "model"
+      },
+      "isNew": false
+    }
+  ]
+}

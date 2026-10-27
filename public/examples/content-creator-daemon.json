@@ -1,0 +1,973 @@
+{
+  "tool": "content-creator-daemon",
+  "capturedAt": "2026-10-27T22:00:31.722Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    },
+    {
+      "url": "https://i.ytimg.com/vi/sDcQdAD7JzE/hqdefault.jpg",
+      "caption": "JuJuBo TV plays it"
+    }
+  ],
+  "heroNote": "JuJuBo TV (Strong fit, fit 69) has a real video about Steal An Egg.",
+  "summary": {
+    "items": [
+      {
+        "label": "Videos read",
+        "value": "287"
+      },
+      {
+        "label": "Creators read",
+        "value": "10"
+      },
+      {
+        "label": "Strong or good fits",
+        "value": "8",
+        "tone": "live"
+      },
+      {
+        "label": "Messages drafted",
+        "value": "8"
+      },
+      {
+        "label": "Public emails found",
+        "value": "4"
+      },
+      {
+        "label": "New creators",
+        "value": "10",
+        "tone": "accent"
+      }
+    ],
+    "sortLabel": "Best fit first",
+    "groups": [
+      {
+        "id": "strong",
+        "label": "Strong fit"
+      },
+      {
+        "id": "good",
+        "label": "Good fit"
+      },
+      {
+        "id": "weak",
+        "label": "Weak fit"
+      },
+      {
+        "id": "risky",
+        "label": "Risky"
+      }
+    ],
+    "notes": [
+      "Public YouTube data read at 2026-10-27 21:57 UTC. Audience age and location are not public and are not shown.",
+      "A fit number is out of 100: how much the creator covers the game, how much they cover games like it, views for their size, past sponsorships and brand safety.",
+      "Messages are drafts. This tool sends nothing, and every term in brackets is for you to fill in."
+    ],
+    "notices": [
+      {
+        "lead": "Not collected:",
+        "body": "private details. Contacts only if the creator published them."
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "content-creator:UCzona5CqbZomiCAGH7iujmg",
+      "badge": {
+        "label": "Strong fit",
+        "tone": "live"
+      },
+      "title": "JuJuBo TV",
+      "snippet": [
+        {
+          "text": "19 videos about Steal An Egg in the last 30 days."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Subscribers",
+          "value": "3.5M"
+        },
+        {
+          "label": "Median views",
+          "value": "2.3M"
+        },
+        {
+          "label": "Fit",
+          "value": "69"
+        }
+      ],
+      "status": {
+        "label": "New",
+        "tone": "accent"
+      },
+      "states": {
+        "new": {
+          "label": "New",
+          "tone": "accent"
+        },
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        },
+        "replied": {
+          "label": "Replied",
+          "tone": "live"
+        }
+      },
+      "group": "strong",
+      "url": "https://www.youtube.com/channel/UCzona5CqbZomiCAGH7iujmg",
+      "detail": {
+        "kind": "content-creator",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:40.426Z",
+        "channel": {
+          "id": "UCzona5CqbZomiCAGH7iujmg",
+          "name": "JuJuBo TV",
+          "handle": "jujubotv",
+          "url": "https://www.youtube.com/channel/UCzona5CqbZomiCAGH7iujmg",
+          "aboutUrl": "https://www.youtube.com/channel/UCzona5CqbZomiCAGH7iujmg/about",
+          "subscribers": 3480000
+        },
+        "stats": {
+          "median": 2308567,
+          "viewsPerSub": 0.6633813218390805,
+          "uploadsRead": 24,
+          "gameUploads": 19,
+          "similarUploads": 0,
+          "gameUploads30d": 19
+        },
+        "fit": {
+          "score": 69,
+          "tier": "Strong fit",
+          "components": [
+            {
+              "key": "game",
+              "label": "Covers your game",
+              "points": 15,
+              "max": 15,
+              "line": "19 of the last 24 uploads are about Steal An Egg."
+            },
+            {
+              "key": "genre",
+              "label": "Covers similar games",
+              "points": 0,
+              "max": 15,
+              "line": "No recent upload is about similar games."
+            },
+            {
+              "key": "reach",
+              "label": "Views for their size",
+              "points": 30,
+              "max": 30,
+              "line": "A typical video gets 2.3M views on 3.5M subscribers (66.3%)."
+            },
+            {
+              "key": "sponsorship",
+              "label": "Past sponsorships",
+              "points": 4,
+              "max": 20,
+              "line": "None of 5 recent videos carry a paid-promotion label or disclosure words."
+            },
+            {
+              "key": "safety",
+              "label": "Brand safety",
+              "points": 20,
+              "max": 20,
+              "line": "No concerns in 24 recent titles."
+            }
+          ]
+        },
+        "sponsorship": {
+          "sampled": 5,
+          "sponsored": 0,
+          "examples": []
+        },
+        "safety": {
+          "checked": 24,
+          "flags": []
+        },
+        "contact": {
+          "email": null,
+          "source": null,
+          "excerpt": null
+        },
+        "video": {
+          "title": "OMG! I GOT THIS IN HALLOWEEN UPDATE PART 2..! ☠️ (Steal An Egg)",
+          "url": "https://www.youtube.com/watch?v=sDcQdAD7JzE",
+          "views": 1189542,
+          "publishedText": "2d ago",
+          "about": "game"
+        },
+        "draft": {
+          "subject": "Steal An Egg sponsorship question",
+          "body": "Hi JuJuBo TV,\n\nI came across your video \"OMG! I GOT THIS IN HALLOWEEN UPDATE PART 2..! ☠️ (Steal An Egg)\" (https://www.youtube.com/watch?v=sDcQdAD7JzE). It covers the Halloween update in Steal An Egg, which is the game I make.\n\nYour channel already makes videos about Steal An Egg, so a sponsored video would sit close to what you make.\n\nI am [your name], and I work on Steal An Egg. This is a sponsorship request: I would like to ask whether you would consider a sponsored video or stream about it. The game is here: [link to your game].\n\nWhat I have in mind: [your offer]. My budget: [your rate range]. If you prefer another format, or you have a rate card, I would be glad to hear it. A no is completely fine, and you do not need to reply if it is not for you.\n\nThank you for your time,\n[your name]",
+          "placeholders": [
+            "[your name]",
+            "[link to your game]",
+            "[your offer]",
+            "[your rate range]"
+          ]
+        },
+        "status": "New",
+        "firstSeen": "2026-10-27T21:57:40.426Z",
+        "changed": null,
+        "notCollected": "Not collected: private details. Contacts only if the creator published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "content-creator:UCABY7K1PWgjhWY1_VdIehhQ",
+      "badge": {
+        "label": "Strong fit",
+        "tone": "live"
+      },
+      "title": "Codezzy",
+      "snippet": [
+        {
+          "text": "24 videos about Steal An Egg in the last 30 days."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Subscribers",
+          "value": "524K"
+        },
+        {
+          "label": "Median views",
+          "value": "149K"
+        },
+        {
+          "label": "Fit",
+          "value": "69"
+        }
+      ],
+      "status": {
+        "label": "New",
+        "tone": "accent"
+      },
+      "states": {
+        "new": {
+          "label": "New",
+          "tone": "accent"
+        },
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        },
+        "replied": {
+          "label": "Replied",
+          "tone": "live"
+        }
+      },
+      "group": "strong",
+      "url": "https://www.youtube.com/channel/UCABY7K1PWgjhWY1_VdIehhQ",
+      "detail": {
+        "kind": "content-creator",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:40.426Z",
+        "channel": {
+          "id": "UCABY7K1PWgjhWY1_VdIehhQ",
+          "name": "Codezzy",
+          "handle": "codezzyrbx",
+          "url": "https://www.youtube.com/channel/UCABY7K1PWgjhWY1_VdIehhQ",
+          "aboutUrl": "https://www.youtube.com/channel/UCABY7K1PWgjhWY1_VdIehhQ/about",
+          "subscribers": 524000
+        },
+        "stats": {
+          "median": 149048,
+          "viewsPerSub": 0.284442748091603,
+          "uploadsRead": 24,
+          "gameUploads": 24,
+          "similarUploads": 0,
+          "gameUploads30d": 24
+        },
+        "fit": {
+          "score": 69,
+          "tier": "Strong fit",
+          "components": [
+            {
+              "key": "game",
+              "label": "Covers your game",
+              "points": 15,
+              "max": 15,
+              "line": "24 of the last 24 uploads are about Steal An Egg."
+            },
+            {
+              "key": "genre",
+              "label": "Covers similar games",
+              "points": 0,
+              "max": 15,
+              "line": "No recent upload is about similar games."
+            },
+            {
+              "key": "reach",
+              "label": "Views for their size",
+              "points": 30,
+              "max": 30,
+              "line": "A typical video gets 149K views on 524K subscribers (28.4%)."
+            },
+            {
+              "key": "sponsorship",
+              "label": "Past sponsorships",
+              "points": 4,
+              "max": 20,
+              "line": "None of 5 recent videos carry a paid-promotion label or disclosure words."
+            },
+            {
+              "key": "safety",
+              "label": "Brand safety",
+              "points": 20,
+              "max": 20,
+              "line": "No concerns in 24 recent titles."
+            }
+          ]
+        },
+        "sponsorship": {
+          "sampled": 5,
+          "sponsored": 0,
+          "examples": []
+        },
+        "safety": {
+          "checked": 24,
+          "flags": []
+        },
+        "contact": {
+          "email": null,
+          "source": null,
+          "excerpt": null
+        },
+        "video": {
+          "title": "I Started OVER Using ONLY FISHING in Steal an Egg...",
+          "url": "https://www.youtube.com/watch?v=CJJyHRX0Yak",
+          "views": 41987,
+          "publishedText": "10h ago",
+          "about": "game"
+        },
+        "draft": {
+          "subject": "Sponsorship idea for Steal An Egg",
+          "body": "Hi Codezzy,\n\nI came across your video \"I Started OVER Using ONLY FISHING in Steal an Egg...\" (https://www.youtube.com/watch?v=CJJyHRX0Yak). It shows a different way to play Steal An Egg, which is the game I made, so I thought it could be a good match.\n\nYour channel already makes videos about Steal An Egg, so a sponsored video would sit close to what you make.\n\nI am [your name], and I work on Steal An Egg. This is a sponsorship request: I would like to ask whether you would consider a sponsored video or stream about it. The game is here: [link to your game].\n\nWhat I have in mind: [your offer]. My budget: [your rate range]. If you prefer another format, or you have a rate card, I would be glad to hear it. A no is completely fine, and you do not need to reply if it is not for you.\n\nThank you for your time,\n[your name]",
+          "placeholders": [
+            "[your name]",
+            "[link to your game]",
+            "[your offer]",
+            "[your rate range]"
+          ]
+        },
+        "status": "New",
+        "firstSeen": "2026-10-27T21:57:40.426Z",
+        "changed": null,
+        "notCollected": "Not collected: private details. Contacts only if the creator published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "content-creator:UCcG6eH_iCPt4feChm3zK9IA",
+      "badge": {
+        "label": "Strong fit",
+        "tone": "live"
+      },
+      "title": "Bemmy",
+      "snippet": [
+        {
+          "text": "14 videos about Steal An Egg in the last 30 days."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Subscribers",
+          "value": "299K"
+        },
+        {
+          "label": "Median views",
+          "value": "105K"
+        },
+        {
+          "label": "Fit",
+          "value": "69"
+        }
+      ],
+      "status": {
+        "label": "New",
+        "tone": "accent"
+      },
+      "states": {
+        "new": {
+          "label": "New",
+          "tone": "accent"
+        },
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        },
+        "replied": {
+          "label": "Replied",
+          "tone": "live"
+        }
+      },
+      "group": "strong",
+      "url": "https://www.youtube.com/channel/UCcG6eH_iCPt4feChm3zK9IA",
+      "detail": {
+        "kind": "content-creator",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:40.426Z",
+        "channel": {
+          "id": "UCcG6eH_iCPt4feChm3zK9IA",
+          "name": "Bemmy",
+          "handle": "BemmyTD",
+          "url": "https://www.youtube.com/channel/UCcG6eH_iCPt4feChm3zK9IA",
+          "aboutUrl": "https://www.youtube.com/channel/UCcG6eH_iCPt4feChm3zK9IA/about",
+          "subscribers": 299000
+        },
+        "stats": {
+          "median": 104778,
+          "viewsPerSub": 0.35042809364548494,
+          "uploadsRead": 24,
+          "gameUploads": 14,
+          "similarUploads": 0,
+          "gameUploads30d": 14
+        },
+        "fit": {
+          "score": 69,
+          "tier": "Strong fit",
+          "components": [
+            {
+              "key": "game",
+              "label": "Covers your game",
+              "points": 15,
+              "max": 15,
+              "line": "14 of the last 24 uploads are about Steal An Egg."
+            },
+            {
+              "key": "genre",
+              "label": "Covers similar games",
+              "points": 0,
+              "max": 15,
+              "line": "No recent upload is about similar games."
+            },
+            {
+              "key": "reach",
+              "label": "Views for their size",
+              "points": 30,
+              "max": 30,
+              "line": "A typical video gets 105K views on 299K subscribers (35.0%)."
+            },
+            {
+              "key": "sponsorship",
+              "label": "Past sponsorships",
+              "points": 4,
+              "max": 20,
+              "line": "None of 5 recent videos carry a paid-promotion label or disclosure words."
+            },
+            {
+              "key": "safety",
+              "label": "Brand safety",
+              "points": 20,
+              "max": 20,
+              "line": "No concerns in 24 recent titles."
+            }
+          ]
+        },
+        "sponsorship": {
+          "sampled": 5,
+          "sponsored": 0,
+          "examples": []
+        },
+        "safety": {
+          "checked": 24,
+          "flags": []
+        },
+        "contact": {
+          "email": null,
+          "source": null,
+          "excerpt": null
+        },
+        "video": {
+          "title": "OMG I GOT THE FIRST NEW *SPECTRAL* RARITY in BREAK AND STEAL AN EGG...",
+          "url": "https://www.youtube.com/watch?v=v57NpCawzVU",
+          "views": 95389,
+          "publishedText": "2d ago",
+          "about": "game"
+        },
+        "draft": {
+          "subject": "Sponsorship idea for Steal An Egg",
+          "body": "Hi Bemmy,\n\nI came across your video \"OMG I GOT THE FIRST NEW *SPECTRAL* RARITY in BREAK AND STEAL AN EGG...\" (https://www.youtube.com/watch?v=v57NpCawzVU). It covers a new rarity in Steal An Egg, the tycoon game I make, so it is close to what my game is about.\n\nYour channel already makes videos about Steal An Egg and a similar game, so a sponsored video would sit close to what you already make.\n\nI am [your name], and I work on Steal An Egg. This is a sponsorship request: I would like to ask whether you would consider a sponsored video or stream about it. The game is here: [link to your game].\n\nWhat I have in mind: [your offer]. My budget: [your rate range]. If you prefer another format, or you have a rate card, I would be glad to hear it. A no is completely fine, and you do not need to reply if it is not for you.\n\nThank you for your time,\n[your name]",
+          "placeholders": [
+            "[your name]",
+            "[link to your game]",
+            "[your offer]",
+            "[your rate range]"
+          ]
+        },
+        "status": "New",
+        "firstSeen": "2026-10-27T21:57:40.426Z",
+        "changed": null,
+        "notCollected": "Not collected: private details. Contacts only if the creator published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "content-creator:UCAIMJ2KQEbQBuB5njvf2a8w",
+      "badge": {
+        "label": "Good fit",
+        "tone": "accent"
+      },
+      "title": "Dqrkz",
+      "snippet": [
+        {
+          "text": "23 videos about Steal An Egg in the last 30 days."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Subscribers",
+          "value": "126K"
+        },
+        {
+          "label": "Median views",
+          "value": "35.5K"
+        },
+        {
+          "label": "Fit",
+          "value": "61"
+        }
+      ],
+      "status": {
+        "label": "New",
+        "tone": "accent"
+      },
+      "states": {
+        "new": {
+          "label": "New",
+          "tone": "accent"
+        },
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        },
+        "replied": {
+          "label": "Replied",
+          "tone": "live"
+        }
+      },
+      "group": "good",
+      "url": "https://www.youtube.com/channel/UCAIMJ2KQEbQBuB5njvf2a8w",
+      "detail": {
+        "kind": "content-creator",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:40.426Z",
+        "channel": {
+          "id": "UCAIMJ2KQEbQBuB5njvf2a8w",
+          "name": "Dqrkz",
+          "handle": "DqrkLightz",
+          "url": "https://www.youtube.com/channel/UCAIMJ2KQEbQBuB5njvf2a8w",
+          "aboutUrl": "https://www.youtube.com/channel/UCAIMJ2KQEbQBuB5njvf2a8w/about",
+          "subscribers": 126000
+        },
+        "stats": {
+          "median": 35500,
+          "viewsPerSub": 0.28174603174603174,
+          "uploadsRead": 24,
+          "gameUploads": 23,
+          "similarUploads": 0,
+          "gameUploads30d": 23
+        },
+        "fit": {
+          "score": 61,
+          "tier": "Good fit",
+          "components": [
+            {
+              "key": "game",
+              "label": "Covers your game",
+              "points": 15,
+              "max": 15,
+              "line": "23 of the last 24 uploads are about Steal An Egg."
+            },
+            {
+              "key": "genre",
+              "label": "Covers similar games",
+              "points": 0,
+              "max": 15,
+              "line": "No recent upload is about similar games."
+            },
+            {
+              "key": "reach",
+              "label": "Views for their size",
+              "points": 30,
+              "max": 30,
+              "line": "A typical video gets 35.5K views on 126K subscribers (28.2%)."
+            },
+            {
+              "key": "sponsorship",
+              "label": "Past sponsorships",
+              "points": 4,
+              "max": 20,
+              "line": "None of 5 recent videos carry a paid-promotion label or disclosure words."
+            },
+            {
+              "key": "safety",
+              "label": "Brand safety",
+              "points": 12,
+              "max": 20,
+              "line": "2 concerns in 24 recent titles."
+            }
+          ]
+        },
+        "sponsorship": {
+          "sampled": 5,
+          "sponsored": 0,
+          "examples": []
+        },
+        "safety": {
+          "checked": 24,
+          "flags": [
+            {
+              "category": "misleading thumbnails/clickbait",
+              "evidenceTitle": "I LEAKED The ENTIRE Halloween Update In Steal An Egg...",
+              "url": "https://www.youtube.com/watch?v=esRIQJ8hHQE",
+              "confidence": "low"
+            },
+            {
+              "category": "exploit or cheat promotion",
+              "evidenceTitle": "This *NEW* Glitch Gives FREE DIVINES in Steal An Egg...",
+              "url": "https://www.youtube.com/watch?v=JKHUaxXhKqU",
+              "confidence": "low"
+            }
+          ]
+        },
+        "contact": {
+          "email": null,
+          "source": null,
+          "excerpt": null
+        },
+        "video": {
+          "title": "I Exposed all GAME BREAKING Glitches in Steal an Egg...",
+          "url": "https://www.youtube.com/watch?v=CdX-8RMQFIM",
+          "views": 8347,
+          "publishedText": "14h ago",
+          "about": "game"
+        },
+        "draft": {
+          "subject": "Sponsorship question about Steal An Egg",
+          "body": "Hi Dqrkz,\n\nI came across your video \"I Exposed all GAME BREAKING Glitches in Steal an Egg...\" (https://www.youtube.com/watch?v=CdX-8RMQFIM). It covers glitches in Steal An Egg, the Tycoon game I make, so it is close to what my game is about.\n\nYour video is about this game, so a sponsored video would sit close to what you already make.\n\nI am [your name], and I work on Steal An Egg. This is a sponsorship request: I would like to ask whether you would consider a sponsored video or stream about it. The game is here: [link to your game].\n\nWhat I have in mind: [your offer]. My budget: [your rate range]. If you prefer another format, or you have a rate card, I would be glad to hear it. A no is completely fine, and you do not need to reply if it is not for you.\n\nThank you for your time,\n[your name]",
+          "placeholders": [
+            "[your name]",
+            "[link to your game]",
+            "[your offer]",
+            "[your rate range]"
+          ]
+        },
+        "status": "New",
+        "firstSeen": "2026-10-27T21:57:40.426Z",
+        "changed": null,
+        "notCollected": "Not collected: private details. Contacts only if the creator published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "content-creator:UCAd0IcKT94dfSazjpr7UXKA",
+      "badge": {
+        "label": "Good fit",
+        "tone": "accent"
+      },
+      "title": "SkellyPlays",
+      "snippet": [
+        {
+          "text": "24 videos about Steal An Egg in the last 30 days."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Subscribers",
+          "value": "268K"
+        },
+        {
+          "label": "Median views",
+          "value": "98.6K"
+        },
+        {
+          "label": "Fit",
+          "value": "59"
+        }
+      ],
+      "status": {
+        "label": "New",
+        "tone": "accent"
+      },
+      "states": {
+        "new": {
+          "label": "New",
+          "tone": "accent"
+        },
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        },
+        "replied": {
+          "label": "Replied",
+          "tone": "live"
+        }
+      },
+      "group": "good",
+      "url": "https://www.youtube.com/channel/UCAd0IcKT94dfSazjpr7UXKA",
+      "detail": {
+        "kind": "content-creator",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:40.426Z",
+        "channel": {
+          "id": "UCAd0IcKT94dfSazjpr7UXKA",
+          "name": "SkellyPlays",
+          "handle": "RealSkellyPlays",
+          "url": "https://www.youtube.com/channel/UCAd0IcKT94dfSazjpr7UXKA",
+          "aboutUrl": "https://www.youtube.com/channel/UCAd0IcKT94dfSazjpr7UXKA/about",
+          "subscribers": 268000
+        },
+        "stats": {
+          "median": 98587,
+          "viewsPerSub": 0.36786194029850744,
+          "uploadsRead": 24,
+          "gameUploads": 24,
+          "similarUploads": 0,
+          "gameUploads30d": 24
+        },
+        "fit": {
+          "score": 59,
+          "tier": "Good fit",
+          "components": [
+            {
+              "key": "game",
+              "label": "Covers your game",
+              "points": 15,
+              "max": 15,
+              "line": "24 of the last 24 uploads are about Steal An Egg."
+            },
+            {
+              "key": "genre",
+              "label": "Covers similar games",
+              "points": 0,
+              "max": 15,
+              "line": "No recent upload is about similar games."
+            },
+            {
+              "key": "reach",
+              "label": "Views for their size",
+              "points": 30,
+              "max": 30,
+              "line": "A typical video gets 98.6K views on 268K subscribers (36.8%)."
+            },
+            {
+              "key": "sponsorship",
+              "label": "Past sponsorships",
+              "points": 4,
+              "max": 20,
+              "line": "None of 5 recent videos carry a paid-promotion label or disclosure words."
+            },
+            {
+              "key": "safety",
+              "label": "Brand safety",
+              "points": 10,
+              "max": 20,
+              "line": "1 concern in 24 recent titles."
+            }
+          ]
+        },
+        "sponsorship": {
+          "sampled": 5,
+          "sponsored": 0,
+          "examples": []
+        },
+        "safety": {
+          "checked": 24,
+          "flags": [
+            {
+              "category": "misleading thumbnails/clickbait",
+              "evidenceTitle": "Starting Over With UNLIMITED ROBUX in Steal an Egg",
+              "url": "https://www.youtube.com/watch?v=WH5dTzUcOCw",
+              "confidence": "medium"
+            }
+          ]
+        },
+        "contact": {
+          "email": null,
+          "source": null,
+          "excerpt": null
+        },
+        "video": {
+          "title": "Getting EVERY Pet In Steal An Egg!",
+          "url": "https://www.youtube.com/watch?v=w3J9Clm9RSQ",
+          "views": 65682,
+          "publishedText": "21h ago",
+          "about": "game"
+        },
+        "draft": {
+          "subject": "Sponsorship idea for Steal An Egg",
+          "body": "Hi SkellyPlays,\n\nI came across your video \"Getting EVERY Pet In Steal An Egg!\" (https://www.youtube.com/watch?v=w3J9Clm9RSQ). It is about collecting every pet in Steal An Egg, which is the game I made.\n\nYour channel already has a video about Steal An Egg, so a sponsored video would sit close to what you already make.\n\nI am [your name], and I work on Steal An Egg. This is a sponsorship request: I would like to ask whether you would consider a sponsored video or stream about it. The game is here: [link to your game].\n\nWhat I have in mind: [your offer]. My budget: [your rate range]. If you prefer another format, or you have a rate card, I would be glad to hear it. A no is completely fine, and you do not need to reply if it is not for you.\n\nThank you for your time,\n[your name]",
+          "placeholders": [
+            "[your name]",
+            "[link to your game]",
+            "[your offer]",
+            "[your rate range]"
+          ]
+        },
+        "status": "New",
+        "firstSeen": "2026-10-27T21:57:40.426Z",
+        "changed": null,
+        "notCollected": "Not collected: private details. Contacts only if the creator published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "content-creator:UC2uQvUg3YYzoOtj1yZLT0Ow",
+      "badge": {
+        "label": "Good fit",
+        "tone": "accent"
+      },
+      "title": "FoltynPlays",
+      "snippet": [
+        {
+          "text": "3 videos about Steal An Egg in the last 30 days."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Subscribers",
+          "value": "5.9M"
+        },
+        {
+          "label": "Median views",
+          "value": "442K"
+        },
+        {
+          "label": "Fit",
+          "value": "56"
+        }
+      ],
+      "status": {
+        "label": "New",
+        "tone": "accent"
+      },
+      "states": {
+        "new": {
+          "label": "New",
+          "tone": "accent"
+        },
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        },
+        "replied": {
+          "label": "Replied",
+          "tone": "live"
+        }
+      },
+      "group": "good",
+      "url": "https://www.youtube.com/channel/UC2uQvUg3YYzoOtj1yZLT0Ow",
+      "detail": {
+        "kind": "content-creator",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:40.426Z",
+        "channel": {
+          "id": "UC2uQvUg3YYzoOtj1yZLT0Ow",
+          "name": "FoltynPlays",
+          "handle": "foltynplays",
+          "url": "https://www.youtube.com/channel/UC2uQvUg3YYzoOtj1yZLT0Ow",
+          "aboutUrl": "https://www.youtube.com/channel/UC2uQvUg3YYzoOtj1yZLT0Ow/about",
+          "subscribers": 5890000
+        },
+        "stats": {
+          "median": 442446,
+          "viewsPerSub": 0.07511816638370118,
+          "uploadsRead": 24,
+          "gameUploads": 3,
+          "similarUploads": 0,
+          "gameUploads30d": 3
+        },
+        "fit": {
+          "score": 56,
+          "tier": "Good fit",
+          "components": [
+            {
+              "key": "game",
+              "label": "Covers your game",
+              "points": 8,
+              "max": 15,
+              "line": "3 of the last 24 uploads are about Steal An Egg."
+            },
+            {
+              "key": "genre",
+              "label": "Covers similar games",
+              "points": 0,
+              "max": 15,
+              "line": "No recent upload is about similar games."
+            },
+            {
+              "key": "reach",
+              "label": "Views for their size",
+              "points": 24,
+              "max": 30,
+              "line": "A typical video gets 442K views on 5.9M subscribers (7.5%)."
+            },
+            {
+              "key": "sponsorship",
+              "label": "Past sponsorships",
+              "points": 4,
+              "max": 20,
+              "line": "None of 5 recent videos carry a paid-promotion label or disclosure words."
+            },
+            {
+              "key": "safety",
+              "label": "Brand safety",
+              "points": 20,
+              "max": 20,
+              "line": "No concerns in 24 recent titles."
+            }
+          ]
+        },
+        "sponsorship": {
+          "sampled": 5,
+          "sponsored": 0,
+          "examples": []
+        },
+        "safety": {
+          "checked": 24,
+          "flags": []
+        },
+        "contact": {
+          "email": null,
+          "source": null,
+          "excerpt": null
+        },
+        "video": {
+          "title": "Spending $8,592,692 On Halloween Eggs In Steal An Egg!",
+          "url": "https://www.youtube.com/watch?v=6Fa6EMYadeo",
+          "views": 460325,
+          "publishedText": "6d ago",
+          "about": "game"
+        },
+        "draft": {
+          "subject": "Steal An Egg: a sponsorship idea",
+          "body": "Hi FoltynPlays,\n\nI came across your video \"Spending $8,592,692 On Halloween Eggs In Steal An Egg!\" (https://www.youtube.com/watch?v=6Fa6EMYadeo). It is about my own game, Steal An Egg, and the Halloween eggs in it.\n\nThat video is about this game, so a sponsored video would sit close to the kind of content your channel already makes.\n\nI am [your name], and I work on Steal An Egg. This is a sponsorship request: I would like to ask whether you would consider a sponsored video or stream about it. The game is here: [link to your game].\n\nWhat I have in mind: [your offer]. My budget: [your rate range]. If you prefer another format, or you have a rate card, I would be glad to hear it. A no is completely fine, and you do not need to reply if it is not for you.\n\nThank you for your time,\n[your name]",
+          "placeholders": [
+            "[your name]",
+            "[link to your game]",
+            "[your offer]",
+            "[your rate range]"
+          ]
+        },
+        "status": "New",
+        "firstSeen": "2026-10-27T21:57:40.426Z",
+        "changed": null,
+        "notCollected": "Not collected: private details. Contacts only if the creator published them."
+      },
+      "isNew": false
+    }
+  ]
+}

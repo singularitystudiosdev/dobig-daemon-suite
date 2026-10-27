@@ -321,7 +321,7 @@ function PracticeFiling({ d, state, act }: { d: DmcaDetail; state: string | unde
   )
 }
 
-export default function DmcaDetailView({ finding, detail: d, state, act }: DetailViewProps<DmcaDetail>) {
+export default function DmcaDetailView({ finding, detail: d, state, act, daemonId }: DetailViewProps<DmcaDetail>) {
   const c = d.candidate
   const checked = d.checked ? new Date(d.checked).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'Not available'
   const pageInfo = [`${c.playing.toLocaleString('en-US')} playing`, `${c.visits.toLocaleString('en-US')} visits`, c.created ? `created ${c.created.slice(0, 10)}` : null].filter(Boolean).join(', ')
@@ -420,7 +420,7 @@ export default function DmcaDetailView({ finding, detail: d, state, act }: Detai
         </Section>
       )}
 
-      {fileable && <AutomateCta slug="dmca-daemon" game={d.ours.name} variant="line" />}
+      {fileable && daemonId !== 'example' && <AutomateCta slug="dmca-daemon" game={d.ours.name} variant="line" />}
 
       <div className="flex flex-wrap items-center gap-12 border-t border-line pt-16">
         {state === 'dismissed' ? (

@@ -30,8 +30,23 @@ function Shimmer() {
 }
 
 /** An image that stays hidden behind its placeholder until it has decoded, then settles in. */
-function RevealImage({ src, alt, shimmer }: { src: string; alt: string; shimmer?: boolean }) {
+function RevealImage({ src, alt, shimmer, onRetry }: { src: string; alt: string; shimmer?: boolean; onRetry?: () => void }) {
   const [loaded, setLoaded] = useState(false)
+  const [broken, setBroken] = useState(false)
+  if (broken) {
+    return (
+      <div role="img" aria-label={`${alt}, image unavailable`} className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-raised p-8 text-center">
+        <span className="text-micro text-muted">Image unavailable</span>
+        {onRetry && (
+          <span className="relative z-10">
+            <Button size="sm" icon={RotateCw} onClick={onRetry}>
+              Retry
+            </Button>
+          </span>
+        )}
+      </div>
+    )
+  }
   return (
     <>
       {!loaded && (shimmer ? <Shimmer /> : <div aria-hidden className="absolute inset-0 bg-raised motion-safe:animate-pulse" />)}
@@ -43,7 +58,7 @@ function RevealImage({ src, alt, shimmer }: { src: string; alt: string; shimmer?
         alt={alt}
         decoding="async"
         onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
+        onError={() => setBroken(true)}
         className={cn('absolute inset-0 size-full object-cover', loaded ? 'opacity-100 motion-safe:animate-settle' : 'opacity-0')}
       />
     </>
@@ -80,7 +95,7 @@ export function VariantFrame({
   if (tile.status === 'done' && tile.src) {
     return (
       <div role="group" aria-label={`${name}, ready`} className="relative aspect-video overflow-hidden rounded-8 bg-raised">
-        <RevealImage key={tile.src} src={tile.src} alt={`${name} variant`} shimmer />
+        <RevealImage key={tile.src} src={tile.src} alt={`${name} variant`} shimmer onRetry={onRetry} />
         <button type="button" onClick={onOpen} aria-label={`Enlarge ${name}`} className="absolute inset-0 rounded-8" />
         <span className={cn(chip, 'pointer-events-none')}>{label}</span>
         {tile.earlier && <span className={cn(statusChip, 'pointer-events-none text-muted')}>Generated earlier</span>}

@@ -1,3 +1,4 @@
+import { apiUrl } from '@/lib/static'
 import type { ImageProvider, VariantEvent, VariantFailure } from '@/lib/apiTypes'
 import type { ExistingVariant } from './variantsClient'
 
@@ -55,7 +56,7 @@ export function tilesReducer(state: TilesState, action: TilesAction): TilesState
       const tiles = { ...state.tiles }
       for (const v of action.items) {
         const k = tileKey(v.thumbId, v.index)
-        if (!tiles[k]) tiles[k] = { status: 'done', src: v.src, earlier: true }
+        if (!tiles[k]) tiles[k] = { status: 'done', src: apiUrl(v.src), earlier: true }
       }
       return { ...state, tiles }
     }
@@ -73,7 +74,7 @@ export function tilesReducer(state: TilesState, action: TilesAction): TilesState
         if (cur && (cur.status === 'done' || cur.status === 'failed') && !cur.earlier) return state
         return { ...state, tiles: { ...state.tiles, [key]: { status: 'working' } } }
       }
-      if (e.type === 'done') return { ...state, tiles: { ...state.tiles, [key]: { status: 'done', src: e.src } } }
+      if (e.type === 'done') return { ...state, tiles: { ...state.tiles, [key]: { status: 'done', src: apiUrl(e.src) } } }
       return { ...state, tiles: { ...state.tiles, [key]: { status: 'failed', reason: e.reason, message: e.message } } }
     }
   }

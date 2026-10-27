@@ -130,7 +130,7 @@ async function post(route: Route, req: GeminiRequest, modalities: string[]): Pro
     return { status: res.status, json, headers: res.headers }
   } catch (err) {
     if (req.signal.aborted) throw err
-    if (timeout.aborted) throw new GeminiError('timeout', 'Nano Banana took longer than 90 seconds. Retry this tile.')
+    if (timeout.aborted) throw new GeminiError('timeout', 'Nano Banana took longer than 100 seconds. Retry this tile.')
     throw new GeminiError('upstream', scrub('Could not reach Google. Check your connection and retry this tile.', req.apiKey))
   }
 }

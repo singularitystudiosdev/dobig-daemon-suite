@@ -540,6 +540,77 @@ let schedDaemonId
   await new Promise((r) => hook.close(r))
 }
 
+// ---- finding marks (what a user marked on a finding survives a reload)
+{
+  const d = path.join(tmp, 'marks')
+  const M = await boot(d, { start: false })
+  const mc = api(M.base)
+  const made = await mc('POST', '/api/daemons', { tool: 'dmca-daemon', target: game('marks', 401) })
+  const id = made.json.daemon.id
+  const other = (await mc('POST', '/api/daemons', { tool: 'hack-daemon', target: game('marks-other', 402) })).json.daemon.id
+  const url = `/api/daemons/${id}/marks`
+  check('marks: empty at first', (await mc('GET', url)).status === 200 && Object.keys((await mc('GET', url)).json.marks).length === 0)
+  const set = await mc('POST', url, { findingId: 'copy-1', state: 'filed' })
+  check('marks: set answers ok with the marks', set.status === 200 && set.json.ok === true && set.json.marks['copy-1'] === 'filed')
+  await mc('POST', url, { findingId: 'copy-2', state: 'dismissed' })
+  await mc('POST', url, { findingId: '__proto__', state: 'reviewed' })
+  const got = (await mc('GET', url)).json.marks
+  check('marks: get returns what was set (and a __proto__ id is an ordinary key)', got['copy-1'] === 'filed' && got['copy-2'] === 'dismissed' && Object.keys(got).length === 3 && Object.getOwnPropertyDescriptor(got, '__proto__')?.value === 'reviewed')
+  check('marks: another daemon has its own marks', Object.keys((await mc('GET', `/api/daemons/${other}/marks`)).json.marks).length === 0)
+  check('marks: a mark can change', (await mc('POST', url, { findingId: 'copy-1', state: 'open' })).json.marks['copy-1'] === 'open')
+  check('marks: an empty or null state clears it', (await mc('POST', url, { findingId: 'copy-1', state: '' })).json.marks['copy-1'] === undefined && (await mc('POST', url, { findingId: 'copy-2', state: null })).json.marks['copy-2'] === undefined)
+  const badBodies = [
+    { findingId: 'a', state: 'Filed' },
+    { findingId: 'a', state: '9lives' },
+    { findingId: 'a', state: 'has space' },
+    { findingId: 'a', state: 'x'.repeat(41) },
+    { findingId: 'a', state: 7 },
+    { findingId: '', state: 'filed' },
+    { findingId: 'a'.repeat(201), state: 'filed' },
+    { findingId: 'a\nb', state: 'filed' },
+    { findingId: 'a\u0000b', state: 'filed' },
+    { findingId: 5, state: 'filed' },
+    { state: 'filed' },
+  ]
+  const badCodes = []
+  for (const b of badBodies) {
+    const r = await mc('POST', url, b)
+    badCodes.push(r.status === 400 && r.json.ok === false && r.json.code === 'bad-input' && typeof r.json.message === 'string' ? 400 : r.status)
+  }
+  check('marks: a bad state or finding id is a 400 bad-input', badCodes.every((s) => s === 400), badCodes.join(','))
+  check('marks: a 40-character state and a 200-character id are accepted', (await mc('POST', url, { findingId: 'i'.repeat(200), state: 's'.repeat(40) })).status === 200)
+  const nope = '00000000-0000-4000-8000-000000000000'
+  const m404 = [await mc('GET', `/api/daemons/${nope}/marks`), await mc('POST', `/api/daemons/${nope}/marks`, { findingId: 'a', state: 'filed' })]
+  check('marks: an unknown daemon is a JSON 404 not-found', m404.every((r) => r.status === 404 && r.json.code === 'not-found' && r.json.ok === false))
+  check('marks: other methods are a 405', (await mc('DELETE', url)).status === 405)
+
+  // 500 marks per daemon: the 501st is refused, changing or clearing an existing one still works
+  const full = (await mc('POST', '/api/daemons', { tool: 'dmca-daemon', target: game('marks-full', 403) })).json.daemon.id
+  const fullUrl = `/api/daemons/${full}/marks`
+  let accepted = 0
+  for (let i = 0; i < 500; i++) if ((await mc('POST', fullUrl, { findingId: `f-${i}`, state: 'filed' })).status === 200) accepted++
+  const over = await mc('POST', fullUrl, { findingId: 'f-500', state: 'filed' })
+  check('marks: 500 marks are accepted and the 501st is a 400', accepted === 500 && over.status === 400 && over.json.ok === false && /at most 500/.test(over.json.message))
+  check('marks: at the cap an existing mark can still change and clear', (await mc('POST', fullUrl, { findingId: 'f-0', state: 'dismissed' })).status === 200 && (await mc('POST', fullUrl, { findingId: 'f-1', state: '' })).status === 200 && (await mc('POST', fullUrl, { findingId: 'f-500', state: 'filed' })).status === 200)
+  await mc('DELETE', `/api/daemons/${full}`)
+
+  await M.engine.store.flush()
+  const file = path.join(d, 'marks.json')
+  const mode = fs.statSync(file).mode & 0o777
+  check('marks: marks.json is mode 0600', mode === 0o600, mode.toString(8))
+  await M.close()
+  const M2 = await boot(d, { start: false })
+  const m2 = api(M2.base)
+  const again = (await m2('GET', url)).json.marks
+  check('marks: they survive a restart on the same data dir', again['i'.repeat(200)] === 's'.repeat(40) && again['copy-1'] === undefined && Object.keys(again).length === 2 && Object.getOwnPropertyDescriptor(again, '__proto__')?.value === 'reviewed')
+  check('marks: deleting a daemon with marks answers 200 and its marks are gone', (await m2('DELETE', `/api/daemons/${id}`)).status === 200 && (await m2('GET', url)).status === 404)
+  check('marks: a failed delete (unknown daemon) leaves other marks alone', (await m2('POST', `/api/daemons/${other}/marks`, { findingId: 'k', state: 'patched' })).status === 200 && (await m2('DELETE', `/api/daemons/${nope}`)).status === 404 && (await m2('GET', `/api/daemons/${other}/marks`)).json.marks.k === 'patched')
+  await M2.engine.store.flush()
+  const onDisk = JSON.parse(fs.readFileSync(file, 'utf8'))
+  check('marks: marks.json no longer holds the deleted daemons', !(id in onDisk) && !(full in onDisk) && onDisk[other]?.k === 'patched', Object.keys(onDisk).length + ' daemon(s)')
+  await M2.close()
+}
+
 // ---- default data dir resolution
 {
   const { resolveDataDir } = await import('../store.ts')

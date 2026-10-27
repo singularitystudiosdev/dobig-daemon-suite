@@ -1,0 +1,1459 @@
+{
+  "tool": "dmca-daemon",
+  "capturedAt": "2026-10-27T21:58:10.036Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "Your game"
+    },
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-f794c49c348bd22d940929c9cdad7f9f/768/432/Image/Jpeg/noFilter",
+      "caption": "A copy found"
+    }
+  ],
+  "heroNote": "Steal a Baby Egg🥚: best image differs by 1 of 64 hash bits from Steal An Egg's thumbnail.",
+  "summary": {
+    "items": [
+      {
+        "label": "Games searched",
+        "value": "80"
+      },
+      {
+        "label": "Images compared",
+        "value": "381"
+      },
+      {
+        "label": "Identical images",
+        "value": "0"
+      },
+      {
+        "label": "Near-identical images",
+        "value": "1",
+        "tone": "danger"
+      },
+      {
+        "label": "Need review",
+        "value": "3",
+        "tone": "warn"
+      },
+      {
+        "label": "Weak signals",
+        "value": "8"
+      },
+      {
+        "label": "Your own games skipped",
+        "value": "0"
+      }
+    ],
+    "sortLabel": "Identical images first, then near-identical, then by similarity",
+    "groups": [
+      {
+        "id": "identical",
+        "label": "Identical image"
+      },
+      {
+        "id": "near",
+        "label": "Near-identical image"
+      },
+      {
+        "id": "review",
+        "label": "Needs review"
+      },
+      {
+        "id": "weak",
+        "label": "Weak signals"
+      }
+    ],
+    "notices": [
+      {
+        "lead": "A wrong takedown has a price.",
+        "body": "Under 17 U.S.C. 512(f), anyone who knowingly files a false takedown claim is liable for the damages and legal fees the other side suffers. File only for work you own, and only after you have looked at both games yourself."
+      },
+      {
+        "lead": "Filing is a human step:",
+        "body": "Roblox Rights Manager has no public API. DMCA Daemon prepares the evidence and the notice; you file it in Creator Hub under Intellectual Property."
+      }
+    ],
+    "notes": [
+      "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+      "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+      "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+      "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed.",
+      "Searched Roblox for: \"Steal An Egg\", \"steal egg\", \"steal\", \"StealAnEgg\", \"Welcome to Steal An Egg!\", \"Steal An Egg anime\", \"Steal An Egg dig\", \"Steal An Egg roleplay\".",
+      "Roblox search returned 216 games. The first 80 by other creators, in search rank order, were compared (the cap is 80)."
+    ]
+  },
+  "findings": [
+    {
+      "id": "dmca:10759286189",
+      "badge": {
+        "label": "Near-identical image",
+        "tone": "danger"
+      },
+      "title": "Steal a Baby Egg🥚",
+      "snippet": [
+        {
+          "text": "closest image differs by 1 of 64 hash bits (98% alike); name 55% similar; description 20% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/112530679555916"
+        },
+        {
+          "label": "Creator",
+          "value": "+1 Banana CCU"
+        },
+        {
+          "label": "Playing",
+          "value": "21"
+        },
+        {
+          "label": "Created",
+          "value": "2026-08-24"
+        },
+        {
+          "label": "Similarity",
+          "value": "98% image"
+        }
+      ],
+      "status": {
+        "label": "Review, then file",
+        "tone": "accent"
+      },
+      "states": {
+        "open": {
+          "label": "Review, then file",
+          "tone": "accent"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "near",
+      "url": "https://www.roblox.com/games/112530679555916",
+      "detail": {
+        "kind": "dmca",
+        "lane": "near",
+        "ruleExplanation": "Near-identical image: the closest image pair differs by 1 of 64 hash bits (rule: 2 or fewer) and the names are 55% similar (rule: 50% or more). A near-identical picture plus a similar name is strong evidence of reuse, but it is a perceptual match and not identical bytes, so open both games and review them before you file.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10759286189,
+          "placeId": 112530679555916,
+          "url": "https://www.roblox.com/games/112530679555916",
+          "name": "Steal a Baby Egg🥚",
+          "creatorName": "+1 Banana CCU",
+          "creatorId": 359321322,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/359321322",
+          "playing": 21,
+          "visits": 3594523,
+          "created": "2026-08-24T15:28:55.167Z",
+          "descriptionExcerpt": "🥚 Welcome to Steal a Baby Egg! How to Play: 🥚 Steal Baby Eggs from other players 🐣 Hatch Baby Eggs to collect cute and rare pets 💰 Earn money from your pets ⚡ Train on the treadmill to gain Speed ⬆️ Upgrade your treadmill and base 🥷 Sneak into other bases and steal their Baby Eggs ✨ Discover rarer eggs, pets,..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-f794c49c348bd22d940929c9cdad7f9f/768/432/Image/Jpeg/noFilter",
+            "distance": 1,
+            "identical": false,
+            "colorSimilarity": 0.81
+          },
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-04e6a9bf2d608f21f8e7a55e052e1ab5/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-0a775085e72aca198e8e8a2f34655da4/768/432/Image/Jpeg/noFilter",
+            "distance": 14,
+            "identical": false,
+            "colorSimilarity": 0.59
+          },
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-7a23736a6f01247910e0ac1a4918abbb/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-42748726538ce54eb0faacafec5e7e8c/768/432/Image/Jpeg/noFilter",
+            "distance": 15,
+            "identical": false,
+            "colorSimilarity": 0.82
+          },
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-9e8482a46f2c4ce339d87e70f66ff51c/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-7f8a92133bca18d6c9d19ed1f2029efd/768/432/Image/Jpeg/noFilter",
+            "distance": 16,
+            "identical": false,
+            "colorSimilarity": 0.75
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 5,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 1,
+        "nameSimilarity": 0.55,
+        "descriptionSimilarity": 0.2,
+        "sharedPhrases": [
+          "discover rarer eggs pets sizes and mutations supports desktop console mobile and tablet players",
+          "train on the treadmill to gain speed",
+          "rare pets earn money from your pets",
+          "upgrade your treadmill and base"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Steal a Baby Egg🥚, https://www.roblox.com/games/112530679555916\n   Creator shown by Roblox: +1 Banana CCU (https://www.roblox.com/communities/359321322)\n   What the automated comparison found on 2026-10-27: closest image differs by 1 of 64 hash bits (98% alike); name 55% similar; description 20% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:9987897510",
+      "badge": {
+        "label": "Needs review",
+        "tone": "warn"
+      },
+      "title": "Steal An Egg",
+      "snippet": [
+        {
+          "text": "closest image differs by 5 of 64 hash bits (92% alike); name 100% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/105628449621876"
+        },
+        {
+          "label": "Creator",
+          "value": "Eduexplorer"
+        },
+        {
+          "label": "Playing",
+          "value": "11"
+        },
+        {
+          "label": "Created",
+          "value": "2026-04-04"
+        },
+        {
+          "label": "Similarity",
+          "value": "92% image"
+        }
+      ],
+      "status": {
+        "label": "Review",
+        "tone": "warn"
+      },
+      "states": {
+        "open": {
+          "label": "Review",
+          "tone": "warn"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "review",
+      "url": "https://www.roblox.com/games/105628449621876",
+      "detail": {
+        "kind": "dmca",
+        "lane": "review",
+        "ruleExplanation": "Needs review: the closest image pair differs by 5 of 64 hash bits (rule: 10 or fewer). A perceptual or text match is a lead, not proof. Open both games and compare them before you decide.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 9987897510,
+          "placeId": 105628449621876,
+          "url": "https://www.roblox.com/games/105628449621876",
+          "name": "Steal An Egg",
+          "creatorName": "Eduexplorer",
+          "creatorId": 639952544,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/639952544",
+          "playing": 11,
+          "visits": 4540294,
+          "created": "2026-04-04T09:55:09.54Z",
+          "descriptionExcerpt": ""
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-9e8482a46f2c4ce339d87e70f66ff51c/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-168f812bfc216c4e33d12a44914e033f/768/432/Image/Jpeg/noFilter",
+            "distance": 5,
+            "identical": false,
+            "colorSimilarity": 0.95
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 2,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 5,
+        "nameSimilarity": 1,
+        "descriptionSimilarity": 0,
+        "sharedPhrases": [],
+        "modelNote": "The name exactly matches the original game's name \"Steal An Egg\" and the description is empty, so nothing else can be compared.",
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Steal An Egg, https://www.roblox.com/games/105628449621876\n   Creator shown by Roblox: Eduexplorer (https://www.roblox.com/communities/639952544)\n   What the automated comparison found on 2026-10-27: closest image differs by 5 of 64 hash bits (92% alike); name 100% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10765158636",
+      "badge": {
+        "label": "Needs review",
+        "tone": "warn"
+      },
+      "title": "Steal Brainrot Eggs",
+      "snippet": [
+        {
+          "text": "closest image differs by 7 of 64 hash bits (89% alike); name 39% similar; description 2% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/104469958681645"
+        },
+        {
+          "label": "Creator",
+          "value": "414 Games"
+        },
+        {
+          "label": "Playing",
+          "value": "308"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-04"
+        },
+        {
+          "label": "Similarity",
+          "value": "89% image"
+        }
+      ],
+      "status": {
+        "label": "Review",
+        "tone": "warn"
+      },
+      "states": {
+        "open": {
+          "label": "Review",
+          "tone": "warn"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "review",
+      "url": "https://www.roblox.com/games/104469958681645",
+      "detail": {
+        "kind": "dmca",
+        "lane": "review",
+        "ruleExplanation": "Needs review: the closest image pair differs by 7 of 64 hash bits (rule: 10 or fewer). A perceptual or text match is a lead, not proof. Open both games and compare them before you decide.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10765158636,
+          "placeId": 104469958681645,
+          "url": "https://www.roblox.com/games/104469958681645",
+          "name": "Steal Brainrot Eggs",
+          "creatorName": "414 Games",
+          "creatorId": 33493701,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/33493701",
+          "playing": 308,
+          "visits": 7426628,
+          "created": "2026-09-04T23:56:34.294Z",
+          "descriptionExcerpt": "🥚 Welcome to Steal Brainrot Eggs! Steal eggs from brainrots, hatch rare creatures, build your base, and become the richest player! 🔥 HOW TO PLAY: 🥚 Steal Eggs 🐣 Hatch Eggs to unlock rare pets 💰 Earn Cash from your collection ⬆️ Upgrade your Base 🏃 Train to become faster 😈 Steal Eggs from other players ✨..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-34464c2eb998b1b8efa24e207de11319/768/432/Image/Jpeg/noFilter",
+            "distance": 7,
+            "identical": false,
+            "colorSimilarity": 0.82
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 5,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 7,
+        "nameSimilarity": 0.39,
+        "descriptionSimilarity": 0.02,
+        "sharedPhrases": [
+          "steal eggs from other players discover",
+          "how to play steal eggs"
+        ],
+        "modelNote": "The name and description reuse phrases like \"Steal Eggs\", \"Hatch Eggs\", \"Earn Cash\", \"Upgrade your Base\", \"Steal Eggs from other players\", and \"Discover RARE Eggs, Mutations & Sizes\" from the original.",
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Steal Brainrot Eggs, https://www.roblox.com/games/104469958681645\n   Creator shown by Roblox: 414 Games (https://www.roblox.com/communities/33493701)\n   What the automated comparison found on 2026-10-27: closest image differs by 7 of 64 hash bits (89% alike); name 39% similar; description 2% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10765907187",
+      "badge": {
+        "label": "Needs review",
+        "tone": "warn"
+      },
+      "title": "[🎃] Drive An Egg",
+      "snippet": [
+        {
+          "text": "closest image differs by 10 of 64 hash bits (84% alike); name 50% similar; description 72% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/127111893376687"
+        },
+        {
+          "label": "Creator",
+          "value": "One More Crash"
+        },
+        {
+          "label": "Playing",
+          "value": "484"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-10"
+        },
+        {
+          "label": "Similarity",
+          "value": "84% image"
+        }
+      ],
+      "status": {
+        "label": "Review",
+        "tone": "warn"
+      },
+      "states": {
+        "open": {
+          "label": "Review",
+          "tone": "warn"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "review",
+      "url": "https://www.roblox.com/games/127111893376687",
+      "detail": {
+        "kind": "dmca",
+        "lane": "review",
+        "ruleExplanation": "Needs review: the closest image pair differs by 10 of 64 hash bits (rule: 10 or fewer). A perceptual or text match is a lead, not proof. Open both games and compare them before you decide.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10765907187,
+          "placeId": 127111893376687,
+          "url": "https://www.roblox.com/games/127111893376687",
+          "name": "[🎃] Drive An Egg",
+          "creatorName": "One More Crash",
+          "creatorId": 732052720,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/732052720",
+          "playing": 484,
+          "visits": 9456034,
+          "created": "2026-09-10T15:32:33.817Z",
+          "descriptionExcerpt": "🚗 Welcome to Drive An Egg! How to Play: 🥚 Steal eggs from pets 🚘 DRIVE THE EGGS! 🐣 Hatch eggs to collect rare pets 💰 Earn money from your pets ⬆️ Upgrade your treadmill and base 🏃 Train on the treadmill to gain Speed 🥷 Steal eggs from other players ✨ Discover rarer eggs, pets, sizes, and mutations! 🎮 Supports..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-b858fbd20cba5fec4155d648160a703d/768/432/Image/Jpeg/noFilter",
+            "distance": 10,
+            "identical": false,
+            "colorSimilarity": 0.84
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 2,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 10,
+        "nameSimilarity": 0.5,
+        "descriptionSimilarity": 0.72,
+        "sharedPhrases": [
+          "hatch eggs to collect rare pets earn money from your pets upgrade your treadmill and base train on the treadmill to gain speed steal eggs from other players discover rarer eggs pets sizes and mutations supports desktop console mobile and tablet players",
+          "an egg how to play steal eggs from pets"
+        ],
+        "modelNote": "The description copies the original's \"How to Play\" list nearly line for line, including \"Steal eggs from pets\", \"Hatch eggs to collect rare pets\", \"Earn money from your pets\", and \"Discover rarer eggs, pets, sizes, and mutations!\".",
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: [🎃] Drive An Egg, https://www.roblox.com/games/127111893376687\n   Creator shown by Roblox: One More Crash (https://www.roblox.com/communities/732052720)\n   What the automated comparison found on 2026-10-27: closest image differs by 10 of 64 hash bits (84% alike); name 50% similar; description 72% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10757504146",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "Steal A Brainrot Egg",
+      "snippet": [
+        {
+          "text": "closest image differs by 11 of 64 hash bits (83% alike); name 49% similar; description 27% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/126016859830524"
+        },
+        {
+          "label": "Creator",
+          "value": "brainrot is still HUGE"
+        },
+        {
+          "label": "Playing",
+          "value": "402"
+        },
+        {
+          "label": "Created",
+          "value": "2026-08-23"
+        },
+        {
+          "label": "Similarity",
+          "value": "83% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/126016859830524",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the closest image pair differs by 11 of 64 hash bits (rule: 16 or fewer). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10757504146,
+          "placeId": 126016859830524,
+          "url": "https://www.roblox.com/games/126016859830524",
+          "name": "Steal A Brainrot Egg",
+          "creatorName": "brainrot is still HUGE",
+          "creatorId": 993102780,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/993102780",
+          "playing": 402,
+          "visits": 23604955,
+          "created": "2026-08-23T20:31:41.954Z",
+          "descriptionExcerpt": "Welcome to Steal A Brainrot Egg 🥚 How to play: Steal eggs from brainrots 🥚 Hatch eggs to collect rare brainrots 🐣 Earn money from your brainrots 💰 Upgrade your treadmill and base ⬆️ Train on the treadmill to gain speed 🏃 Steal eggs from other players 🥚 Discover rarer eggs, brainrots, sizes, and mutations!"
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-7a23736a6f01247910e0ac1a4918abbb/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-832d9ea81597aceedf46fb13f3babf8e/768/432/Image/Jpeg/noFilter",
+            "distance": 11,
+            "identical": false,
+            "colorSimilarity": 0.6
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 5,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 11,
+        "nameSimilarity": 0.49,
+        "descriptionSimilarity": 0.27,
+        "sharedPhrases": [
+          "upgrade your treadmill and base train on the treadmill to gain speed steal eggs from other players discover rarer eggs",
+          "egg how to play steal eggs from",
+          "hatch eggs to collect rare"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Steal A Brainrot Egg, https://www.roblox.com/games/126016859830524\n   Creator shown by Roblox: brainrot is still HUGE (https://www.roblox.com/communities/993102780)\n   What the automated comparison found on 2026-10-27: closest image differs by 11 of 64 hash bits (83% alike); name 49% similar; description 27% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10765899482",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "[🎃] Steal an Egg For SCP Monsters",
+      "snippet": [
+        {
+          "text": "closest image differs by 11 of 64 hash bits (83% alike); name 46% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/84239592885582"
+        },
+        {
+          "label": "Creator",
+          "value": "So Many Eggs!"
+        },
+        {
+          "label": "Playing",
+          "value": "1,949"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-10"
+        },
+        {
+          "label": "Similarity",
+          "value": "83% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/84239592885582",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the closest image pair differs by 11 of 64 hash bits (rule: 16 or fewer). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10765899482,
+          "placeId": 84239592885582,
+          "url": "https://www.roblox.com/games/84239592885582",
+          "name": "[🎃] Steal an Egg For SCP Monsters",
+          "creatorName": "So Many Eggs!",
+          "creatorId": 998420787,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/998420787",
+          "playing": 1949,
+          "visits": 3173228,
+          "created": "2026-09-10T14:14:55.19Z",
+          "descriptionExcerpt": "🔮 WELCOME TO Steal Eggs for Scp Monsters 🥚 Sneak in and collect mysterious eggs! 🧪 Hatch your eggs to unlock unique SCP creatures! 💰 Build your collection and earn more Cash! 🏃 Train on treadmills to increase your Speed! ⚙️ Upgrade your treadmills and grow your Base! 🕵️ Steal other peoples EGGS! ✨ Hunt for rare..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-32e914732114a8252532d131ee9bf0da/768/432/Image/Jpeg/noFilter",
+            "distance": 11,
+            "identical": false,
+            "colorSimilarity": 0.61
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 7,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 11,
+        "nameSimilarity": 0.46,
+        "descriptionSimilarity": 0,
+        "sharedPhrases": [],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: [🎃] Steal an Egg For SCP Monsters, https://www.roblox.com/games/84239592885582\n   Creator shown by Roblox: So Many Eggs! (https://www.roblox.com/communities/998420787)\n   What the automated comparison found on 2026-10-27: closest image differs by 11 of 64 hash bits (83% alike); name 46% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10747748563",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "Steal an Anime Egg!",
+      "snippet": [
+        {
+          "text": "closest image differs by 13 of 64 hash bits (80% alike); name 71% similar; description 1% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/76377501906469"
+        },
+        {
+          "label": "Creator",
+          "value": "BlinkWorks Studios"
+        },
+        {
+          "label": "Playing",
+          "value": "94"
+        },
+        {
+          "label": "Created",
+          "value": "2026-08-21"
+        },
+        {
+          "label": "Similarity",
+          "value": "80% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/76377501906469",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the closest image pair differs by 13 of 64 hash bits (rule: 16 or fewer). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10747748563,
+          "placeId": 76377501906469,
+          "url": "https://www.roblox.com/games/76377501906469",
+          "name": "Steal an Anime Egg!",
+          "creatorName": "BlinkWorks Studios",
+          "creatorId": 820014558,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/820014558",
+          "playing": 94,
+          "visits": 15905471,
+          "created": "2026-08-21T03:01:06.781Z",
+          "descriptionExcerpt": "⚔️ Steal An Anime Egg! How to Play: 🥚 Grab an Anime Egg from a boss’s territory. 🏃 Escape the chase and bring your egg back to your plot. 🐣 Wait for it to hatch and discover your anime fighter. 💵 Place your fighters on your plot to earn cash. 👟 Train on your treadmill to build speed and reach new areas. 🔧..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-ce0100d08106a5fe9659df2282775299/768/432/Image/Jpeg/noFilter",
+            "distance": 13,
+            "identical": false,
+            "colorSimilarity": 0.25
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 4,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 13,
+        "nameSimilarity": 0.71,
+        "descriptionSimilarity": 0.01,
+        "sharedPhrases": [
+          "desktop console mobile and tablet"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Steal an Anime Egg!, https://www.roblox.com/games/76377501906469\n   Creator shown by Roblox: BlinkWorks Studios (https://www.roblox.com/communities/820014558)\n   What the automated comparison found on 2026-10-27: closest image differs by 13 of 64 hash bits (80% alike); name 71% similar; description 1% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10765653050",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "Dig & Steal an Egg",
+      "snippet": [
+        {
+          "text": "closest image differs by 16 of 64 hash bits (75% alike); name 76% similar; description 25% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/96277029135954"
+        },
+        {
+          "label": "Creator",
+          "value": "MikiVerse Studio"
+        },
+        {
+          "label": "Playing",
+          "value": "1"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-08"
+        },
+        {
+          "label": "Similarity",
+          "value": "75% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/96277029135954",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the closest image pair differs by 16 of 64 hash bits (rule: 16 or fewer). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10765653050,
+          "placeId": 96277029135954,
+          "url": "https://www.roblox.com/games/96277029135954",
+          "name": "Dig & Steal an Egg",
+          "creatorName": "MikiVerse Studio",
+          "creatorId": 639159992,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/639159992",
+          "playing": 1,
+          "visits": 66500,
+          "created": "2026-09-08T08:01:19.091Z",
+          "descriptionExcerpt": "🥚 Welcome to Dig & Steal an Egg! The eggs aren't lying around. You DIG them out of the ground. How to Play: ⛏️ Dig eggs out of the ground 🏃 Run home before the guardian catches you 🐣 Hatch eggs to collect rare pets 💰 Earn money from your pets ⚡ Train on the treadmill to gain Speed 🚪 Steal eggs from other players..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-7d349a461ec451df517040b6f6eef665/768/432/Image/Jpeg/noFilter",
+            "distance": 16,
+            "identical": false,
+            "colorSimilarity": 0.46
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 4,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 16,
+        "nameSimilarity": 0.76,
+        "descriptionSimilarity": 0.25,
+        "sharedPhrases": [
+          "train on the treadmill to gain speed steal eggs from other players discover rarer eggs pets sizes and mutations",
+          "hatch eggs to collect rare pets earn money from your pets"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Dig & Steal an Egg, https://www.roblox.com/games/96277029135954\n   Creator shown by Roblox: MikiVerse Studio (https://www.roblox.com/communities/639159992)\n   What the automated comparison found on 2026-10-27: closest image differs by 16 of 64 hash bits (75% alike); name 76% similar; description 25% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10765490955",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "Steal a Hacker Egg 🌮",
+      "snippet": [
+        {
+          "text": "closest image differs by 16 of 64 hash bits (75% alike); name 50% similar; description 24% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/95219522950423"
+        },
+        {
+          "label": "Creator",
+          "value": "it's time for a win"
+        },
+        {
+          "label": "Playing",
+          "value": "574"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-06"
+        },
+        {
+          "label": "Similarity",
+          "value": "75% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/95219522950423",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the closest image pair differs by 16 of 64 hash bits (rule: 16 or fewer). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10765490955,
+          "placeId": 95219522950423,
+          "url": "https://www.roblox.com/games/95219522950423",
+          "name": "Steal a Hacker Egg 🌮",
+          "creatorName": "it's time for a win",
+          "creatorId": 1109248289,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/1109248289",
+          "playing": 574,
+          "visits": 9726710,
+          "created": "2026-09-06T23:23:47.86Z",
+          "descriptionExcerpt": "👾🥚 Welcome to Steal A Hacker Egg! How to Play: 🥚 Steal hacker eggs from hacker guards 🐣 Hatch eggs to collect rare hackers 💰 Earn money from your hackers ⬆️ Upgrade your treadmill and base 🏃 Train on the treadmill to gain Speed 🥷 Steal hacker eggs from other players ✨ Discover rarer eggs, hackers, sizes, and..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-311fcc6896b32a9bcebea22d04beae05/768/432/Image/Jpeg/noFilter",
+            "distance": 16,
+            "identical": false,
+            "colorSimilarity": 0.43
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 3,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 16,
+        "nameSimilarity": 0.5,
+        "descriptionSimilarity": 0.24,
+        "sharedPhrases": [
+          "upgrade your treadmill and base train on the treadmill to gain speed steal",
+          "sizes and mutations supports desktop console mobile and tablet players",
+          "eggs from other players discover rarer eggs",
+          "hatch eggs to collect rare"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Steal a Hacker Egg 🌮, https://www.roblox.com/games/95219522950423\n   Creator shown by Roblox: it's time for a win (https://www.roblox.com/communities/1109248289)\n   What the automated comparison found on 2026-10-27: closest image differs by 16 of 64 hash bits (75% alike); name 50% similar; description 24% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10765637643",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "☠️ Steal an EXE Egg ☠️ ",
+      "snippet": [
+        {
+          "text": "closest image differs by 16 of 64 hash bits (75% alike); name 76% similar; description 2% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/85862346280552"
+        },
+        {
+          "label": "Creator",
+          "value": "Weirdoo's Gang"
+        },
+        {
+          "label": "Playing",
+          "value": "354"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-08"
+        },
+        {
+          "label": "Similarity",
+          "value": "75% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/85862346280552",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the closest image pair differs by 16 of 64 hash bits (rule: 16 or fewer). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10765637643,
+          "placeId": 85862346280552,
+          "url": "https://www.roblox.com/games/85862346280552",
+          "name": "☠️ Steal an EXE Egg ☠️ ",
+          "creatorName": "Weirdoo's Gang",
+          "creatorId": 506498812,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/506498812",
+          "playing": 354,
+          "visits": 16395341,
+          "created": "2026-09-08T03:09:17.98Z",
+          "descriptionExcerpt": "☠️ Steal an EXE Egg How to Play: 🥚 Steal an EXE Egg from a monster’s territory at night. 💨 Escape the chase and bring the egg back to your plot. ☠️ Wait for it to hatch and discover your EXE monster. 💰 Place your EXEs on your plot to earn cash. ⚡ Train to increase your speed and survive stronger monsters. 🛠️..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-fc42ee291e0d85007afce25015ee37ce/768/432/Image/Jpeg/noFilter",
+            "distance": 16,
+            "identical": false,
+            "colorSimilarity": 0.43
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 5,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 16,
+        "nameSimilarity": 0.76,
+        "descriptionSimilarity": 0.02,
+        "sharedPhrases": [
+          "desktop console mobile and tablet",
+          "egg how to play steal"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: ☠️ Steal an EXE Egg ☠️ , https://www.roblox.com/games/85862346280552\n   Creator shown by Roblox: Weirdoo's Gang (https://www.roblox.com/communities/506498812)\n   What the automated comparison found on 2026-10-27: closest image differs by 16 of 64 hash bits (75% alike); name 76% similar; description 2% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10766620257",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "[🎃] Bike For Egg!",
+      "snippet": [
+        {
+          "text": "closest image differs by 20 of 64 hash bits (69% alike); name 25% similar; description 53% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/74023858073178"
+        },
+        {
+          "label": "Creator",
+          "value": "Huron Games"
+        },
+        {
+          "label": "Playing",
+          "value": "11,986"
+        },
+        {
+          "label": "Created",
+          "value": "2026-09-15"
+        },
+        {
+          "label": "Similarity",
+          "value": "69% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/74023858073178",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the descriptions are 53% similar (rule: 35% or more). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10766620257,
+          "placeId": 74023858073178,
+          "url": "https://www.roblox.com/games/74023858073178",
+          "name": "[🎃] Bike For Egg!",
+          "creatorName": "Huron Games",
+          "creatorId": 288369792,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/288369792",
+          "playing": 11986,
+          "visits": 27091116,
+          "created": "2026-09-15T22:04:36.156Z",
+          "descriptionExcerpt": "Welcome to Bike For Egg! How to Play: 🥚 Steal eggs from pets 🐣 Hatch eggs to collect rare pets 💰 Earn money from your pets ⬆️ Upgrade your treadmill and base 🏃 Train on the treadmill to gain Speed 🥷 Steal eggs from other players ✨ Discover rarer eggs, pets, sizes, and mutations! 📖 Complete your Animal Index and..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-b0d702b736360d6601dddc7159451b6d/768/432/Image/Jpeg/noFilter",
+            "distance": 20,
+            "identical": false,
+            "colorSimilarity": 0.37
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 6,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 20,
+        "nameSimilarity": 0.25,
+        "descriptionSimilarity": 0.53,
+        "sharedPhrases": [
+          "egg how to play steal eggs from pets hatch eggs to collect rare pets earn money from your pets upgrade your treadmill and base train on the treadmill to gain speed steal eggs from other players discover rarer eggs pets sizes and mutations"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: [🎃] Bike For Egg!, https://www.roblox.com/games/74023858073178\n   Creator shown by Roblox: Huron Games (https://www.roblox.com/communities/288369792)\n   What the automated comparison found on 2026-10-27: closest image differs by 20 of 64 hash bits (69% alike); name 25% similar; description 53% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    },
+    {
+      "id": "dmca:10769626057",
+      "badge": {
+        "label": "Weak signal",
+        "tone": "muted"
+      },
+      "title": "Push to Steal an Egg",
+      "snippet": [
+        {
+          "text": "closest image differs by 24 of 64 hash bits (63% alike); name 61% similar; description 44% similar."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Link",
+          "value": "roblox.com/games/71285230255088"
+        },
+        {
+          "label": "Creator",
+          "value": "Whoopsie Daisy Games"
+        },
+        {
+          "label": "Playing",
+          "value": "504"
+        },
+        {
+          "label": "Created",
+          "value": "2026-10-06"
+        },
+        {
+          "label": "Similarity",
+          "value": "63% image"
+        }
+      ],
+      "status": {
+        "label": "Weak",
+        "tone": "muted"
+      },
+      "states": {
+        "open": {
+          "label": "Weak",
+          "tone": "muted"
+        },
+        "dismissed": {
+          "label": "Dismissed",
+          "tone": "muted"
+        },
+        "filed": {
+          "label": "Filed",
+          "tone": "live"
+        }
+      },
+      "group": "weak",
+      "url": "https://www.roblox.com/games/71285230255088",
+      "detail": {
+        "kind": "dmca",
+        "lane": "weak",
+        "ruleExplanation": "Weak signal: the descriptions are 44% similar (rule: 35% or more). This is a faint overlap and is shown only so you can rule it out.",
+        "laneRules": {
+          "identical": "Identical image: one of their images has the very same bytes as one of yours (equal sha256). That shows the same file was used, not who made it first.",
+          "near": "Near-identical image: the closest image pair differs by 2 or fewer of 64 hash bits and the names are at least 50% similar. This is a perceptual match, not identical bytes.",
+          "review": "Needs review: the closest image pair differs by 10 or fewer of 64 hash bits, or the names are at least 75% similar and the descriptions at least 50% similar.",
+          "weak": "Weak signal: the closest image pair differs by 16 or fewer of 64 hash bits, or the descriptions are at least 35% similar. Only the strongest 8 are listed."
+        },
+        "ours": {
+          "universeId": 10563114921,
+          "placeId": 107778070777162,
+          "name": "Steal An Egg",
+          "url": "https://www.roblox.com/games/107778070777162"
+        },
+        "candidate": {
+          "universeId": 10769626057,
+          "placeId": 71285230255088,
+          "url": "https://www.roblox.com/games/71285230255088",
+          "name": "Push to Steal an Egg",
+          "creatorName": "Whoopsie Daisy Games",
+          "creatorId": 792059002,
+          "creatorType": "Group",
+          "creatorUrl": "https://www.roblox.com/communities/792059002",
+          "playing": 504,
+          "visits": 533887,
+          "created": "2026-10-06T15:05:34.284Z",
+          "descriptionExcerpt": "🥚 Welcome to Push to Steal an Egg! How to Play: • 🥚 Steal eggs from pets • 🐣 Hatch eggs to collect rare pets • 💰 Earn money from your pets • ⬆️ Upgrade your weights and base • 🏃 Train by running on Treadmills to gain Speed • 🥷 Steal eggs from other players • ✨ Discover rarer eggs, pets, sizes, and mutations! 💻..."
+        },
+        "imagePairs": [
+          {
+            "ours": "https://tr.rbxcdn.com/180DAY-04e6a9bf2d608f21f8e7a55e052e1ab5/768/432/Image/Jpeg/noFilter",
+            "theirs": "https://tr.rbxcdn.com/180DAY-ffdbf50390eab3d0a41c9c533167e00f/768/432/Image/Jpeg/noFilter",
+            "distance": 24,
+            "identical": false,
+            "colorSimilarity": 0.32
+          }
+        ],
+        "imagesCompared": {
+          "theirs": 3,
+          "ours": 5,
+          "identical": 0
+        },
+        "bestDistance": 24,
+        "nameSimilarity": 0.61,
+        "descriptionSimilarity": 0.44,
+        "sharedPhrases": [
+          "to steal an egg how to play steal eggs from pets hatch eggs to collect rare pets earn money from your pets upgrade your",
+          "to gain speed steal eggs from other players discover rarer eggs pets sizes and mutations"
+        ],
+        "notice": "DRAFT ONLY. DMCA Daemon has not filed this and cannot. Complete every [BRACKETED] item yourself, then file it in Roblox Creator Hub under Intellectual Property.\n\nNotice of claimed infringement under 17 U.S.C. 512(c)(3)\n\n1. Copyrighted work: Steal An Egg, https://www.roblox.com/games/107778070777162\n   [Describe which of your assets or works are protected and that you own or may act for the owner. Only you can state this.]\n\n2. Material claimed to infringe, and where to find it: Push to Steal an Egg, https://www.roblox.com/games/71285230255088\n   Creator shown by Roblox: Whoopsie Daisy Games (https://www.roblox.com/communities/792059002)\n   What the automated comparison found on 2026-10-27: closest image differs by 24 of 64 hash bits (63% alike); name 61% similar; description 44% similar\n   [Add what you personally verified in the game, and the exact assets copied. A match score alone is not proof of copying.]\n\n3. Contact information of the complaining party: [YOUR FULL NAME, POSTAL ADDRESS, EMAIL, PHONE]\n\n4. Good-faith statement: [YOUR STATEMENT that you have a good faith belief the use described above is not authorized by the copyright owner, its agent, or the law. Write this only if you hold that belief.]\n\n5. Accuracy and authority statement: [YOUR STATEMENT that the information in this notice is accurate and, under penalty of perjury, that you are the owner of the exclusive right allegedly infringed or are authorized to act on the owner's behalf.]\n\n6. Signature: [YOUR PHYSICAL OR ELECTRONIC SIGNATURE: your full legal name]\n\nReminder: under 17 U.S.C. 512(f), a person who knowingly materially misrepresents that material is infringing is liable for the resulting damages, including costs and attorneys' fees.",
+        "rightsManagerUrl": "https://create.roblox.com/dashboard/ip",
+        "rightsManagerDocsUrl": "https://create.roblox.com/docs/production/publishing/rights-manager",
+        "checked": "2026-10-27T21:57:54.627Z"
+      },
+      "isNew": false
+    }
+  ]
+}

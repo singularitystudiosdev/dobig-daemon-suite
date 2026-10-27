@@ -1,0 +1,519 @@
+{
+  "tool": "pulse-daemon",
+  "capturedAt": "2026-10-27T21:58:46.879Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    }
+  ],
+  "heroNote": "Steal An Egg: live players, likes, server health and update status read from public Roblox data.",
+  "summary": {
+    "items": [
+      {
+        "label": "Overall",
+        "value": "First read",
+        "tone": "muted"
+      },
+      {
+        "label": "Players now",
+        "value": "671,580"
+      },
+      {
+        "label": "Like ratio",
+        "value": "91.6%"
+      },
+      {
+        "label": "Median fps",
+        "value": "59.9"
+      },
+      {
+        "label": "Regressed vitals",
+        "value": "0"
+      }
+    ],
+    "sortLabel": "Regressions first",
+    "notes": [
+      "Players, votes, the last update and game age come from the game's public Roblox data. Server speed, latency and fill come from a sample of the public servers: up to 3 pages of 100, read from the fullest end of the list, the emptiest end, then the next fullest, so the sample is not only full servers. It had 299 servers this time. It is a sample, not every server, and private servers are not included.",
+      "Overall rule: Sick when two or more vitals regressed, Watch when one regressed, Healthy otherwise. The first run has nothing to compare with, so it reads First read.",
+      "This is the first reading for this daemon, so every vital is a First read and nothing is flagged."
+    ]
+  },
+  "findings": [
+    {
+      "id": "pulse:players",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Players now",
+      "snippet": [
+        {
+          "text": "First read: 671,580. The next run compares with it."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Now",
+          "value": "671,580"
+        },
+        {
+          "label": "Before",
+          "value": "None yet"
+        },
+        {
+          "label": "Change",
+          "value": "First read"
+        },
+        {
+          "label": "Read",
+          "value": "21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Baseline",
+        "tone": "muted"
+      },
+      "detail": {
+        "kind": "pulse",
+        "vital": "players",
+        "state": "first",
+        "gameName": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:58:46.121Z",
+        "previousAt": null,
+        "now": "671,580",
+        "before": null,
+        "change": "First read",
+        "rule": "Flagged when players now are 20 percent or more below the previous reading, and only when the two readings are at least 3 hours apart, because player counts swing with the time of day. The same size rise is marked Improved.",
+        "verdict": "There is no earlier reading of this vital, so nothing was compared and nothing is flagged.",
+        "updatedNote": null,
+        "figures": [
+          {
+            "label": "Players now",
+            "value": "671,580",
+            "before": null
+          },
+          {
+            "label": "Total visits",
+            "value": "9,656,194,674",
+            "before": null
+          },
+          {
+            "label": "Favourites",
+            "value": "8,826,403",
+            "before": null
+          }
+        ],
+        "sample": null,
+        "historyLabel": "Players now",
+        "history": [
+          {
+            "t": "2026-10-27T21:58:46.121Z",
+            "v": 671580
+          }
+        ],
+        "unit": "",
+        "check": "Compare with the same hour on earlier days before reacting, since the time of day moves this number. If it stays low, check what shipped in the last update."
+      },
+      "isNew": false
+    },
+    {
+      "id": "pulse:likes",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Like ratio",
+      "snippet": [
+        {
+          "text": "First read: 91.6%. The next run compares with it."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Now",
+          "value": "91.6%"
+        },
+        {
+          "label": "Before",
+          "value": "None yet"
+        },
+        {
+          "label": "Change",
+          "value": "First read"
+        },
+        {
+          "label": "Read",
+          "value": "21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Baseline",
+        "tone": "muted"
+      },
+      "detail": {
+        "kind": "pulse",
+        "vital": "likes",
+        "state": "first",
+        "gameName": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:58:46.121Z",
+        "previousAt": null,
+        "now": "91.6%",
+        "before": null,
+        "change": "First read",
+        "rule": "Flagged when the like ratio (up votes over up plus down votes) is 2 points or more below the previous reading. A rise of 2 points or more is marked Improved.",
+        "verdict": "There is no earlier reading of this vital, so nothing was compared and nothing is flagged.",
+        "updatedNote": null,
+        "figures": [
+          {
+            "label": "Like ratio",
+            "value": "91.6%",
+            "before": null
+          },
+          {
+            "label": "Up votes",
+            "value": "3,865,162",
+            "before": null
+          },
+          {
+            "label": "Down votes",
+            "value": "352,554",
+            "before": null
+          }
+        ],
+        "sample": null,
+        "historyLabel": "Like ratio, up votes over all votes",
+        "history": [
+          {
+            "t": "2026-10-27T21:58:46.121Z",
+            "v": 91.641
+          }
+        ],
+        "unit": "%",
+        "check": "Check what shipped in the last update. Recent comments on the game page may show what players are reacting to."
+      },
+      "isNew": false
+    },
+    {
+      "id": "pulse:fps",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Server speed (median)",
+      "snippet": [
+        {
+          "text": "First read: 59.9 fps. The next run compares with it."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Now",
+          "value": "59.9 fps"
+        },
+        {
+          "label": "Before",
+          "value": "None yet"
+        },
+        {
+          "label": "Change",
+          "value": "First read"
+        },
+        {
+          "label": "Read",
+          "value": "21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Baseline",
+        "tone": "muted"
+      },
+      "detail": {
+        "kind": "pulse",
+        "vital": "fps",
+        "state": "first",
+        "gameName": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:58:46.121Z",
+        "previousAt": null,
+        "now": "59.9 fps",
+        "before": null,
+        "change": "First read",
+        "rule": "Flagged when the median server fps is 10 percent or more below the previous reading. A rise of 10 percent or more is marked Improved.",
+        "verdict": "There is no earlier reading of this vital, so nothing was compared and nothing is flagged.",
+        "updatedNote": null,
+        "figures": [
+          {
+            "label": "Median server fps",
+            "value": "59.9 fps",
+            "before": null
+          },
+          {
+            "label": "Servers under 30 fps",
+            "value": "0.3%",
+            "before": null
+          },
+          {
+            "label": "Servers sampled",
+            "value": "299 (199 fullest first, 100 emptiest first)",
+            "before": null
+          }
+        ],
+        "sample": {
+          "servers": 299,
+          "fullest": 199,
+          "emptiest": 100
+        },
+        "historyLabel": "Median server fps",
+        "history": [
+          {
+            "t": "2026-10-27T21:58:46.121Z",
+            "v": 59.94
+          }
+        ],
+        "unit": " fps",
+        "check": "Check what runs on the server every frame and anything that changed there recently. Server fps is measured on the server, not on player devices."
+      },
+      "isNew": false
+    },
+    {
+      "id": "pulse:ping",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Server latency (90th percentile)",
+      "snippet": [
+        {
+          "text": "First read: 236 ms. The next run compares with it."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Now",
+          "value": "236 ms"
+        },
+        {
+          "label": "Before",
+          "value": "None yet"
+        },
+        {
+          "label": "Change",
+          "value": "First read"
+        },
+        {
+          "label": "Read",
+          "value": "21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Baseline",
+        "tone": "muted"
+      },
+      "detail": {
+        "kind": "pulse",
+        "vital": "ping",
+        "state": "first",
+        "gameName": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:58:46.121Z",
+        "previousAt": null,
+        "now": "236 ms",
+        "before": null,
+        "change": "First read",
+        "rule": "Flagged when the 90th percentile ping is 25 percent or more above the previous reading. A fall of 25 percent or more is marked Improved.",
+        "verdict": "There is no earlier reading of this vital, so nothing was compared and nothing is flagged.",
+        "updatedNote": null,
+        "figures": [
+          {
+            "label": "Ping, 90th percentile",
+            "value": "236 ms",
+            "before": null
+          },
+          {
+            "label": "Ping, median",
+            "value": "77 ms",
+            "before": null
+          },
+          {
+            "label": "Servers sampled",
+            "value": "299 (199 fullest first, 100 emptiest first)",
+            "before": null
+          }
+        ],
+        "sample": {
+          "servers": 299,
+          "fullest": 199,
+          "emptiest": 100
+        },
+        "historyLabel": "Ping, 90th percentile",
+        "history": [
+          {
+            "t": "2026-10-27T21:58:46.121Z",
+            "v": 236
+          }
+        ],
+        "unit": " ms",
+        "check": "Ping is what players measure to reach the server, so it can rise for reasons outside your game. Compare with a few earlier readings before changing anything."
+      },
+      "isNew": false
+    },
+    {
+      "id": "pulse:fill",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Server fill",
+      "snippet": [
+        {
+          "text": "First read: public servers are 71.3% full in the sample."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Now",
+          "value": "71.3%"
+        },
+        {
+          "label": "Before",
+          "value": "None yet"
+        },
+        {
+          "label": "Change",
+          "value": "First read"
+        },
+        {
+          "label": "Read",
+          "value": "21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Baseline",
+        "tone": "muted"
+      },
+      "detail": {
+        "kind": "pulse",
+        "vital": "fill",
+        "state": "first",
+        "gameName": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:58:46.121Z",
+        "previousAt": null,
+        "now": "71.3%",
+        "before": null,
+        "change": "First read",
+        "rule": "No flag rule. Fill moves with the time of day and with which servers were sampled, so it is shown for context and never marked Regressed.",
+        "verdict": "There is no earlier reading of fill. This vital has no flag rule in any case.",
+        "updatedNote": null,
+        "figures": [
+          {
+            "label": "Players over max players",
+            "value": "71.3%",
+            "before": null
+          },
+          {
+            "label": "Servers sampled",
+            "value": "299 (199 fullest first, 100 emptiest first)",
+            "before": null
+          }
+        ],
+        "sample": {
+          "servers": 299,
+          "fullest": 199,
+          "emptiest": 100
+        },
+        "historyLabel": "Server fill, players over max players",
+        "history": [
+          {
+            "t": "2026-10-27T21:58:46.121Z",
+            "v": 71.33
+          }
+        ],
+        "unit": "%",
+        "check": "Mostly empty servers can mean players are spread thin. Check the maximum players per server and how players are placed into servers."
+      },
+      "isNew": false
+    },
+    {
+      "id": "pulse:update",
+      "badge": {
+        "label": "First read",
+        "tone": "muted"
+      },
+      "title": "Last update",
+      "snippet": [
+        {
+          "text": "First read: last updated 1.3 hours ago. The game is 3 months old."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Now",
+          "value": "Oct 27"
+        },
+        {
+          "label": "Before",
+          "value": "None yet"
+        },
+        {
+          "label": "Change",
+          "value": "First read"
+        },
+        {
+          "label": "Read",
+          "value": "21:58 UTC"
+        }
+      ],
+      "status": {
+        "label": "Baseline",
+        "tone": "muted"
+      },
+      "detail": {
+        "kind": "pulse",
+        "vital": "update",
+        "state": "first",
+        "gameName": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:58:46.121Z",
+        "previousAt": null,
+        "now": "Oct 27",
+        "before": null,
+        "change": "First read",
+        "rule": "Called out when the game was updated after the previous reading, so a regression right after an update says so. An update is never counted as a regression by itself.",
+        "verdict": "There is no earlier reading, so there is nothing to call out yet.",
+        "updatedNote": null,
+        "figures": [
+          {
+            "label": "Last updated",
+            "value": "Oct 27, 20:38 UTC",
+            "before": null
+          },
+          {
+            "label": "Time since the update",
+            "value": "1.3 hours ago",
+            "before": null
+          },
+          {
+            "label": "Game age",
+            "value": "3 months",
+            "before": null
+          }
+        ],
+        "sample": null,
+        "historyLabel": "Days since the last update, at each reading",
+        "history": [
+          {
+            "t": "2026-10-27T21:58:46.121Z",
+            "v": 0.1
+          }
+        ],
+        "unit": " days",
+        "check": "If a vital regressed after an update, check what shipped in it. Roblox shows when a game was updated, not what changed."
+      },
+      "isNew": false
+    }
+  ]
+}

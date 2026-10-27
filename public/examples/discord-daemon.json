@@ -1,0 +1,31 @@
+{
+  "tool": "discord-daemon",
+  "capturedAt": "2026-10-27T21:57:53.620Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    },
+    {
+      "url": "https://cdn.discordapp.com/icons/1536773161868198028/2d555aa5252bae4b8ee52a0260134d99.png?size=128",
+      "caption": "Official Discord"
+    }
+  ],
+  "heroNote": "Steal an Egg is the official Steal An Egg Discord, 594,281 members, 64,433 online.",
+  "summary": null,
+  "findings": [],
+  "server": {
+    "name": "Steal an Egg",
+    "members": 594281,
+    "online": 64433,
+    "iconUrl": "https://cdn.discordapp.com/icons/1536773161868198028/2d555aa5252bae4b8ee52a0260134d99.png?size=128",
+    "inviteUrl": "https://discord.gg/S9y7aJ5JxQ"
+  },
+  "note": "The Discord Daemon reads your own server through a bot you create, so there is no public example run. This is the public lookup of the game's official server."
+}

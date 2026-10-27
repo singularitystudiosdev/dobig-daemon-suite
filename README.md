@@ -9,7 +9,15 @@ npm install
 npm run dev            # http://127.0.0.1:5190
 npm run dev:keychain   # same, with an OpenRouter key read from the macOS keychain
 npm run build          # typecheck + production build
+npm test               # the offline server checks (no network, no keys)
+npm run agent:install  # macOS: keep the app running at login so the 12-hour reruns happen after a reboot
 ```
+
+Two things to know on the first screen. The 12-hour reruns happen inside the running app, so they only run while it is
+running; `npm run agent:install` installs a login agent that starts it at login and restarts it if it stops. And the
+contact-us requests (the New tool and Automate options) are saved on the machine that runs the server: set
+`REQUESTS_WEBHOOK_URL` to a Slack or Discord webhook to have them delivered to a person. Until then the panel says
+"Saved on this machine" and offers to copy the request.
 
 ## GitHub Pages preview
 
@@ -46,9 +54,11 @@ A scheduled rerun costs the same credits as a manual one, and a rerun marks whic
   went, **Run now** with its real cost, the run history, and Remove.
 - Runs execute on the server and keep going if the browser tab closes. Events are saved, so reopening the page replays
   the run and follows it live if it is still going.
-- A daemon that cannot pay for its next run pauses itself and says "Out of credits".
+- A scheduled rerun that cannot be paid for fails with an out-of-credits error, shown in the run history, and the daemon
+  tries again at its next interval. Add credits and press Run now to run it at once.
 - The scheduler lives in the Vite dev server process. If that process is stopped, reruns wait; an overdue daemon runs
-  once when the server comes back, not once per missed interval.
+  once when the server comes back, not once per missed interval. `npm run agent:install` makes macOS start the server at
+  login and restart it if it stops (`npm run agent:status` checks it, `npm run agent:uninstall` removes it).
 
 ## Credits
 

@@ -5,6 +5,7 @@ import { createCredits, type Credits } from './credits.ts'
 import { createDaemons, type Daemons, type Route } from './daemons.ts'
 import { BodyError, redactKeys, sendJson } from './http.ts'
 import { resolveLlmKey, type KeyEnv } from './keys.ts'
+import { cleanMark, createMarks, MarksError, type Marks } from './marks.ts'
 import { cleanRequest, createRequests, RequestsError, type Requests } from './requests.ts'
 import { createLlm, DEFAULT_ANALYSIS_MODEL, type Llm } from './llm.ts'
 import { createRunEngine, type RunEngine } from './runs.ts'
@@ -40,6 +41,8 @@ export interface Engine {
   credits: Credits
   secrets: SecretStore
   requests: Requests
+  /** What the user marked on each daemon's findings (filed, dismissed, ...). */
+  marks: Marks
   runs: RunEngine
   daemons: Daemons
   keyEnv(): KeyEnv
@@ -101,6 +104,7 @@ export function createEngine(options: EngineOptions): Engine {
   const credits = createCredits(store)
   const secrets = createSecrets(store)
   const requests = createRequests({ store, webhookUrl: env('REQUESTS_WEBHOOK_URL') })
+  const marks = createMarks(store)
   const keyEnv = (): KeyEnv => ({ key: env('GEMINI_API_KEY'), openrouterKey: env('OPENROUTER_API_KEY') })
   const makeLlm = (): Llm =>
     createLlm({
@@ -192,7 +196,47 @@ export function createEngine(options: EngineOptions): Engine {
     },
   ]
 
-  const compiled: Compiled[] = [...builtin, ...daemons.routes].map((r) => compile(r.method, r.path, r.handler))
+  const noDaemon = (ctx: RouteContext) => bad(ctx, 'No such daemon. It may have been deleted.', 'not-found', 404)
+  const markRoutes: Route[] = [
+    {
+      method: 'GET',
+      path: '/api/daemons/:id/marks',
+      async handler(ctx, { id }) {
+        if (!daemons.get(id)) return noDaemon(ctx)
+        ctx.json(200, { marks: marks.get(id) })
+      },
+    },
+    {
+      method: 'POST',
+      path: '/api/daemons/:id/marks',
+      async handler(ctx, { id }) {
+        if (!daemons.get(id)) return noDaemon(ctx)
+        const clean = cleanMark(await ctx.body())
+        if ('error' in clean) return bad(ctx, clean.error)
+        try {
+          ctx.json(200, { ok: true, marks: marks.set(id, clean.value.findingId, clean.value.state) })
+        } catch (err) {
+          if (err instanceof MarksError) return bad(ctx, err.message, err.code)
+          throw err
+        }
+      },
+    },
+  ]
+  // Deleting a daemon also drops its marks (only when the daemon was really removed, not on a 404).
+  const daemonRoutes: Route[] = daemons.routes.map((r) =>
+    r.method === 'DELETE' && r.path === '/api/daemons/:id'
+      ? {
+          ...r,
+          async handler(ctx, params) {
+            const existed = !!daemons.get(params.id)
+            await r.handler(ctx, params)
+            if (existed && !daemons.get(params.id)) marks.clear(params.id)
+          },
+        }
+      : r,
+  )
+
+  const compiled: Compiled[] = [...builtin, ...daemonRoutes, ...markRoutes].map((r) => compile(r.method, r.path, r.handler))
   for (const mod of Object.values(toolModules)) {
     for (const [key, handler] of Object.entries(mod.routes ?? {}) as [string, RouteHandler][]) {
       const space = key.indexOf(' ')
@@ -249,6 +293,7 @@ export function createEngine(options: EngineOptions): Engine {
     credits,
     secrets,
     requests,
+    marks,
     runs,
     daemons,
     keyEnv,

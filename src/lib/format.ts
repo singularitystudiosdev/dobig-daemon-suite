@@ -1,8 +1,5 @@
 /* Number and time formatting. Compact numbers follow dobig.com: 9.6B, 432.4M, 2B. */
 
-/** The demo clock. Mock records are dated relative to this instant so relative times are stable. */
-export const DEMO_NOW = new Date('2026-10-26T15:00:00-06:00')
-
 export function fmtInt(n: number) {
   return Math.round(n).toLocaleString('en-US')
 }
@@ -72,7 +69,7 @@ export function fmtMinSec(seconds: number) {
   return `${m}:${String(Math.round(seconds % 60)).padStart(2, '0')}`
 }
 
-export function timeAgo(iso: string | Date, now: Date = DEMO_NOW) {
+export function timeAgo(iso: string | Date, now: Date = new Date()) {
   const then = typeof iso === 'string' ? new Date(iso) : iso
   const mins = Math.round((now.getTime() - then.getTime()) / 60000)
   if (mins < 1) return 'just now'
@@ -91,13 +88,6 @@ export function fmtDay(iso: string) {
 /** "Oct 22, 17:04". */
 export function fmtDayTime(iso: string) {
   return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })
-}
-
-/** Log timestamp from a run offset: base time plus ms, "14:02:07.310". */
-export function fmtLogTime(offsetMs: number, base: Date = DEMO_NOW) {
-  const d = new Date(base.getTime() + offsetMs)
-  const pad = (n: number, w = 2) => String(n).padStart(w, '0')
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`
 }
 
 export function clamp(n: number, min = 0, max = 1) {

@@ -1,0 +1,596 @@
+{
+  "tool": "creator-dox",
+  "capturedAt": "2026-10-27T21:57:53.200Z",
+  "game": {
+    "name": "Steal An Egg",
+    "placeId": 107778070777162,
+    "url": "https://www.roblox.com/games/107778070777162/Steal-An-Egg",
+    "cover": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter"
+  },
+  "hero": [
+    {
+      "url": "https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter",
+      "caption": "The game"
+    },
+    {
+      "url": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-B90364C680937069FE37329AFEDAEA06-Png/420/420/AvatarHeadshot/Png/noFilter",
+      "caption": "Owner (misfitsbsthree)"
+    }
+  ],
+  "heroNote": "Steal An Egg and its owner misfitsbsthree, the registered owner of the group that makes it, as the run found them.",
+  "summary": {
+    "items": [
+      {
+        "label": "People found",
+        "value": "6",
+        "tone": "live"
+      },
+      {
+        "label": "Roles checked",
+        "value": "2 of 11"
+      },
+      {
+        "label": "Discord servers",
+        "value": "0 of 0"
+      },
+      {
+        "label": "Social links",
+        "value": "0"
+      },
+      {
+        "label": "Emails published",
+        "value": "0"
+      },
+      {
+        "label": "New this run",
+        "value": "First run"
+      }
+    ],
+    "sortLabel": "Best way to reach first",
+    "groups": [
+      {
+        "id": "owner",
+        "label": "Owner"
+      },
+      {
+        "id": "leadership",
+        "label": "Leadership"
+      },
+      {
+        "id": "discord",
+        "label": "Discord"
+      },
+      {
+        "id": "social",
+        "label": "Social"
+      },
+      {
+        "id": "email",
+        "label": "Email"
+      },
+      {
+        "id": "other",
+        "label": "Other"
+      }
+    ],
+    "notes": [
+      "Read the game description, the group description, 6 profile descriptions and 0 profile channel fields on Roblox, 5 web pages and 6 web searches (Bing).",
+      "2 invites found on web pages were set aside because the servers are not about the game: Rolimon's | Roblox Trading, Rolimon's Support.",
+      "Roblox only shows game and group social links to signed-in users, so these were read from public text and search instead.",
+      "Accounts the owner named were read one level deep: 3 of 3 found on Roblox.",
+      "Searches that returned results naming the game: \"Steal An Egg\" roblox | site:discord.gg \"Steal An Egg\". Search matches are marked unconfirmed unless the team's own text or Discord's invite lookup backs them.",
+      "Discord invite lookups: 2 live, 0 expired. An expired invite in the owner's own text is still listed."
+    ],
+    "notices": [
+      {
+        "lead": "Not collected:",
+        "body": "home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      {
+        "lead": "Best route",
+        "body": "Start with misfitsbsthree, the owner, on Roblox. It comes from text the owner or team wrote themselves."
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "person:10751598093",
+      "badge": {
+        "label": "Owner",
+        "tone": "ink"
+      },
+      "title": "misfitsbsthree (ben), owner of and Collect Rare Pets",
+      "snippet": [
+        {
+          "text": "Group owner (rank 255). No public channels found for them."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Owner"
+        },
+        {
+          "label": "Confidence",
+          "value": "Linked by the owner"
+        }
+      ],
+      "status": {
+        "label": "Tracked",
+        "tone": "muted"
+      },
+      "states": {
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        }
+      },
+      "group": "owner",
+      "url": "https://www.roblox.com/users/10751598093/profile",
+      "detail": {
+        "kind": "creator",
+        "subject": "person",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:41.595Z",
+        "channel": null,
+        "person": {
+          "userId": 10751598093,
+          "username": "misfitsbsthree",
+          "displayName": "ben",
+          "verified": true,
+          "profileUrl": "https://www.roblox.com/users/10751598093/profile",
+          "relation": "owner",
+          "roles": [
+            {
+              "group": "and Collect Rare Pets",
+              "role": "Group owner",
+              "rank": 255
+            }
+          ],
+          "reason": "Registered owner of the group and Collect Rare Pets, which makes Steal An Egg."
+        },
+        "publishedBy": [],
+        "confidence": "Linked by the owner",
+        "unconfirmed": false,
+        "provenance": [
+          {
+            "where": "Registered owner of the group and Collect Rare Pets",
+            "url": "https://www.roblox.com/communities/825735094",
+            "excerpt": null
+          },
+          {
+            "where": "Profile description of misfitsbsthree",
+            "url": "https://www.roblox.com/users/10751598093/profile",
+            "excerpt": "Hi I'm Ben from Steal an Egg. My other roblox accounts are MisfitsBS, MisfitsBStoo, and MisfitsBStheFourth!"
+          }
+        ],
+        "invite": null,
+        "channels": [],
+        "changed": null,
+        "roles": [
+          {
+            "id": 796368024,
+            "name": "Misfits",
+            "rank": 18,
+            "memberCount": 3,
+            "leader": true,
+            "why": "Members read as leaders. Highest rank with members (rank 18)."
+          },
+          {
+            "id": 788477062,
+            "name": "Owner",
+            "rank": 1,
+            "memberCount": 1,
+            "leader": true,
+            "why": "Members read as leaders. The role is named Owner."
+          },
+          {
+            "id": 802174009,
+            "name": "Legend",
+            "rank": 1,
+            "memberCount": 1,
+            "leader": false,
+            "why": "Not a leadership role."
+          },
+          {
+            "id": 869985000,
+            "name": "Utily",
+            "rank": 1,
+            "memberCount": 1,
+            "leader": false,
+            "why": "Not a leadership role."
+          },
+          {
+            "id": 12884901889,
+            "name": "Member",
+            "rank": 1,
+            "memberCount": 108262406,
+            "leader": false,
+            "why": "The base role everyone starts with."
+          }
+        ],
+        "rankReason": "The person who owns the game. Channels they published are separate rows, ranked above this profile.",
+        "notCollected": "Not collected: home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "person:3889785873",
+      "badge": {
+        "label": "Leader",
+        "tone": "ink"
+      },
+      "title": "Brockkodile (Brockodile), leader of and Collect Rare Pets",
+      "snippet": [
+        {
+          "text": "Misfits (rank 18). No public channels found for them."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Leader"
+        },
+        {
+          "label": "Confidence",
+          "value": "Linked by the owner"
+        }
+      ],
+      "status": {
+        "label": "Tracked",
+        "tone": "muted"
+      },
+      "states": {
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        }
+      },
+      "group": "leadership",
+      "url": "https://www.roblox.com/users/3889785873/profile",
+      "detail": {
+        "kind": "creator",
+        "subject": "person",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:41.595Z",
+        "channel": null,
+        "person": {
+          "userId": 3889785873,
+          "username": "Brockkodile",
+          "displayName": "Brockodile",
+          "verified": true,
+          "profileUrl": "https://www.roblox.com/users/3889785873/profile",
+          "relation": "leader",
+          "roles": [
+            {
+              "group": "and Collect Rare Pets",
+              "role": "Misfits",
+              "rank": 18
+            }
+          ],
+          "reason": "Holds the role Misfits (rank 18) in and Collect Rare Pets. Highest rank with members (rank 18)."
+        },
+        "publishedBy": [],
+        "confidence": "Linked by the owner",
+        "unconfirmed": false,
+        "provenance": [
+          {
+            "where": "Member of the role Misfits in the group and Collect Rare Pets",
+            "url": "https://www.roblox.com/communities/825735094",
+            "excerpt": null
+          }
+        ],
+        "invite": null,
+        "channels": [],
+        "changed": null,
+        "roles": null,
+        "rankReason": "Holds a leadership role in the owning group. Channels they published are separate rows, ranked above this profile.",
+        "notCollected": "Not collected: home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "person:2735356267",
+      "badge": {
+        "label": "Leader",
+        "tone": "ink"
+      },
+      "title": "MisfitsBS (Ben), leader of and Collect Rare Pets",
+      "snippet": [
+        {
+          "text": "Misfits (rank 18), Owner (rank 1). No public channels found for them."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Leader"
+        },
+        {
+          "label": "Confidence",
+          "value": "Linked by the owner"
+        }
+      ],
+      "status": {
+        "label": "Tracked",
+        "tone": "muted"
+      },
+      "states": {
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        }
+      },
+      "group": "leadership",
+      "url": "https://www.roblox.com/users/2735356267/profile",
+      "detail": {
+        "kind": "creator",
+        "subject": "person",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:41.595Z",
+        "channel": null,
+        "person": {
+          "userId": 2735356267,
+          "username": "MisfitsBS",
+          "displayName": "Ben",
+          "verified": true,
+          "profileUrl": "https://www.roblox.com/users/2735356267/profile",
+          "relation": "leader",
+          "roles": [
+            {
+              "group": "and Collect Rare Pets",
+              "role": "Misfits",
+              "rank": 18
+            },
+            {
+              "group": "and Collect Rare Pets",
+              "role": "Owner",
+              "rank": 1
+            }
+          ],
+          "reason": "Holds the role Misfits (rank 18) in and Collect Rare Pets. Highest rank with members (rank 18). Holds the role Owner (rank 1) in and Collect Rare Pets. The role is named Owner. Named in the profile text of misfitsbsthree as one of their accounts."
+        },
+        "publishedBy": [],
+        "confidence": "Linked by the owner",
+        "unconfirmed": false,
+        "provenance": [
+          {
+            "where": "Member of the role Misfits in the group and Collect Rare Pets",
+            "url": "https://www.roblox.com/communities/825735094",
+            "excerpt": null
+          },
+          {
+            "where": "Profile description of MisfitsBS",
+            "url": "https://www.roblox.com/users/2735356267/profile",
+            "excerpt": "Owner of Misfits Gaming and Pixel Playground Second Account: MisfitsBStoo Third Account: MisfitsBSthree"
+          }
+        ],
+        "invite": null,
+        "channels": [],
+        "changed": null,
+        "roles": null,
+        "rankReason": "Holds a leadership role in the owning group. Channels they published are separate rows, ranked above this profile.",
+        "notCollected": "Not collected: home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "person:4613024122",
+      "badge": {
+        "label": "Leader",
+        "tone": "ink"
+      },
+      "title": "MSFMooses, leader of and Collect Rare Pets",
+      "snippet": [
+        {
+          "text": "Misfits (rank 18). No public channels found for them."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Leader"
+        },
+        {
+          "label": "Confidence",
+          "value": "Linked by the owner"
+        }
+      ],
+      "status": {
+        "label": "Tracked",
+        "tone": "muted"
+      },
+      "states": {
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        }
+      },
+      "group": "leadership",
+      "url": "https://www.roblox.com/users/4613024122/profile",
+      "detail": {
+        "kind": "creator",
+        "subject": "person",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:41.595Z",
+        "channel": null,
+        "person": {
+          "userId": 4613024122,
+          "username": "MSFMooses",
+          "displayName": "MSFMooses",
+          "verified": false,
+          "profileUrl": "https://www.roblox.com/users/4613024122/profile",
+          "relation": "leader",
+          "roles": [
+            {
+              "group": "and Collect Rare Pets",
+              "role": "Misfits",
+              "rank": 18
+            }
+          ],
+          "reason": "Holds the role Misfits (rank 18) in and Collect Rare Pets. Highest rank with members (rank 18)."
+        },
+        "publishedBy": [],
+        "confidence": "Linked by the owner",
+        "unconfirmed": false,
+        "provenance": [
+          {
+            "where": "Member of the role Misfits in the group and Collect Rare Pets",
+            "url": "https://www.roblox.com/communities/825735094",
+            "excerpt": null
+          }
+        ],
+        "invite": null,
+        "channels": [],
+        "changed": null,
+        "roles": null,
+        "rankReason": "Holds a leadership role in the owning group. Channels they published are separate rows, ranked above this profile.",
+        "notCollected": "Not collected: home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "person:11840737143",
+      "badge": {
+        "label": "Owner account",
+        "tone": "ink"
+      },
+      "title": "MisfitsBStheFourth, account named by the owner",
+      "snippet": [
+        {
+          "text": "Account named by the owner. No public channels found for them."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Owner account"
+        },
+        {
+          "label": "Confidence",
+          "value": "Linked by the owner"
+        }
+      ],
+      "status": {
+        "label": "Tracked",
+        "tone": "muted"
+      },
+      "states": {
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        }
+      },
+      "group": "owner",
+      "url": "https://www.roblox.com/users/11840737143/profile",
+      "detail": {
+        "kind": "creator",
+        "subject": "person",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:41.595Z",
+        "channel": null,
+        "person": {
+          "userId": 11840737143,
+          "username": "MisfitsBStheFourth",
+          "displayName": "MisfitsBStheFourth",
+          "verified": false,
+          "profileUrl": "https://www.roblox.com/users/11840737143/profile",
+          "relation": "alt",
+          "roles": [],
+          "reason": "Named in the profile text of misfitsbsthree as one of their accounts."
+        },
+        "publishedBy": [],
+        "confidence": "Linked by the owner",
+        "unconfirmed": false,
+        "provenance": [
+          {
+            "where": "Named by the owner as their account",
+            "url": "https://www.roblox.com/users/11840737143/profile",
+            "excerpt": null
+          }
+        ],
+        "invite": null,
+        "channels": [],
+        "changed": null,
+        "roles": null,
+        "rankReason": "An account the owner says is theirs.",
+        "notCollected": "Not collected: home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      "isNew": false
+    },
+    {
+      "id": "person:10019828168",
+      "badge": {
+        "label": "Owner account",
+        "tone": "ink"
+      },
+      "title": "MisfitsBStoo, account named by the owner",
+      "snippet": [
+        {
+          "text": "Account named by the owner. No public channels found for them."
+        }
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Owner account"
+        },
+        {
+          "label": "Confidence",
+          "value": "Linked by the owner"
+        }
+      ],
+      "status": {
+        "label": "Tracked",
+        "tone": "muted"
+      },
+      "states": {
+        "contacted": {
+          "label": "Contacted",
+          "tone": "live"
+        }
+      },
+      "group": "owner",
+      "url": "https://www.roblox.com/users/10019828168/profile",
+      "detail": {
+        "kind": "creator",
+        "subject": "person",
+        "game": "Steal An Egg",
+        "fetchedAt": "2026-10-27T21:57:41.595Z",
+        "channel": null,
+        "person": {
+          "userId": 10019828168,
+          "username": "MisfitsBStoo",
+          "displayName": "MisfitsBStoo",
+          "verified": true,
+          "profileUrl": "https://www.roblox.com/users/10019828168/profile",
+          "relation": "alt",
+          "roles": [],
+          "reason": "Named in the profile text of misfitsbsthree as one of their accounts."
+        },
+        "publishedBy": [],
+        "confidence": "Linked by the owner",
+        "unconfirmed": false,
+        "provenance": [
+          {
+            "where": "Named by the owner as their account",
+            "url": "https://www.roblox.com/users/10019828168/profile",
+            "excerpt": null
+          },
+          {
+            "where": "Profile description of MisfitsBStoo",
+            "url": "https://www.roblox.com/users/10019828168/profile",
+            "excerpt": "It's me too! Second account of MisfitsBS from Misfits Gaming :3"
+          }
+        ],
+        "invite": null,
+        "channels": [],
+        "changed": null,
+        "roles": null,
+        "rankReason": "An account the owner says is theirs.",
+        "notCollected": "Not collected: home address, phone, family, private data. Contacts only if the owner published them."
+      },
+      "isNew": false
+    }
+  ]
+}

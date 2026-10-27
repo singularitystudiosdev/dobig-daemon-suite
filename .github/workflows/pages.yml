@@ -32,6 +32,8 @@ jobs:
         env:
           VITE_BASE: /${{ github.event.repository.name }}/
           VITE_STATIC_PREVIEW: '1'
+          # The hosted server's https URL (repository variable API_BASE). Empty keeps the read-only preview.
+          VITE_API_BASE: ${{ vars.API_BASE }}
       # Routes are hash based, so any other path only needs to land on the app.
       - run: cp dist/index.html dist/404.html
       - uses: actions/configure-pages@v6

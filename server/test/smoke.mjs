@@ -5,6 +5,14 @@
 //   Both keys set (Gemini wins):             GEMINI_API_KEY=test-ok GEMINI_BASE_URL=http://127.0.0.1:5199 OPENROUTER_API_KEY=test-or-ok OPENROUTER_BASE_URL=http://127.0.0.1:5199 vite ...  node server/test/smoke.mjs both
 // The `live` server also needs OPENROUTER_BASE_URL=http://127.0.0.1:5199 (header keys beginning with sk-or- go to OpenRouter's /api/v1/images, served by the same mock).
 // Env vars read by the server: GEMINI_API_KEY, GEMINI_BASE_URL, OPENROUTER_API_KEY, OPENROUTER_BASE_URL, DAEMON_CACHE_DIR.
+// Refuse to run against a server that could write into the live image cache (<repo>/.cache/variants).
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+const LIVE_CACHE = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '.cache', 'variants')
+if (!process.env.DAEMON_CACHE_DIR || resolve(process.env.DAEMON_CACHE_DIR) === LIVE_CACHE) {
+  console.error('Refusing to run: set DAEMON_CACHE_DIR to a temp dir (not .cache/variants) and start the server with the same one, e.g. DAEMON_CACHE_DIR=$(mktemp -d).')
+  process.exit(2)
+}
 const BASE = process.env.BASE ?? 'http://127.0.0.1:5192'
 const MOCK = process.env.MOCK ?? 'http://127.0.0.1:5199'
 const phase = process.argv[2] ?? 'live'

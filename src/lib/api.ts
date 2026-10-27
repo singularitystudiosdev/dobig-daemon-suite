@@ -118,6 +118,11 @@ export const patchDaemon = (id: string, patch: { enabled?: boolean; intervalHour
   call<DaemonRecord>(`/api/daemons/${encodeURIComponent(id)}`, { method: 'PATCH', body: JSON.stringify(patch) })
 export const runDaemonNow = (id: string) => call<{ runId: string }>(`/api/daemons/${encodeURIComponent(id)}/run`, { method: 'POST' })
 export const deleteDaemon = (id: string) => call<{ ok: true }>(`/api/daemons/${encodeURIComponent(id)}`, { method: 'DELETE' })
+/** What the user marked on this daemon's findings: finding id to a short state ("filed", "dismissed", ...). */
+export const getMarks = (daemonId: string) => call<{ marks: Record<string, string> }>(`/api/daemons/${encodeURIComponent(daemonId)}/marks`).then((r) => r.marks)
+/** Saves one mark; an empty state clears it. Resolves with the daemon's marks as the server holds them. */
+export const setMark = (daemonId: string, findingId: string, state: string) =>
+  call<{ ok: true; marks: Record<string, string> }>(`/api/daemons/${encodeURIComponent(daemonId)}/marks`, { method: 'POST', body: JSON.stringify({ findingId, state }) }).then((r) => r.marks)
 
 /** Resolve a public Discord invite (discord.gg/<code> or the code) with no token. */
 export async function resolveDiscord(link: string, signal?: AbortSignal): Promise<{ ok: true; server: DiscordServerInfo } | ApiError> {

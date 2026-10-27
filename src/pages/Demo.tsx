@@ -19,7 +19,8 @@ import { GameHeader } from '@/demo/shell/GameHeader'
 import { GameRail, type RailItem } from '@/demo/shell/GameRail'
 import { KeyDialog } from '@/demo/shell/KeyDialog'
 import { TopBar } from '@/demo/shell/TopBar'
-import { STATIC_PREVIEW } from '@/lib/static'
+import { API_BASE, STATIC_PREVIEW } from '@/lib/static'
+import { AccessGate } from '@/demo/shell/AccessGate'
 import StaticPreview from './StaticPreview'
 import { entryIdOf, useDaemonList, useEntries } from '@/demo/shell/useDaemons'
 import type { AddCardProps, EntryStatus, TargetEntry, WorkspaceProps } from '@/demo/types'
@@ -37,6 +38,14 @@ export default function Demo({ slug }: { slug: string }) {
     )
   }
   if (STATIC_PREVIEW) return <StaticPreview key={slug} slug={slug} />
+  if (API_BASE) {
+    return (
+      <>
+        <Dashboard key={slug} slug={slug} />
+        <AccessGate />
+      </>
+    )
+  }
   return <Dashboard key={slug} slug={slug} />
 }
 
