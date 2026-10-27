@@ -86,3 +86,22 @@ export const OPENROUTER_MODEL = 'google/gemini-nano-banana-2.1'
 /** The exact prompt from the product spec. Do not reword. */
 export const VARIANT_PROMPT = 'Make a variant of this thumbnail with a novel perspective'
 export const VARIANTS_PER_THUMB = 3
+
+/* ---- requests for new tooling (server/requests.ts) ---- */
+
+/** One request sent to the forward deployed engineers from the "New tool" panel. */
+export interface ToolRequest {
+  id: string
+  createdAt: string
+  message: string
+  game: string | null
+  contact: string
+  /** True only when the team's webhook accepted it. False means it is saved in the queue and nothing else. */
+  delivered: boolean
+}
+
+export interface ToolRequestInput {
+  message: string
+  game?: string
+  contact: string
+}

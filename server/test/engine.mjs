@@ -468,6 +468,68 @@ let schedDaemonId
   await C.close()
 }
 
+// ---- requests for new tooling (the "New tool" panel)
+{
+  const d = path.join(tmp, 'requests')
+  const R = await boot(d, { start: false })
+  const rc = api(R.base)
+  const good = { message: 'Warn me when a copycat of my game reaches the top 50 in search.', contact: 'dev@example.com', game: 'https://www.roblox.com/games/1/x' }
+  check('requests: empty list at first', (await rc('GET', '/api/requests')).json.requests.length === 0)
+  const bads = [
+    { ...good, message: 'too short' },
+    { ...good, message: 'x'.repeat(2001) },
+    { ...good, contact: ' ' },
+    { ...good, contact: 'a\nb@example.com' },
+    { ...good, game: 'g'.repeat(201) },
+    { contact: 'dev@example.com' },
+    { ...good, message: 'bad \u0000 byte in the description' },
+  ]
+  const badStatuses = []
+  for (const b of bads) badStatuses.push((await rc('POST', '/api/requests', b)).status)
+  check('requests: invalid input is a 400 with a plain message', badStatuses.every((s) => s === 400) && (await rc('POST', '/api/requests', bads[0])).json.message.includes('at least 12'), badStatuses.join(','))
+  const ok = await rc('POST', '/api/requests', good)
+  check('requests: a valid request is saved (201) and not marked delivered without a webhook', ok.status === 201 && ok.json.request.delivered === false && ok.json.request.contact === 'dev@example.com' && ok.json.request.message === good.message)
+  const listed = (await rc('GET', '/api/requests')).json.requests
+  check('requests: listed newest first', listed.length === 1 && listed[0].id === ok.json.request.id)
+  await rc('POST', '/api/requests', { ...good, message: 'Second request about a weekly retention digest.', game: '  ' })
+  check('requests: a blank game link is stored as null and the newest is first', (await rc('GET', '/api/requests')).json.requests[0].game === null)
+  await R.engine.store.flush()
+  const mode = fs.statSync(path.join(d, 'requests.json')).mode & 0o777
+  check('requests: requests.json is mode 0600 (it holds contact details)', mode === 0o600, mode.toString(8))
+  let limited = 0
+  for (let i = 0; i < 6; i++) if ((await rc('POST', '/api/requests', good)).status === 429) limited++
+  check('requests: more than 5 in 10 minutes is a 429 rate-limited', limited >= 2 && (await rc('POST', '/api/requests', good)).json.code === 'rate-limited')
+  await R.close()
+  const R2 = await boot(d, { start: false })
+  check('requests: they survive a restart', (await api(R2.base)('GET', '/api/requests')).json.requests.length >= 2)
+  await R2.close()
+
+  // webhook: a 200 marks it delivered, a 500 does not, and it receives the text for Slack (text) and Discord (content)
+  const hooks = []
+  let hookStatus = 200
+  const hook = http.createServer((req, res) => {
+    let b = ''
+    req.on('data', (c) => (b += c))
+    req.on('end', () => {
+      hooks.push(JSON.parse(b))
+      res.statusCode = hookStatus
+      res.end('ok')
+    })
+  })
+  await new Promise((r) => hook.listen(0, '127.0.0.1', r))
+  const url = `http://127.0.0.1:${hook.address().port}/h`
+  const W = await boot(path.join(tmp, 'requests-hook'), { start: false, env: { REQUESTS_WEBHOOK_URL: url } })
+  const wc = api(W.base)
+  const sent = await wc('POST', '/api/requests', good)
+  check('requests: a webhook 200 marks the request delivered', sent.json.request.delivered === true && hooks.length === 1)
+  check('requests: the webhook gets text and content with the message, contact and game', hooks[0].text === hooks[0].content && hooks[0].text.includes(good.message) && hooks[0].text.includes('dev@example.com') && hooks[0].text.includes('Game: https://www.roblox.com/games/1/x'))
+  hookStatus = 500
+  const failed = await wc('POST', '/api/requests', { ...good, message: 'The webhook is down for this one, save it anyway.' })
+  check('requests: a webhook failure still saves the request, delivered false', failed.status === 201 && failed.json.request.delivered === false && (await wc('GET', '/api/requests')).json.requests.length === 2)
+  await W.close()
+  await new Promise((r) => hook.close(r))
+}
+
 // ---- default data dir resolution
 {
   const { resolveDataDir } = await import('../store.ts')

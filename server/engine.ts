@@ -5,6 +5,7 @@ import { createCredits, type Credits } from './credits.ts'
 import { createDaemons, type Daemons, type Route } from './daemons.ts'
 import { BodyError, redactKeys, sendJson } from './http.ts'
 import { resolveLlmKey, type KeyEnv } from './keys.ts'
+import { cleanRequest, createRequests, RequestsError, type Requests } from './requests.ts'
 import { createLlm, DEFAULT_ANALYSIS_MODEL, type Llm } from './llm.ts'
 import { createRunEngine, type RunEngine } from './runs.ts'
 import { cleanSecretValue, createSecrets, isSecretName, type SecretStore } from './secrets.ts'
@@ -38,6 +39,7 @@ export interface Engine {
   store: Store
   credits: Credits
   secrets: SecretStore
+  requests: Requests
   runs: RunEngine
   daemons: Daemons
   keyEnv(): KeyEnv
@@ -98,6 +100,7 @@ export function createEngine(options: EngineOptions): Engine {
   const store = createStore(options.dataDir)
   const credits = createCredits(store)
   const secrets = createSecrets(store)
+  const requests = createRequests({ store, webhookUrl: env('REQUESTS_WEBHOOK_URL') })
   const keyEnv = (): KeyEnv => ({ key: env('GEMINI_API_KEY'), openrouterKey: env('OPENROUTER_API_KEY') })
   const makeLlm = (): Llm =>
     createLlm({
@@ -139,6 +142,21 @@ export function createEngine(options: EngineOptions): Engine {
         if (typeof tool !== 'string' || !slugs.has(tool)) return bad(ctx, 'Unknown tool.')
         credits.topUp(tool as DaemonSlug)
         ctx.json(200, credits.response())
+      },
+    },
+    { method: 'GET', path: '/api/requests', handler: async (ctx) => ctx.json(200, { requests: requests.list() }) },
+    {
+      method: 'POST',
+      path: '/api/requests',
+      async handler(ctx) {
+        const clean = cleanRequest(await ctx.body())
+        if ('error' in clean) return bad(ctx, clean.error)
+        try {
+          ctx.json(201, { ok: true, request: await requests.add(clean.value) })
+        } catch (err) {
+          if (err instanceof RequestsError) return bad(ctx, err.message, err.code, 429)
+          throw err
+        }
       },
     },
     { method: 'GET', path: '/api/secrets', handler: async (ctx) => ctx.json(200, { secrets: secrets.presence() }) },
@@ -230,6 +248,7 @@ export function createEngine(options: EngineOptions): Engine {
     store,
     credits,
     secrets,
+    requests,
     runs,
     daemons,
     keyEnv,

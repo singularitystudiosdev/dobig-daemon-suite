@@ -1,5 +1,5 @@
 import type { DaemonSlug } from '@/data/daemons'
-import type { ApiError, GalleryThumb, ResolveResponse, StatusResponse, VariantEvent, VariantRequest } from './apiTypes'
+import type { ApiError, GalleryThumb, ResolveResponse, StatusResponse, ToolRequest, ToolRequestInput, VariantEvent, VariantRequest } from './apiTypes'
 import type { CreateDaemonRequest, CreateDaemonResponse, CreditsResponse, DaemonDetail, DaemonRecord, DiscordServerInfo, RunEvent } from './runTypes'
 
 /* Typed client for the dev-server API (server/**). Nothing here throws on an expected failure:
@@ -109,6 +109,8 @@ export const getSecrets = () => call<{ secrets: Record<SecretName, boolean> }>('
 export const setSecret = (name: SecretName, value: string) => call<{ ok: true }>('/api/secrets', { method: 'POST', body: JSON.stringify({ name, value }) })
 export const removeSecret = (name: SecretName) => call<{ ok: true }>(`/api/secrets/${name}`, { method: 'DELETE' })
 
+export const listToolRequests = () => call<{ requests: ToolRequest[] }>('/api/requests').then((r) => r.requests)
+export const sendToolRequest = (input: ToolRequestInput) => call<{ ok: true; request: ToolRequest }>('/api/requests', { method: 'POST', body: JSON.stringify(input) }).then((r) => r.request)
 export const listDaemons = (tool?: DaemonSlug) => call<{ daemons: DaemonRecord[] }>(`/api/daemons${tool ? `?tool=${tool}` : ''}`).then((r) => r.daemons)
 export const getDaemon = (id: string) => call<DaemonDetail>(`/api/daemons/${encodeURIComponent(id)}`)
 export const createDaemon = (req: CreateDaemonRequest) => call<CreateDaemonResponse>('/api/daemons', { method: 'POST', body: JSON.stringify(req) })

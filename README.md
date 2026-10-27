@@ -63,6 +63,15 @@ Thumbnail Daemon and 2,500 to the others. There is no payment: it is a local all
 - Description drafts are suggestions. You apply them on the Roblox game page.
 - The Discord Daemon only reads servers where you have added your own bot, and never direct messages.
 
+## New tool requests
+
+The tool menu ends with a **New tool** row. It opens a panel explaining that our forward deployed engineers build custom
+tooling directly, with a short form (what the tool should do, an optional game link, how to reach you). The server saves
+each request in `.data/requests.json` (file mode 0600, it holds contact details) and the panel lists your recent ones.
+To get them to the team, set `REQUESTS_WEBHOOK_URL` to a Slack or Discord incoming webhook: each request is then also
+posted there, and the confirmation says "Sent to the engineering team" only when the webhook accepted it. Without a
+webhook it says "Request saved" and the request waits in the queue. Five requests per ten minutes are accepted.
+
 ## Keys
 
 Press **Keys** on any tool. Paste one key and the server decides what it is for:
