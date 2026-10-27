@@ -184,12 +184,12 @@ export function ExampleRun({ example }: { example: ToolExample }) {
       {discord ? (
         <Strip>
           Example from a real lookup of {example.game.name}&rsquo;s official server{when ? `, captured ${when}` : ''}. It is read-only.{' '}
-          {example.note ? example.note.split(/(?<=\.)\s+/)[0] : 'The tool needs your own bot, so there is no public run.'} Run the tool on your own server with the steps below.
+          {example.note ? example.note.split(/(?<=\.)\s+/)[0] : 'The tool needs your own bot, so there is no public run.'}
         </Strip>
       ) : (
         <Strip>
           Example from a real run on {example.game.name}
-          {when ? `, captured ${when}` : ''}. It is read-only: run the tool on your own game with the steps below.
+          {when ? `, captured ${when}` : ''}. It is read-only.
         </Strip>
       )}
 

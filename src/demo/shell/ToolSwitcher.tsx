@@ -29,7 +29,7 @@ function ToolIcon({ slug, className }: { slug: DaemonSlug; className?: string })
 
 function Credits({ slug }: { slug: DaemonSlug }) {
   const n = useBalance(slug)
-  if (STATIC_PREVIEW) return <span className="text-micro text-muted">Runs on your machine</span>
+  if (STATIC_PREVIEW) return null
   return (
     <span className="tabular inline-flex items-center gap-4 text-micro text-muted">
       <Zap aria-hidden className="size-12" />
@@ -79,7 +79,8 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
     }
   }
   const onListKey = (e: KeyboardEvent) => {
-    const last = NEW
+    // The New tool row needs the server, so the Pages preview does not offer it.
+    const last = STATIC_PREVIEW ? NEW - 1 : NEW
     if (e.key === 'ArrowDown') setActive((i) => (i >= last ? 0 : i + 1))
     else if (e.key === 'ArrowUp') setActive((i) => (i <= 0 ? last : i - 1))
     else if (e.key === 'Home') setActive(0)
@@ -139,22 +140,24 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
                   </span>
                 </li>
               ))}
-              <li
-                id={`${listId}-new`}
-                role="option"
-                aria-selected={false}
-                onClick={openNew}
-                onPointerMove={() => setActive(NEW)}
-                className={cn('mt-4 flex cursor-pointer items-center gap-12 rounded-8 border border-dashed border-line-strong p-8', active === NEW && 'bg-raised')}
-              >
-                <span aria-hidden className="flex h-36 w-64 shrink-0 items-center justify-center rounded-8 bg-raised text-accent-ink">
-                  <Plus className="size-20" />
-                </span>
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="truncate text-label font-medium text-ink">New tool</span>
-                  <span className="text-micro text-muted">Build custom tooling with our engineers</span>
-                </span>
-              </li>
+              {!STATIC_PREVIEW && (
+                <li
+                  id={`${listId}-new`}
+                  role="option"
+                  aria-selected={false}
+                  onClick={openNew}
+                  onPointerMove={() => setActive(NEW)}
+                  className={cn('mt-4 flex cursor-pointer items-center gap-12 rounded-8 border border-dashed border-line-strong p-8', active === NEW && 'bg-raised')}
+                >
+                  <span aria-hidden className="flex h-36 w-64 shrink-0 items-center justify-center rounded-8 bg-raised text-accent-ink">
+                    <Plus className="size-20" />
+                  </span>
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate text-label font-medium text-ink">New tool</span>
+                    <span className="text-micro text-muted">Build custom tooling with our engineers</span>
+                  </span>
+                </li>
+              )}
             </ul>
             <button
               type="button"
