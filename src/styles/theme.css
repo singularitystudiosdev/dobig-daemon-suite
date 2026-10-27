@@ -83,6 +83,9 @@
   --animate-scan: scan 2400ms linear infinite; /* deliberate */
   --animate-blink: blink 1000ms steps(1) infinite; /* deliberate */
   --animate-flow: flow 900ms linear infinite; /* deliberate */
+  --animate-shimmer: shimmer 1600ms var(--ease-standard) infinite; /* deliberate */
+  --animate-rise: rise 420ms var(--ease-emphasized-decelerate) both; /* deliberate */
+  --animate-settle: settle 480ms var(--ease-emphasized-decelerate) both; /* deliberate */
 
   @keyframes enter {
     from { opacity: 0; transform: translateY(8px); }
@@ -102,6 +105,20 @@
   }
   @keyframes blink {
     50% { opacity: 0; }
+  }
+  /* A bright band sweeping across a pending frame: marks work in flight, not decoration. */
+  @keyframes shimmer {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: none; }
+  }
+  /* A finished image easing into its frame. */
+  @keyframes settle {
+    from { opacity: 0; transform: scale(1.04); }
+    to { opacity: 1; transform: none; }
   }
   @keyframes flow {
     to { stroke-dashoffset: -24; }

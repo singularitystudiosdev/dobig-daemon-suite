@@ -77,6 +77,28 @@
   grid-template-columns: minmax(0, 1fr) 360px;
 }
 
+/* Shared-element morphs: a tool tile becomes the detail card becomes the demo's tool chip. */
+::view-transition-group(.tool-morph) {
+  animation-duration: 460ms; /* deliberate */
+  animation-timing-function: var(--ease-emphasized-decelerate);
+}
+::view-transition-group(.game-morph) {
+  animation-duration: 420ms; /* deliberate */
+  animation-timing-function: var(--ease-emphasized-decelerate);
+}
+::view-transition-old(.tool-morph),
+::view-transition-new(.tool-morph) {
+  height: 100%;
+  object-fit: cover;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { lazy, Suspense, type ReactNode } from 'react'
 import { useRoute } from '@/lib/router'
 import { isDaemonSlug } from '@/data/daemons'
 import { toolPages } from '@/tools/registry'
@@ -7,11 +7,27 @@ import { TopNav } from '@/components/shell/TopNav'
 import { Footer } from '@/components/shell/Footer'
 import { Skeleton, ToastProvider } from '@/components/ui'
 import Hub from '@/pages/Hub'
+import ToolDetail from '@/pages/ToolDetail'
 
+const Demo = lazy(() => import('@/pages/Demo'))
+
+/* Routes: #/ the hub, #/t/<slug> a tool's detail, #/demo/<slug> its demo dashboard (its own top bar,
+   so no navbar or footer), #/d/<slug> the full simulated run. Anything else is the hub. */
 export default function App() {
   const { segments } = useRoute()
-  const slug = segments[0] === 'd' && isDaemonSlug(segments[1]) ? segments[1] : null
-  const Page = slug ? toolPages[slug] : null
+  const [area, second = ''] = segments
+  const validSlug = isDaemonSlug(second) ? second : null
+
+  let page: ReactNode = <Hub />
+  if (area === 't') page = <ToolDetail key={second} slug={second} />
+  else if (area === 'demo' && validSlug) page = <Demo key={validSlug} slug={validSlug} />
+  else if (area === 'd' && validSlug) {
+    const Page = toolPages[validSlug]
+    page = <Page key={validSlug} />
+  }
+  const isDemo = area === 'demo' && validSlug !== null
+  const isRun = area === 'd' && validSlug !== null
+
   return (
     <ActiveGameProvider>
       <ToastProvider>
@@ -22,9 +38,9 @@ export default function App() {
         >
           Skip to main content
         </button>
-        <TopNav active={slug ?? 'hub'} />
-        <Suspense fallback={<PageFallback />}>{Page ? <Page key={slug} /> : <Hub />}</Suspense>
-        <Footer />
+        {!isDemo && <TopNav showToolkitLink={isRun} />}
+        <Suspense fallback={<PageFallback />}>{page}</Suspense>
+        {!isDemo && <Footer />}
       </ToastProvider>
     </ActiveGameProvider>
   )
@@ -32,16 +48,9 @@ export default function App() {
 
 function PageFallback() {
   return (
-    <div className="mx-auto flex max-w-page flex-col gap-24 px-24 pb-96 pt-24" aria-busy>
-      <Skeleton className="h-20 w-160" />
-      <div className="flex items-center gap-20">
-        <Skeleton className="size-96" />
-        <div className="flex flex-1 flex-col gap-12">
-          <Skeleton className="h-40 w-1/3" />
-          <Skeleton className="h-16 w-1/2" />
-        </div>
-      </div>
-      <Skeleton className="h-480 w-full" />
-    </div>
+    <main id="main-content" tabIndex={-1} className="mx-auto max-w-page px-24 pt-48">
+      <Skeleton className="h-48 w-320" />
+      <Skeleton className="mt-24 h-320 w-full" />
+    </main>
   )
 }
