@@ -3,16 +3,19 @@ import path from 'node:path'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import {
   NANO_BANANA_MODEL,
+  OPENROUTER_MODEL,
   VARIANTS_PER_THUMB,
   VARIANT_PROMPT,
   type ApiError,
   type GalleryThumb,
+  type ImageProvider,
   type VariantEvent,
   type VariantFailure,
   type VariantRequest,
 } from '../src/lib/apiTypes.ts'
 import { GeminiError, generateVariant, sniff } from './gemini.ts'
-import { BodyError, readJson, sendJson, startNdjson } from './http.ts'
+import { BodyError, readJson, redactKeys, sendJson, startNdjson } from './http.ts'
+import { generateWithOpenRouter } from './openrouter.ts'
 
 /** Default output directory for generated images; /api/img serves them to the browser. */
 export const CACHE_DIR = '.cache/variants'
@@ -26,6 +29,9 @@ export interface ServerEnv {
   /** Server-side Gemini key (env). Never logged or sent to the client. */
   key: string
   baseUrl: string
+  /** Server-side OpenRouter key (env). Used only when there is no Gemini key. Never logged or sent to the client. */
+  openrouterKey: string
+  openrouterBaseUrl: string
   /** Where generated images are written (and served from by /api/img). Never read to skip a generation. */
   cacheDir: string
 }
@@ -88,6 +94,19 @@ export function parseVariantRequest(raw: unknown): { error: string } | { gallery
 }
 
 const KEY_SHAPE = /^[A-Za-z0-9_-]{6,256}$/
+const OPENROUTER_PREFIX = 'sk-or-'
+
+/** The provider a browser-supplied key belongs to: OpenRouter keys start with sk-or-, anything else is a Gemini key. */
+export function providerForKey(key: string): ImageProvider {
+  return key.startsWith(OPENROUTER_PREFIX) ? 'openrouter' : 'google'
+}
+
+/** The provider the server's own environment keys select (a Gemini key wins when both are set), or null with none. */
+export function envProvider(env: ServerEnv): ImageProvider | null {
+  if (env.key) return 'google'
+  if (env.openrouterKey) return 'openrouter'
+  return null
+}
 
 /** `?v=` busts the immutable browser cache when a new generation overwrites the same filename. */
 function imgSrc(env: ServerEnv, name: string): string {
@@ -130,16 +149,25 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
   // A key typed into the browser wins over the one in the server environment.
   const header = req.headers['x-gemini-key']
   const headerKey = (Array.isArray(header) ? header[0] : header)?.trim() ?? ''
-  const apiKey = headerKey && KEY_SHAPE.test(headerKey) ? headerKey : env.key
+  let apiKey = ''
+  let provider: ImageProvider | null = null
+  if (headerKey && KEY_SHAPE.test(headerKey)) {
+    apiKey = headerKey
+    provider = providerForKey(headerKey)
+  } else {
+    provider = envProvider(env)
+    apiKey = provider === 'google' ? env.key : provider === 'openrouter' ? env.openrouterKey : ''
+  }
   const { tiles } = parsed
   // Every tile is a fresh call to the model; with no key anywhere nothing is generated.
   const mode: 'live' | 'unavailable' = apiKey ? 'live' : 'unavailable'
+  if (mode === 'unavailable') provider = null
 
   const out = startNdjson(req, res)
   const emit = (e: VariantEvent) => out.write(e)
   let done = 0
   let failed = 0
-  emit({ type: 'start', total: tiles.length, mode, model: NANO_BANANA_MODEL })
+  emit({ type: 'start', total: tiles.length, mode, model: NANO_BANANA_MODEL, provider })
 
   const thumbCache = new Map<string, Promise<{ mime: string; base64: string }>>()
   const thumbOf = (t: GalleryThumb) => {
@@ -168,14 +196,10 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
     try {
       if (mode === 'live') {
         const image = await thumbOf(t.thumb)
-        const result = await generateVariant({
-          baseUrl: env.baseUrl,
-          model: NANO_BANANA_MODEL,
-          apiKey,
-          prompt: VARIANT_PROMPT,
-          image,
-          signal: out.signal,
-        })
+        const result =
+          provider === 'openrouter'
+            ? await generateWithOpenRouter({ baseUrl: env.openrouterBaseUrl, model: OPENROUTER_MODEL, apiKey, prompt: VARIANT_PROMPT, image, signal: out.signal })
+            : await generateVariant({ baseUrl: env.baseUrl, model: NANO_BANANA_MODEL, apiKey, prompt: VARIANT_PROMPT, image, signal: out.signal })
         const name = `${t.thumb.id}-${t.index}.${EXT[result.mime]}`
         fs.mkdirSync(env.cacheDir, { recursive: true })
         const tmp = path.join(env.cacheDir, `.${name}.${process.pid}.${Date.now()}.tmp`)
@@ -190,7 +214,7 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
     } catch (err) {
       if (out.signal.aborted) return
       if (err instanceof GeminiError) return fail(t, err.reason, err.message)
-      console.error('[api] variant failed:', redact((err as Error)?.message ?? String(err), apiKey))
+      console.error('[api] variant failed:', redactKeys((err as Error)?.message ?? String(err), apiKey))
       fail(t, 'upstream', 'Something went wrong on the local server. Retry this tile.')
     }
   }
@@ -207,10 +231,6 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, tiles.length) }, worker))
   if (!out.signal.aborted) emit({ type: 'end', done, failed })
   out.end()
-}
-
-function redact(text: string, key: string): string {
-  return key ? text.split(key).join('[redacted]') : text
 }
 
 export function serveGeneratedImage(req: IncomingMessage, res: ServerResponse, env: ServerEnv, file: string): void {

@@ -31,8 +31,8 @@ type Route = 'generate' | 'interactions'
 /** Remembered once the fallback route proved to be the one that works. */
 let preferred: Route = 'generate'
 
-const NO_IMAGE_MSG = 'Nano Banana returned no image for this thumbnail. Retry this tile or try another screenshot.'
-const BLOCKED_MSG = 'Google declined to edit this thumbnail (safety filter). Try another screenshot.'
+export const NO_IMAGE_MSG = 'Nano Banana returned no image for this thumbnail. Retry this tile or try another screenshot.'
+export const BLOCKED_MSG = 'Google declined to edit this thumbnail (safety filter). Try another screenshot.'
 
 function scrub(text: string, key: string): string {
   return key ? text.split(key).join('[redacted]') : text

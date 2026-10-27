@@ -1,4 +1,4 @@
-import type { VariantEvent, VariantFailure } from '@/lib/apiTypes'
+import type { ImageProvider, VariantEvent, VariantFailure } from '@/lib/apiTypes'
 
 /* Tile state for the Thumbnail workspace. Every variant frame exists from the first render as 'queued';
    NDJSON events move it to working, then done or failed. */
@@ -14,7 +14,9 @@ export interface TilesState {
   tiles: Record<string, Tile>
   /** The start event's mode: every tile is a fresh live call to the model. */
   mode: 'live' | null
-  /** The server has no Gemini key anywhere, so nothing is generated. */
+  /** The start event's provider (Google or OpenRouter), or null when the server did not say. */
+  provider: ImageProvider | null
+  /** The server has no image key anywhere, so nothing is generated. */
   unavailable: boolean
 }
 
@@ -28,7 +30,7 @@ export type TilesAction =
 export const tileKey = (thumbId: string, index: number) => `${thumbId}:${index}`
 
 export function initTiles(keys: string[]): TilesState {
-  return { tiles: Object.fromEntries(keys.map((k) => [k, { status: 'queued' } as Tile])), mode: null, unavailable: false }
+  return { tiles: Object.fromEntries(keys.map((k) => [k, { status: 'queued' } as Tile])), mode: null, provider: null, unavailable: false }
 }
 
 export function tilesReducer(state: TilesState, action: TilesAction): TilesState {
@@ -52,7 +54,7 @@ export function tilesReducer(state: TilesState, action: TilesAction): TilesState
       return { ...state, unavailable: false }
     case 'event': {
       const e = action.event
-      if (e.type === 'start') return e.mode === 'unavailable' ? state : { ...state, mode: e.mode }
+      if (e.type === 'start') return e.mode === 'unavailable' ? state : { ...state, mode: e.mode, provider: e.provider ?? null }
       if (e.type === 'end') return state
       const key = tileKey(e.thumbId, e.index)
       if (!(key in state.tiles)) return state

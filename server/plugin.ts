@@ -2,15 +2,16 @@ import path from 'node:path'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { loadEnv, type Plugin, type ResolvedConfig } from 'vite'
 import { NANO_BANANA_MODEL, VARIANTS_PER_THUMB, type ApiError, type StatusResponse } from '../src/lib/apiTypes.ts'
-import { sendJson } from './http.ts'
+import { redactKeys, sendJson } from './http.ts'
 import { ResolveError, resolveGame } from './roblox.ts'
-import { CACHE_DIR, handleVariants, serveGeneratedImage, type ServerEnv } from './variants.ts'
+import { CACHE_DIR, envProvider, handleVariants, serveGeneratedImage, type ServerEnv } from './variants.ts'
 
 const DEFAULT_BASE = 'https://generativelanguage.googleapis.com'
+const DEFAULT_OPENROUTER_BASE = 'https://openrouter.ai'
 
 /** JSON API under /api, mounted in both `vite` (dev) and `vite preview`. */
 export function apiPlugin(): Plugin {
-  let env: ServerEnv = { key: '', baseUrl: DEFAULT_BASE, cacheDir: '' }
+  let env: ServerEnv = { key: '', baseUrl: DEFAULT_BASE, openrouterKey: '', openrouterBaseUrl: DEFAULT_OPENROUTER_BASE, cacheDir: '' }
 
   const configure = (config: ResolvedConfig) => {
     const file = loadEnv(config.mode, config.envDir || config.root, '')
@@ -18,6 +19,8 @@ export function apiPlugin(): Plugin {
     env = {
       key: pick('GEMINI_API_KEY'),
       baseUrl: (pick('GEMINI_BASE_URL') || DEFAULT_BASE).replace(/\/+$/, ''),
+      openrouterKey: pick('OPENROUTER_API_KEY'),
+      openrouterBaseUrl: (pick('OPENROUTER_BASE_URL') || DEFAULT_OPENROUTER_BASE).replace(/\/+$/, ''),
       // DAEMON_CACHE_DIR: where generated images are written; tests point it at a temp dir.
       cacheDir: pick('DAEMON_CACHE_DIR') ? path.resolve(pick('DAEMON_CACHE_DIR')) : path.join(config.root, CACHE_DIR),
     }
@@ -28,7 +31,7 @@ export function apiPlugin(): Plugin {
     if (!(url === '/api' || url.startsWith('/api/') || url.startsWith('/api?'))) return next()
     route(req, res, env).catch((err) => {
       // Never echo internals (or a key) to the client.
-      console.error('[api] unhandled:', redact(err instanceof Error ? err.message : String(err), env.key))
+      console.error('[api] unhandled:', redactKeys(err instanceof Error ? err.message : String(err), env.key || env.openrouterKey))
       const body: ApiError = { ok: false, code: 'upstream', message: 'The local API hit an unexpected error. Reload and try again.' }
       sendJson(res, 500, body)
     })
@@ -46,10 +49,6 @@ export function apiPlugin(): Plugin {
   }
 }
 
-function redact(text: string, key: string): string {
-  return key ? text.split(key).join('[redacted]') : text
-}
-
 async function route(req: IncomingMessage, res: ServerResponse, env: ServerEnv): Promise<void> {
   const u = new URL(req.url ?? '/', 'http://localhost')
   const p = u.pathname.replace(/\/+$/, '')
@@ -59,7 +58,8 @@ async function route(req: IncomingMessage, res: ServerResponse, env: ServerEnv):
   if (p === '/api/status') {
     if (method !== 'GET') return methodNotAllowed('GET')
     const body: StatusResponse = {
-      geminiKey: env.key.length > 0,
+      geminiKey: env.key.length > 0 || env.openrouterKey.length > 0,
+      provider: envProvider(env),
       model: NANO_BANANA_MODEL,
       perThumb: VARIANTS_PER_THUMB,
     }

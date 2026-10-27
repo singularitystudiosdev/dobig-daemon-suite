@@ -47,9 +47,14 @@ export interface ApiError {
   retryAfter?: number
 }
 
+/** Who the server asks for images: Google's Gemini API directly, or OpenRouter (same Nano Banana 2.1 model). */
+export type ImageProvider = 'google' | 'openrouter'
+
 export interface StatusResponse {
-  /** True when GEMINI_API_KEY is set on the server (env or .env.local). */
+  /** True when the server has a key of either provider in its environment (GEMINI_API_KEY or OPENROUTER_API_KEY). */
   geminiKey: boolean
+  /** The provider the server uses with its own key: google wins when both are set; null when it has none. */
+  provider: ImageProvider | null
   /** Model id the server asks for. */
   model: string
   /** Variants generated per gallery thumbnail. */
@@ -69,13 +74,15 @@ export type VariantFailure = 'no-key' | 'blocked' | 'no-image' | 'rate-limited' 
 /** NDJSON events, one JSON object per line, from POST /api/variants. */
 export type VariantEvent =
   /** 'live': a key is available and every tile is a fresh call to the model. 'unavailable': no key anywhere, nothing is generated. */
-  | { type: 'start'; total: number; mode: 'live' | 'unavailable'; model: string }
+  | { type: 'start'; total: number; mode: 'live' | 'unavailable'; model: string; provider: ImageProvider | null }
   | { type: 'working'; thumbId: string; index: number }
   | { type: 'done'; thumbId: string; index: number; src: string; ms: number }
   | { type: 'failed'; thumbId: string; index: number; reason: VariantFailure; message: string }
   | { type: 'end'; done: number; failed: number }
 
 export const NANO_BANANA_MODEL = 'gemini-nano-banana-2.1'
+/** The same model under OpenRouter's catalogue (https://openrouter.ai/google/gemini-nano-banana-2.1). */
+export const OPENROUTER_MODEL = 'google/gemini-nano-banana-2.1'
 /** The exact prompt from the product spec. Do not reword. */
 export const VARIANT_PROMPT = 'Make a variant of this thumbnail with a novel perspective'
 export const VARIANTS_PER_THUMB = 3

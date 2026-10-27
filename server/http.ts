@@ -100,3 +100,9 @@ export function sleep(ms: number, signal?: AbortSignal): Promise<void> {
     signal?.addEventListener('abort', onAbort, { once: true })
   })
 }
+
+/** Scrubs a known key plus anything shaped like an OpenRouter (sk-or-...) or Google (AIza...) key from text bound for a log or the client. */
+export function redactKeys(text: string, key = ''): string {
+  const plain = key ? text.split(key).join('[redacted]') : text
+  return plain.replace(/sk-or-[A-Za-z0-9_-]+/g, '[redacted]').replace(/AIza[A-Za-z0-9_-]{20,}/g, '[redacted]')
+}

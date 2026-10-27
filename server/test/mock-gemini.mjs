@@ -1,11 +1,15 @@
-// Mock of the Gemini image endpoints (generateContent AND interactions) for key-less tests.
+// Mock of the Gemini image endpoints (generateContent AND interactions) and OpenRouter's POST /api/v1/images for key-less tests.
 // The behaviour is picked by the API key the caller sends in x-goog-api-key:
 //   test-ok          generateContent -> JPEG                 test-interactions  generateContent 404, interactions -> JPEG
 //   test-block       promptFeedback.blockReason SAFETY       test-finish        finishReason IMAGE_SAFETY, no image
 //   test-429         first call per tile 429 (Retry-After 1) then JPEG       test-429-always  always 429
 //   test-slow        waits 20 s before answering             test-badkey        400 API_KEY_INVALID
 //   test-noimage     200 with text only                      test-modality      400 until TEXT+IMAGE modalities
-// GET /__stats -> {calls, maxConcurrent, prompts[], keys[], routes[], aborted}   POST /__reset clears it.
+// OpenRouter (POST /api/v1/images, key from `Authorization: Bearer`; a leading sk-or- is ignored when picking the behaviour):
+//   test-or-ok       -> JPEG        test-or-401  401 Invalid API key     test-or-402  402 out of credits
+//   test-or-429      first call per 4 answers 429 (Retry-After 1) then JPEG        test-or-moderation  400 blocked by safety policy
+//   test-or-empty    200 with data:[]
+// GET /__stats -> {calls, maxConcurrent, prompts[], keys[], routes[], aborted, openrouter:{calls, concurrent, maxConcurrent, prompts[], keys[], images[]}}   POST /__reset clears it.
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -17,7 +21,7 @@ const JPEG = fs.readFileSync(path.join(here, 'fixture.jpg'))
 const port = Number(process.env.MOCK_PORT ?? 5199)
 
 let stats
-const reset = () => (stats = { calls: 0, concurrent: 0, maxConcurrent: 0, prompts: [], keys: [], routes: [], aborted: 0, images: [] })
+const reset = () => (stats = { calls: 0, concurrent: 0, maxConcurrent: 0, prompts: [], keys: [], routes: [], aborted: 0, images: [], openrouter: { calls: 0, concurrent: 0, maxConcurrent: 0, prompts: [], keys: [], images: [], count429: 0 } })
 reset()
 
 const wait = (ms, res) =>
@@ -53,6 +57,32 @@ const send = (res, status, json, headers = {}) => {
   res.end(JSON.stringify(json))
 }
 
+async function openrouter(req, res) {
+  const chunks = []
+  for await (const c of req) chunks.push(c)
+  const body = JSON.parse(Buffer.concat(chunks).toString())
+  const bearer = /^Bearer (.*)$/.exec(req.headers.authorization ?? '')?.[1] ?? ''
+  const key = bearer.replace(/^sk-or-/, '')
+  const st = stats.openrouter
+  const ref = body.input_references?.[0]?.image_url?.url ?? ''
+  const m = /^data:([^;]+);base64,(.*)$/s.exec(ref)
+  st.calls++
+  st.prompts.push(body.prompt)
+  st.keys.push(bearer)
+  st.images.push({ mime: m?.[1], bytes: m ? Buffer.from(m[2], 'base64').length : 0, refs: body.input_references?.length ?? 0, aspect_ratio: body.aspect_ratio, resolution: body.resolution, model: body.model })
+  st.concurrent++
+  st.maxConcurrent = Math.max(st.maxConcurrent, st.concurrent)
+  res.on('close', () => st.concurrent--)
+  await wait(300 + Math.random() * 400, res)
+  if (res.destroyed) return
+  if (key === 'test-or-401') return send(res, 401, { error: { message: 'Invalid API key', code: 401 } })
+  if (key === 'test-or-402') return send(res, 402, { error: { message: 'Insufficient credits. Add more using https://openrouter.ai/credits', code: 402 } })
+  if (key === 'test-or-moderation') return send(res, 400, { error: { message: 'Request blocked by safety policy', code: 400 } })
+  if (key === 'test-or-empty') return send(res, 200, { created: Math.floor(Date.now() / 1000), data: [], usage: { cost: 0.03 } })
+  if (key === 'test-or-429' && st.count429++ % 4 === 0) return send(res, 429, { error: { message: 'Rate limit exceeded', code: 429 } }, { 'retry-after': '1' })
+  return send(res, 200, { created: Math.floor(Date.now() / 1000), data: [{ b64_json: JPEG.toString('base64'), media_type: 'image/jpeg' }], usage: { cost: 0.03 } })
+}
+
 http
   .createServer(async (req, res) => {
     if (req.url === '/__stats') return send(res, 200, stats)
@@ -60,6 +90,7 @@ http
       reset()
       return send(res, 200, { ok: true })
     }
+    if (req.method === 'POST' && req.url === '/api/v1/images') return openrouter(req, res).catch((err) => !res.headersSent && send(res, 500, { error: { message: String(err) } }))
     const route = req.url.includes(':generateContent') ? 'generate' : req.url.endsWith('/v1beta/interactions') ? 'interactions' : null
     if (req.method !== 'POST' || !route) return send(res, 404, { error: { code: 404, message: 'not found', status: 'NOT_FOUND' } })
     const chunks = []

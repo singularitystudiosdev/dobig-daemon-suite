@@ -15,7 +15,7 @@ export function TopBar({ slug, balance, onTopUp, onOpenGemini }: { slug: DaemonS
         <div className="flex shrink-0 items-center gap-8">
           {slug === 'thumbnail-daemon' && (
             <Button icon={KeyRound} onClick={onOpenGemini}>
-              <span className="sr-only sm:not-sr-only">Gemini</span>
+              <span className="sr-only sm:not-sr-only">Key</span>
               {hasKey && <span role="img" aria-label="key saved" className="size-8 rounded-full bg-live" />}
             </Button>
           )}

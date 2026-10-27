@@ -1,9 +1,16 @@
 // End-to-end checks against a running dev server + mock-gemini (no real Google calls).
 //   node server/test/mock-gemini.mjs & DAEMON_CACHE_DIR=$(mktemp -d) GEMINI_API_KEY=test-ok GEMINI_BASE_URL=http://127.0.0.1:5199 vite --port 5192 &
 //   node server/test/smoke.mjs live   |   (server started WITHOUT a key, same DAEMON_CACHE_DIR=$(mktemp -d) and GEMINI_BASE_URL)  node server/test/smoke.mjs nokey
+//   OpenRouter-only server (no Gemini key):  DAEMON_CACHE_DIR=$(mktemp -d) OPENROUTER_API_KEY=test-or-ok OPENROUTER_BASE_URL=http://127.0.0.1:5199 vite --host 127.0.0.1 --port 5192 &  node server/test/smoke.mjs orenv
+//   Both keys set (Gemini wins):             GEMINI_API_KEY=test-ok GEMINI_BASE_URL=http://127.0.0.1:5199 OPENROUTER_API_KEY=test-or-ok OPENROUTER_BASE_URL=http://127.0.0.1:5199 vite ...  node server/test/smoke.mjs both
+// The `live` server also needs OPENROUTER_BASE_URL=http://127.0.0.1:5199 (header keys beginning with sk-or- go to OpenRouter's /api/v1/images, served by the same mock).
+// Env vars read by the server: GEMINI_API_KEY, GEMINI_BASE_URL, OPENROUTER_API_KEY, OPENROUTER_BASE_URL, DAEMON_CACHE_DIR.
 const BASE = process.env.BASE ?? 'http://127.0.0.1:5192'
 const MOCK = process.env.MOCK ?? 'http://127.0.0.1:5199'
 const phase = process.argv[2] ?? 'live'
+// An OpenRouter header key must start with this prefix; the rest is an obviously fake test token (the mock ignores the prefix).
+const OR_PREFIX = 'sk-or-'
+const orKey = (name) => OR_PREFIX + name
 const PROMPT = 'Make a variant of this thumbnail with a novel perspective'
 let pass = 0
 let fail = 0
@@ -49,7 +56,8 @@ console.log('status', JSON.stringify(status.body))
 if (phase === 'live') {
   check('status geminiKey true', status.body.geminiKey === true)
   check('status model/perThumb', status.body.model === 'gemini-nano-banana-2.1' && status.body.perThumb === 3)
-  check('status has no recorded field', !('recorded' in status.body) && Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb', Object.keys(status.body).join())
+  check('status fields exactly geminiKey,model,perThumb,provider', Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb,provider', Object.keys(status.body).join())
+  check('status provider google (env Gemini key)', status.body.provider === 'google')
 
   // ---- /api/game
   const g = await getJson('/api/game?link=' + encodeURIComponent('https://www.roblox.com/games/107778070777162/Steal-An-Egg'))
@@ -90,6 +98,7 @@ if (phase === 'live') {
   const ev = ok.events
   check('variants content-type ndjson + headers', ok.r.headers.get('content-type')?.startsWith('application/x-ndjson') && ok.r.headers.get('cache-control') === 'no-cache' && ok.r.headers.get('x-accel-buffering') === 'no')
   check('first event start/live/total 12', ev[0]?.type === 'start' && ev[0].mode === 'live' && ev[0].total === 12 && ev[0].model === 'gemini-nano-banana-2.1', JSON.stringify(ev[0]))
+  check('start.provider google for the env Gemini key', ev[0]?.provider === 'google')
   const done = ev.filter((e) => e.type === 'done')
   check('12 done, no source field', done.length === 12 && done.every((e) => !('source' in e) && /^\/api\/img\/\d+-\d\.jpg\?v=\d+$/.test(e.src)))
   check('last event end done=12 failed=0', ev.at(-1)?.type === 'end' && ev.at(-1).done === 12 && ev.at(-1).failed === 0, `${Date.now() - t0}ms`)
@@ -107,6 +116,10 @@ if (phase === 'live') {
   check('second identical run: 12 live done, mock now at 24 calls', again.events.filter((e) => e.type === 'done').length === 12 && st2.calls === 24, `calls=${st2.calls}`)
   const hadSrc = new Set(done.map((e) => `${e.thumbId}-${e.index}`))
   check('second run covers the same 12 tiles', again.events.filter((e) => e.type === 'done').every((e) => hadSrc.has(`${e.thumbId}-${e.index}`)))
+
+  await mock('/__reset')
+  const hdrGoogle = await stream({ gallery: gallery.slice(0, 1), only: [{ thumbId: gallery[0].id, index: 0 }] }, { 'x-gemini-key': 'test-ok' })
+  check('start.provider google for header key test-ok', hdrGoogle.events[0]?.provider === 'google' && hdrGoogle.events.some((e) => e.type === 'done'))
 
   // a stale `fresh` flag is ignored and still generates live
   await mock('/__reset')
@@ -153,6 +166,51 @@ if (phase === 'live') {
   const rst2 = await mock()
   check('429 forever -> failed rate-limited after 3 attempts', rf?.reason === 'rate-limited' && rst2.calls >= 3, rf?.message)
 
+  // ---- OpenRouter (header key beginning with sk-or-; mock endpoint POST /api/v1/images)
+  const one = { gallery: gallery.slice(0, 1), only: [{ thumbId: gallery[0].id, index: 0 }] }
+  await mock('/__reset')
+  const orOk = await stream({ gallery }, { 'x-gemini-key': orKey('test-or-ok') })
+  const ors = await mock()
+  const orDone = orOk.events.filter((e) => e.type === 'done')
+  check('OR: start.provider openrouter, model stays NANO_BANANA_MODEL', orOk.events[0]?.type === 'start' && orOk.events[0].provider === 'openrouter' && orOk.events[0].mode === 'live' && orOk.events[0].model === 'gemini-nano-banana-2.1', JSON.stringify(orOk.events[0]))
+  check('OR: 12 done, end done=12 failed=0', orDone.length === 12 && orOk.events.at(-1)?.type === 'end' && orOk.events.at(-1).done === 12 && orOk.events.at(-1).failed === 0 && orDone.every((e) => /^\/api\/img\/\d+-\d\.jpg\?v=\d+$/.test(e.src)))
+  check('OR: mock saw 12 /api/v1/images calls and 0 Google calls', ors.openrouter.calls === 12 && ors.calls === 0, `or=${ors.openrouter.calls} google=${ors.calls}`)
+  check('OR: exact prompt every call', ors.openrouter.prompts.every((p) => p === PROMPT))
+  check('OR: model google/gemini-nano-banana-2.1, 16:9, 1K, one jpeg data-URL reference', ors.openrouter.images.every((i) => i.model === 'google/gemini-nano-banana-2.1' && i.aspect_ratio === '16:9' && i.resolution === '1K' && i.mime === 'image/jpeg' && i.bytes > 1000 && i.refs === 1), JSON.stringify(ors.openrouter.images[0]))
+  check('OR: bearer is the header key on every call', ors.openrouter.keys.every((k) => k === orKey('test-or-ok')))
+  check('OR: concurrency reached 3, never above', ors.openrouter.maxConcurrent === 3, `max=${ors.openrouter.maxConcurrent}`)
+  const orImg = await fetch(BASE + orDone[0].src)
+  check('OR: /api/img serves the generated jpeg', orImg.status === 200 && orImg.headers.get('content-type') === 'image/jpeg' && (await orImg.arrayBuffer()).byteLength > 1000)
+  const orOnly = await stream({ gallery, only: [{ thumbId: gallery[1].id, index: 2 }] }, { 'x-gemini-key': orKey('test-or-ok') })
+  check('OR: only -> exactly one tile', orOnly.events[0].total === 1 && orOnly.events.filter((e) => e.type === 'done').length === 1)
+
+  for (const [name, key, reason, test] of [
+    ['401', 'test-or-401', 'no-key', (m) => m === 'OpenRouter rejected the API key. Check the key and try again.'],
+    ['402', 'test-or-402', 'upstream', (m) => m === 'Your OpenRouter account is out of credits. Add credits at openrouter.ai/credits.'],
+    ['moderation 400', 'test-or-moderation', 'blocked', (m) => m === 'Google declined to edit this thumbnail (safety filter). Try another screenshot.'],
+    ['empty data', 'test-or-empty', 'no-image', (m) => /returned no image/.test(m)],
+  ]) {
+    await mock('/__reset')
+    const r = await stream(name === '401' ? { gallery: gallery.slice(0, 1) } : one, { 'x-gemini-key': orKey(key) })
+    const fs_ = r.events.filter((e) => e.type === 'failed')
+    const want = name === '401' ? 3 : 1
+    const text = JSON.stringify(r.events)
+    check(`OR: ${name} -> ${want} failed ${reason}, stream ends, key not echoed`, fs_.length === want && fs_.every((e) => e.reason === reason && test(e.message)) && r.events.at(-1)?.type === 'end' && !text.includes(orKey(key)) && !text.includes(key), fs_[0]?.message)
+  }
+  await mock('/__reset')
+  const t429or = Date.now()
+  const or429 = await stream({ gallery: gallery.slice(0, 2) }, { 'x-gemini-key': orKey('test-or-429') })
+  const or429s = await mock()
+  check('OR: 429 (Retry-After) then success: all 6 done after retry', or429.events.filter((e) => e.type === 'done').length === 6 && or429s.openrouter.calls > 6, `calls=${or429s.openrouter.calls} ${Date.now() - t429or}ms`)
+
+  // Direct unit check of the key-prefix selection (no network).
+  try {
+    const { providerForKey } = await import('../variants.ts')
+    check('providerForKey: sk-or- prefix -> openrouter, AIza.. and test-or-ok -> google', providerForKey(orKey('x')) === 'openrouter' && providerForKey('AIza-example') === 'google' && providerForKey('test-or-ok') === 'google')
+  } catch (err) {
+    console.log('note: could not import server/variants.ts for the selection unit check:', String(err).slice(0, 120))
+  }
+
   // abort
   await mock('/__reset')
   const ab = await stream({ gallery }, { 'x-gemini-key': 'test-slow' }, { abortAfterMs: 1500 })
@@ -193,7 +251,7 @@ if (phase === 'live') {
 
 if (phase === 'nokey') {
   check('status geminiKey false', status.body.geminiKey === false)
-  check('status has no recorded field', !('recorded' in status.body) && Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb', Object.keys(status.body).join())
+  check('status provider null, fields exactly geminiKey,model,perThumb,provider', status.body.provider === null && Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb,provider', Object.keys(status.body).join())
   await mock('/__reset')
   // A made-up id and a real Steal An Egg gallery (when Roblox is reachable): both unavailable, neither touches the mock.
   const galleries = [[{ id: '424242', url: 'https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter' }]]
@@ -204,7 +262,7 @@ if (phase === 'nokey') {
     const total = gallery.length * 3
     const r = await stream({ gallery })
     const f = r.events.filter((e) => e.type === 'failed')
-    check(`start mode unavailable (${gallery.length} thumb)`, r.events[0].type === 'start' && r.events[0].mode === 'unavailable' && r.events[0].total === total)
+    check(`start mode unavailable, provider null (${gallery.length} thumb)`, r.events[0].type === 'start' && r.events[0].mode === 'unavailable' && r.events[0].provider === null && r.events[0].total === total)
     check(`${total} failed no-key with exact message`, f.length === total && f.every((e) => e.reason === 'no-key' && e.message === 'Add a Gemini API key to generate variants for this game.'))
     check(`end done=0 failed=${total}`, r.events.at(-1).type === 'end' && r.events.at(-1).done === 0 && r.events.at(-1).failed === total)
   }
@@ -212,7 +270,25 @@ if (phase === 'nokey') {
   check('fresh:true without a key is still unavailable', fr.events[0].mode === 'unavailable' && fr.events.filter((e) => e.type === 'done').length === 0)
   check('mock received 0 calls without a key', (await mock()).calls === 0)
   const hk = await stream({ gallery: galleries[0] }, { 'x-gemini-key': 'test-ok' })
-  check('header key makes mode live without env key', hk.events[0].mode === 'live' && hk.events.filter((e) => e.type === 'done').length === 3)
+  check('header key makes mode live without env key', hk.events[0].mode === 'live' && hk.events[0].provider === 'google' && hk.events.filter((e) => e.type === 'done').length === 3)
+}
+
+const SYNTH = [{ id: '424242', url: 'https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter' }]
+if (phase === 'orenv') {
+  // Server env has OPENROUTER_API_KEY=test-or-ok (+ OPENROUTER_BASE_URL at the mock) and NO Gemini key.
+  check('status: geminiKey true, provider openrouter, fields', status.body.geminiKey === true && status.body.provider === 'openrouter' && status.body.model === 'gemini-nano-banana-2.1' && Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb,provider', JSON.stringify(status.body))
+  await mock('/__reset')
+  const r = await stream({ gallery: SYNTH })
+  const st = await mock()
+  check('keyless header generates through OpenRouter (3 done, provider openrouter)', r.events[0].mode === 'live' && r.events[0].provider === 'openrouter' && r.events.filter((e) => e.type === 'done').length === 3 && st.openrouter.calls === 3 && st.calls === 0, `or=${st.openrouter.calls} google=${st.calls}`)
+  check('env key sent as bearer, exact prompt, 16:9 / 1K', st.openrouter.keys.every((k) => k === 'test-or-ok') && st.openrouter.prompts.every((p) => p === PROMPT) && st.openrouter.images.every((i) => i.aspect_ratio === '16:9' && i.resolution === '1K' && i.model === 'google/gemini-nano-banana-2.1'))
+}
+if (phase === 'both') {
+  check('status with both env keys: geminiKey true, provider google', status.body.geminiKey === true && status.body.provider === 'google', JSON.stringify(status.body))
+  await mock('/__reset')
+  const r = await stream({ gallery: SYNTH })
+  const st = await mock()
+  check('keyless header with both env keys generates through Google', r.events[0].provider === 'google' && r.events.filter((e) => e.type === 'done').length === 3 && st.calls === 3 && st.openrouter.calls === 0, `google=${st.calls} or=${st.openrouter.calls}`)
 }
 console.log(`\n${pass} passed, ${fail} failed`)
 process.exit(fail ? 1 : 0)

@@ -3,7 +3,7 @@ import { Download, Images, RefreshCw } from 'lucide-react'
 import { Badge, Button, Dialog, EmptyState, Panel, ProgressBar, useToast } from '@/components/ui'
 import { navigate } from '@/lib/router'
 import { streamVariants } from '@/lib/api'
-import { readGeminiKey, useGeminiKey } from '@/lib/gemini'
+import { PROVIDER_NAME, readGeminiKey, useGeminiKey } from '@/lib/gemini'
 import { VARIANT_PROMPT, VARIANTS_PER_THUMB, type VariantEvent, type VariantRequest } from '@/lib/apiTypes'
 import type { WorkspaceProps } from '../types'
 import { initTiles, tileKey, tilesReducer } from './state'
@@ -56,7 +56,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
           ac.abort()
           refund(scope.length)
           if (opts.initial) dispatch({ type: 'unavailable' })
-          else dispatch({ type: 'fail', keys: scope, reason: 'no-key', message: 'Add a Gemini API key to generate this thumbnail.' })
+          else dispatch({ type: 'fail', keys: scope, reason: 'no-key', message: 'Add a Gemini or OpenRouter key to generate this thumbnail.' })
           return
         }
         if (e.type === 'done' || e.type === 'failed') {
@@ -112,7 +112,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
   const finished = counts.done + counts.failed
 
   useEffect(() => {
-    if (state.unavailable) report({ label: 'Needs a Gemini key', tone: 'warn' })
+    if (state.unavailable) report({ label: 'Needs an image key', tone: 'warn' })
     else if (counts.pending > 0) report({ label: finished === 0 && counts.working === 0 ? 'Starting' : `Generating ${finished} of ${total}`, tone: 'accent', progress: total ? finished / total : 0 })
     else if (counts.failed > 0) report({ label: `${counts.failed} failed`, tone: 'danger' })
     else report({ label: `${counts.done} variants ready`, tone: 'live' })
@@ -149,10 +149,10 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
   if (state.unavailable) {
     const cost = (total * COST_PER_VARIANT_USD).toFixed(2)
     return (
-      <Panel title="Generating for this game needs a Gemini key">
+      <Panel title="Generating for this game needs an image key">
         <div className="flex flex-col gap-16">
           <p className="max-w-prose text-body text-muted">
-            {MODEL_NAME} makes each variant live when you press the button. Nothing is pre-made or stored. It needs a Gemini API key with billing enabled, at about $0.034 per variant. This run is <span className="tabular text-ink">{total}</span> variants, roughly <span className="tabular text-ink">${cost}</span>. Your {total} credits were returned.
+            {MODEL_NAME} makes each variant live when you press the button. Nothing is pre-made or stored. It needs a Gemini or OpenRouter key, at about $0.034 per variant. This run is <span className="tabular text-ink">{total}</span> variants, roughly <span className="tabular text-ink">${cost}</span>. Your {total} credits were returned.
           </p>
           <div className="flex flex-wrap gap-8">
             {geminiKey ? (
@@ -161,7 +161,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
               </Button>
             ) : (
               <Button variant="primary" onClick={addKey}>
-                Add Gemini key
+                Add a key
               </Button>
             )}
           </div>
@@ -182,7 +182,7 @@ export function ThumbnailWorkspace({ entry, refund, charge: chargeProp, report, 
         <>
           {live && (
             <Badge tone="live" dot>
-              Live
+              {state.provider ? `Live, ${PROVIDER_NAME[state.provider]}` : 'Live'}
             </Badge>
           )}
           {!running && (state.mode === 'live' || geminiKey) && (

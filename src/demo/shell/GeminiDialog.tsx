@@ -2,18 +2,23 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { KeyRound } from 'lucide-react'
 import { Badge, Button, Dialog, Field, KeyValue, Skeleton, TextInput, useToast } from '@/components/ui'
 import { getStatus } from '@/lib/api'
-import { maskKey, removeGeminiKey, useGeminiKey, writeGeminiKey } from '@/lib/gemini'
-import type { StatusResponse } from '@/lib/apiTypes'
+import { detectProvider, maskKey, PROVIDER_NAME, removeGeminiKey, useGeminiKey, writeGeminiKey } from '@/lib/gemini'
+import type { ImageProvider, StatusResponse } from '@/lib/apiTypes'
 
-/* Live generation needs the visitor's own billing-enabled Gemini key. The key stays in this browser's
-   localStorage and is sent only to this local server, as the x-gemini-key header. */
+/* Live generation needs the visitor's own paid key: a Google Gemini key or an OpenRouter key, same model. The key
+   stays in this browser's localStorage and is sent only to this local server, as the x-gemini-key header. The key
+   itself is never shown; only its provider and last four characters. */
+
+const SERVER_PROVIDER_NAME: Record<ImageProvider, string> = { google: 'Google', openrouter: 'OpenRouter' }
 
 export function GeminiDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const saved = useGeminiKey()
+  const savedProvider = detectProvider(saved)
   const toast = useToast()
   const [draft, setDraft] = useState('')
   const [status, setStatus] = useState<StatusResponse | null>(null)
   const [statusFailed, setStatusFailed] = useState(false)
+  const draftProvider = detectProvider(draft)
 
   useEffect(() => {
     if (!open) return
@@ -32,22 +37,23 @@ export function GeminiDialog({ open, onOpenChange }: { open: boolean; onOpenChan
     e.preventDefault()
     const key = draft.trim()
     if (!key) return
+    const provider = detectProvider(key)
     writeGeminiKey(key)
     setDraft('')
-    toast.push({ title: 'Gemini key saved', description: 'It stays in this browser and goes only to this local server.', tone: 'ok' })
+    toast.push({ title: provider ? `${PROVIDER_NAME[provider]} key saved` : 'Key saved', description: 'It stays in this browser and goes only to this local server.', tone: 'ok' })
     onOpenChange(false)
   }
   const remove = () => {
     removeGeminiKey()
-    toast.push({ title: 'Gemini key removed', tone: 'info' })
+    toast.push({ title: `${savedProvider ? PROVIDER_NAME[savedProvider] : 'Image'} key removed`, tone: 'info' })
   }
 
   return (
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
-      title="Gemini API key"
-      description="Live generation asks Nano Banana 2.1 for new images, and Google does not offer it on the free tier."
+      title="Image provider key"
+      description="Live generation asks Nano Banana 2.1 for new images, and it needs a paid key."
       footer={
         <>
           {saved && (
@@ -63,18 +69,29 @@ export function GeminiDialog({ open, onOpenChange }: { open: boolean; onOpenChan
     >
       <div className="flex flex-col gap-16">
         <p className="text-label text-muted">
-          You need a billing-enabled Gemini API key. A 1K image costs about $0.034, so a four-thumbnail game is 12 variants, roughly $0.41. The key is stored in this browser only and is sent to this local server as the x-gemini-key header, never anywhere else.
+          Use either a Google Gemini API key (AIza...) with billing enabled, or an OpenRouter key (sk-or-...) with credits. Both reach the same model at about $0.034 per variant, so a four-thumbnail game is 12 variants, roughly $0.41. The key is kept in this browser only and is sent only to this local server as a request header, never anywhere else.
         </p>
         <form id="gemini-key-form" onSubmit={save} className="flex flex-col gap-8">
-          <Field label={saved ? `Replace saved key (${maskKey(saved)})` : 'Paste your key'}>
-            {(id) => <TextInput id={id} type="password" autoComplete="off" spellCheck={false} placeholder="AIza..." value={draft} onChange={(e) => setDraft(e.target.value)} />}
+          <Field
+            label="Paste a Gemini or OpenRouter key"
+            hint={
+              <span aria-live="polite">
+                {draftProvider
+                  ? `Looks like ${draftProvider === 'openrouter' ? 'an OpenRouter' : 'a Gemini'} key`
+                  : saved
+                    ? `Saved key ends in ${maskKey(saved)}. Pasting a new one replaces it.`
+                    : 'Nothing is saved until you press Save key.'}
+              </span>
+            }
+          >
+            {(id) => <TextInput id={id} type="password" autoComplete="off" spellCheck={false} placeholder="AIza... or sk-or-..." value={draft} onChange={(e) => setDraft(e.target.value)} />}
           </Field>
         </form>
         <dl>
           {status ? (
             <>
-              <KeyValue label="Key on the server" value={<Badge tone={status.geminiKey ? 'live' : 'muted'}>{status.geminiKey ? 'Yes' : 'No'}</Badge>} />
-              <KeyValue label="Key in this browser" value={<Badge tone={saved ? 'live' : 'muted'}>{saved ? 'Saved' : 'None'}</Badge>} />
+              <KeyValue label="Key on the server" value={<Badge tone={status.geminiKey ? 'live' : 'muted'}>{status.provider ? SERVER_PROVIDER_NAME[status.provider] : status.geminiKey ? 'Yes' : 'None'}</Badge>} />
+              <KeyValue label="Key in this browser" value={<Badge tone={savedProvider ? 'live' : 'muted'}>{savedProvider ? PROVIDER_NAME[savedProvider] : 'None'}</Badge>} />
               <KeyValue label="Model" value={status.model} mono />
             </>
           ) : statusFailed ? (

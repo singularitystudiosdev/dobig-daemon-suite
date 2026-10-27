@@ -13,8 +13,8 @@ export const REASON_COPY: Record<VariantFailure, string> = {
   'no-image': 'No image returned',
   'rate-limited': 'Rate limited',
   timeout: 'Timed out',
-  upstream: 'Gemini error',
-  'no-key': 'No Gemini key',
+  upstream: 'Provider error',
+  'no-key': 'No image key',
 }
 
 const chip = 'absolute left-8 top-8 rounded-full bg-canvas/70 px-8 py-2 text-micro font-medium text-ink'
