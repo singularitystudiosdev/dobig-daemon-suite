@@ -1,17 +1,28 @@
 import type { ReactNode } from 'react'
-import { Check, Copy, ExternalLink } from 'lucide-react'
-import { Badge, Button, KeyValue, useToast } from '@/components/ui'
-import type { CreatorDetail, CreatorFitComponent, CreatorTier } from '@/lib/details/creator'
-import { fmtCompact, fmtInt } from '@/lib/format'
-import type { Tone } from '@/lib/tone'
+import { Check, Copy, ExternalLink, Undo2 } from 'lucide-react'
+import { Badge, Button, KeyValue, Table, Td, Th, useToast } from '@/components/ui'
 import { cn } from '@/lib/cn'
+import type { CreatorConfidence, CreatorDetail, CreatorInvite, CreatorProvenance, CreatorRelation } from '@/lib/details/creator'
+import { fmtInt } from '@/lib/format'
+import type { Tone } from '@/lib/tone'
 import type { DetailViewProps } from './types'
 
-/* Creator Dox detail: one real YouTube creator. Every figure here was read from public pages or computed in
-   server/tools/creator-score.ts from those figures; the fit formula shown is the formula in that file. */
+/* Creator Dox detail: one way to reach the people behind a game, or one person on the team. Everything shown was read
+   from public text the owner or team wrote, from Discord's public invite lookup, or from a public web search during the
+   run. Each contact says exactly where it was found, with the link and a short quote. */
 
-const tierTone: Record<CreatorTier, Tone> = { 'Strong fit': 'live', 'Good fit': 'accent', 'Weak fit': 'muted', Risky: 'danger' }
-const confTone: Record<string, Tone> = { high: 'danger', medium: 'warn', low: 'muted' }
+const confTone: Record<CreatorConfidence, Tone> = { 'Linked by the owner': 'live', 'Verified invite': 'accent', 'Found by search': 'muted' }
+const confMeaning: Record<CreatorConfidence, string> = {
+  'Linked by the owner': 'The owner or a team member wrote or linked this themselves, in a profile, a group or game description, or a channel they listed.',
+  'Verified invite': 'Discord resolved this invite, and the server name or the person who made the invite matches the game or its team.',
+  'Found by search': 'A public web search matched it by name. It has not been confirmed to belong to the team.',
+}
+const personMeaning: Record<CreatorRelation, string> = {
+  owner: 'Listed by Roblox as the registered owner of the group that made the game, or as its publisher.',
+  leader: 'Listed by Roblox as a member of a leadership role in the group that made the game.',
+  alt: 'The owner wrote this account name in their own profile text as one of their accounts.',
+}
+const relationWord: Record<CreatorRelation, string> = { owner: 'Owner', leader: 'Leader', alt: 'Account named by the owner' }
 
 function Section({ label, hint, children, className }: { label: string; hint?: string; children: ReactNode; className?: string }) {
   return (
@@ -27,245 +38,259 @@ function Section({ label, hint, children, className }: { label: string; hint?: s
 
 function ExactLink({ href, children }: { href: string; children?: ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noreferrer" title={href} className="inline-flex min-w-0 max-w-full items-center gap-6 rounded-8 text-micro text-accent-ink hover:underline">
-      <ExternalLink aria-hidden className="size-12 shrink-0" />
-      <span className="min-w-0 truncate">{children ?? href}</span>
+    <a href={href} target="_blank" rel="noreferrer" title={href} className="inline-flex min-w-0 max-w-full items-start gap-6 rounded-8 text-micro text-accent-ink hover:underline">
+      <ExternalLink aria-hidden className="mt-2 size-12 shrink-0" />
+      <span className="min-w-0 break-all">{children ?? href}</span>
     </a>
   )
 }
 
-const views = (n: number | null): string => (n === null ? 'Not available' : fmtInt(n))
-const pct = (r: number | null, d = 1): string => (r === null ? 'Not available' : `${(r * 100).toFixed(d)}%`)
-
-function FitRow({ c }: { c: CreatorFitComponent }) {
-  const ratio = c.max ? c.points / c.max : 0
+function Provenance({ items }: { items: CreatorProvenance[] }) {
   return (
-    <li className="flex flex-col gap-4 border-b border-line py-8 last:border-b-0">
-      <div className="flex items-baseline justify-between gap-12">
-        <span className="text-label font-medium text-ink">{c.label}</span>
-        <span className="tabular whitespace-nowrap text-label text-ink">
-          {c.points} <span className="text-muted">of {c.max}</span>
-        </span>
-      </div>
-      <div className="h-4 overflow-hidden rounded-full bg-raised" aria-hidden>
-        <div className={cn('h-full rounded-full', ratio >= 0.7 ? 'bg-live' : ratio >= 0.35 ? 'bg-accent' : 'bg-line-strong')} style={{ width: `${Math.round(ratio * 100)}%` }} />
-      </div>
-      <p className="text-micro text-muted">{c.basis}</p>
-    </li>
+    <ul className="flex flex-col">
+      {items.map((p) => (
+        <li key={`${p.url}|${p.where}`} className="flex min-w-0 flex-col gap-6 border-b border-line py-8 first:pt-0 last:border-b-0">
+          <span className="text-label text-ink">{p.where}</span>
+          {p.excerpt && <p className="max-w-prose break-words rounded-8 bg-raised px-12 py-8 text-label text-ink">&ldquo;{p.excerpt}&rdquo;</p>}
+          <ExactLink href={p.url} />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+const dayTime = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short' })
+
+function InviteFacts({ invite }: { invite: CreatorInvite }) {
+  if (invite.state === 'expired') {
+    return (
+      <p className="max-w-prose text-label text-ink">
+        Discord says this invite is gone: it expired or was deleted. It is still listed because the team once linked it, and the server may have a newer invite somewhere else.
+      </p>
+    )
+  }
+  if (invite.state === 'unknown') return <p className="max-w-prose text-label text-warn">Discord did not answer for this invite, so its server details are not available. Run again to retry.</p>
+  return (
+    <div className="flex flex-col gap-8">
+      <dl>
+        <KeyValue label="Server" value={invite.name ?? 'Not available'} />
+        <KeyValue label="Members" value={<span className="tabular">{invite.members === null ? 'Not available' : fmtInt(invite.members)}</span>} />
+        <KeyValue label="Online now" value={<span className="tabular">{invite.online === null ? 'Not available' : fmtInt(invite.online)}</span>} />
+        <KeyValue
+          label="Discord status"
+          value={
+            invite.verified || invite.partnered || invite.community ? (
+              <span className="flex flex-wrap justify-end gap-6">
+                {invite.verified && <Badge tone="accent">Verified</Badge>}
+                {invite.partnered && <Badge tone="accent">Partnered</Badge>}
+                {invite.community && <Badge tone="muted">Community</Badge>}
+              </span>
+            ) : (
+              'Not verified or partnered'
+            )
+          }
+        />
+        <KeyValue label="Invite" value={invite.expiresAt ? `Stops working ${dayTime(invite.expiresAt)}` : 'Does not expire'} />
+        <KeyValue label="Made by" value={invite.inviter ? (invite.inviter.displayName && invite.inviter.displayName.toLowerCase() !== invite.inviter.username.toLowerCase() ? `${invite.inviter.displayName} (${invite.inviter.username})` : invite.inviter.username) : 'Discord did not say'} />
+      </dl>
+      {invite.inviterMatch && (
+        <p className="max-w-prose rounded-8 bg-raised px-12 py-8 text-label text-ink">
+          The inviter&apos;s Discord name is the same text as the Roblox name {invite.inviterMatch.username}, a member of the team. That is a name match only. Nothing confirms it is the same person.
+        </p>
+      )}
+      {invite.description && <p className="max-w-prose text-label text-muted">{invite.description}</p>}
+      {invite.otherCodes.length > 0 && (
+        <div className="flex flex-col gap-4">
+          <span className="text-label text-muted">Other invite links to the same server</span>
+          {invite.otherCodes.map((c) => (
+            <ExactLink key={c} href={`https://discord.gg/${c}`} />
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
 
 export default function CreatorDetailView({ detail: d, state, act }: DetailViewProps<CreatorDetail>) {
   const toast = useToast()
   const contacted = state === 'contacted'
-  const sp = d.sponsorship
-  const bs = d.brandSafety
   const fetched = d.fetchedAt.slice(0, 16).replace('T', ' ')
 
-  const copy = async (email: string) => {
+  const copy = async (text: string, what: string) => {
     try {
-      await navigator.clipboard.writeText(email)
-      toast.push({ title: 'Address copied', description: email, tone: 'ok' })
+      await navigator.clipboard.writeText(text)
+      toast.push({ title: `${what} copied`, description: text, tone: 'ok' })
     } catch {
-      toast.push({ title: 'Could not copy', description: 'Select the address and copy it by hand.', tone: 'warn' })
+      toast.push({ title: 'Could not copy', description: 'Select the text and copy it by hand.', tone: 'warn' })
     }
   }
+
+  const person = d.person
+  const channel = d.channel
+  const copyText = channel ? (channel.kind === 'email' ? channel.handle : channel.url) : null
+  const copyWhat = channel ? (channel.kind === 'email' ? 'Email address' : channel.kind === 'discord' ? 'Invite link' : 'Link') : ''
 
   return (
     <div className="flex flex-col gap-16">
       <header className="flex min-w-0 flex-col gap-6">
         <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
-          <h3 className="text-title font-medium text-ink">{d.channel.name}</h3>
-          {d.channel.handle && <span className="text-label text-muted">@{d.channel.handle}</span>}
-          <Badge tone={tierTone[d.fit.tier]}>{d.fit.tier}</Badge>
+          <h3 className="min-w-0 break-words text-title font-medium text-ink">{person ? (person.displayName && person.displayName !== person.username ? `${person.displayName} (${person.username})` : person.username) : channel ? `${channel.label}: ${channel.kind === 'discord' ? (d.invite?.name ?? channel.handle) : channel.handle}` : ''}</h3>
+          <Badge tone={confTone[d.confidence]}>{d.confidence}</Badge>
+          {person && <Badge tone="ink">{relationWord[person.relation]}</Badge>}
+          {d.changed && <Badge tone="warn">Changed link</Badge>}
           {contacted && (
             <Badge tone="live" dot pulse={false}>
               Contacted
             </Badge>
           )}
         </div>
-        <ExactLink href={d.channel.url} />
-        <p className="max-w-prose text-label text-muted">
-          {d.channel.description ? d.channel.description : 'This channel has no public description.'}
-        </p>
+        <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
+          <ExactLink href={person ? person.profileUrl : (channel?.url ?? '')} />
+          {copyText && (
+            <Button size="sm" icon={Copy} aria-label={`Copy ${copyWhat.toLowerCase()} ${copyText}`} onClick={() => void copy(copyText, copyWhat)}>
+              Copy {copyWhat.toLowerCase()}
+            </Button>
+          )}
+        </div>
+        <p className="max-w-prose text-label text-muted">{person ? personMeaning[person.relation] : confMeaning[d.confidence]}</p>
+        {d.changed && <p className="max-w-prose text-label text-warn">Different from the last run. It was {d.changed.was}.</p>}
         <p className="text-micro text-subtle">
-          Read from public YouTube pages at {fetched} UTC for {d.game}. Subscribers and most view counts are the rounded figures YouTube shows.
+          Read from public pages at {fetched} UTC for {d.game}. {d.rankReason}
         </p>
       </header>
 
       <div className="grid grid-cols-1 gap-24 lg:grid-cols-2">
         <div className="flex min-w-0 flex-col gap-16">
-          <Section label="Partnership fit" hint="Fit = coverage 30 + views per subscriber 25 + sponsorship 20 + brand safety 15 + cadence 10">
-            <div className="flex items-baseline gap-8">
-              <span className="tabular text-headline text-ink">{d.fit.score}</span>
-              <span className="text-label text-muted">out of 100</span>
-            </div>
-            <ul className="flex flex-col">
-              {d.fit.components.map((c) => (
-                <FitRow key={c.label} c={c} />
-              ))}
-            </ul>
-            <p className="text-micro text-subtle">Strong fit is 75 or more, Good fit 55 or more, otherwise Weak fit. Any high-confidence brand-safety flag makes it Risky whatever the score.</p>
+          <Section label="Where it was found" hint={`${d.provenance.length} ${d.provenance.length === 1 ? 'place' : 'places'}`}>
+            <Provenance items={d.provenance} />
+            {d.unconfirmed && <p className="max-w-prose text-label text-warn">This is a search match by name and is not confirmed. Check the page before you write to anyone.</p>}
           </Section>
 
-          <Section label="Reach" hint={`Last ${d.stats.sampleSize} uploads`}>
-            <dl>
-              <KeyValue label="Subscribers" value={d.channel.subscribers === null ? 'Hidden by the channel' : fmtCompact(d.channel.subscribers)} />
-              <KeyValue label="Median views" value={views(d.stats.median)} />
-              <KeyValue label="Mean views" value={views(d.stats.mean)} />
-              <KeyValue label="Views per subscriber" value={pct(d.stats.viewsPerSub)} />
-              <KeyValue label="Upload cadence" value={d.stats.cadenceDays === null ? 'Not available' : d.stats.cadenceDays < 1 ? 'More than one a day' : `Every ${d.stats.cadenceDays} days`} />
-              <KeyValue label={`Uploads about ${d.game}`} value={`${d.stats.gameUploads} of ${d.stats.uploadsRead} (${pct(d.stats.gameShare, 0)})`} />
-              <KeyValue label="Exact view counts" value={`${d.stats.exactViews} of ${d.stats.sampleSize}`} />
-            </dl>
-            <p className="text-micro text-subtle">Cadence is estimated from approximate ages such as "3 days ago". Exact counts come from each video's own page; the rest are the rounded figures on the channel page.</p>
-          </Section>
+          {d.channel && (
+            <Section label="Who published it">
+              {d.publishedBy.length === 0 ? (
+                <p className="text-label text-muted">No one on the team is tied to it. It came from a public web page.</p>
+              ) : (
+                <ul className="flex flex-col">
+                  {d.publishedBy.map((p) => (
+                    <li key={p.userId} className="flex flex-wrap items-baseline justify-between gap-x-12 gap-y-2 border-b border-line py-8 first:pt-0 last:border-b-0">
+                      <span className="text-label text-ink">
+                        {p.displayName && p.displayName !== p.username ? `${p.displayName} (${p.username})` : p.username}
+                        <span className="text-muted">, {relationWord[p.relation].toLowerCase()}</span>
+                      </span>
+                      <ExactLink href={p.profileUrl} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Section>
+          )}
+
+          {person && (
+            <Section label="Roles held">
+              {person.roles.length === 0 ? (
+                <p className="text-label text-muted">{person.relation === 'alt' ? 'No group role is attached to this account.' : 'No group role.'}</p>
+              ) : (
+                <ul className="flex flex-col">
+                  {person.roles.map((r) => (
+                    <li key={`${r.group}|${r.role}`} className="flex items-baseline justify-between gap-12 border-b border-line py-8 first:pt-0 last:border-b-0">
+                      <span className="min-w-0 text-label text-ink">
+                        {r.role} <span className="text-muted">in {r.group}</span>
+                      </span>
+                      <span className="tabular shrink-0 text-label text-muted">Rank {r.rank}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p className="max-w-prose text-label text-muted">{person.reason}</p>
+            </Section>
+          )}
         </div>
 
         <div className="flex min-w-0 flex-col gap-16">
-          <Section label="Sponsorship" hint={`${sp.sampled} recent uploads sampled`}>
-            {sp.sampled === 0 ? (
-              <p className="text-label text-muted">No watch pages could be read, so sponsorship was not checked.</p>
-            ) : (
-              <>
-                <dl>
-                  <KeyValue label="Sponsored share" value={`${pct(sp.share, 0)} (${sp.sponsored} of ${sp.sampled})`} />
-                  <KeyValue label="Median views, sponsored" value={sp.sponsored ? views(sp.sponsoredMedian) : 'No sponsored sample'} />
-                  <KeyValue label="Median views, organic" value={sp.organic ? views(sp.organicMedian) : 'No organic sample'} />
-                  <KeyValue
-                    label="Sponsored vs organic"
-                    value={sp.deltaPct === null ? 'Not enough sponsored videos to compare' : `${sp.deltaPct > 0 ? '+' : ''}${sp.deltaPct}% median views`}
-                  />
-                </dl>
-                <p className="text-micro text-subtle">
-                  Sponsored means YouTube's paid-promotion label, or #ad, sponsored, paid promotion, partnered with, use code or affiliate in the title or description. A comparison needs 3 sponsored and 3 organic samples.
-                </p>
-                <div className="flex flex-wrap items-center gap-8">
-                  <span className="text-label text-muted">Brands named</span>
-                  {sp.brands.length ? sp.brands.map((b) => <Badge key={b}>{b}</Badge>) : <span className="text-label text-ink">{sp.sponsored ? 'None named in the descriptions' : 'No sponsored videos sampled'}</span>}
-                </div>
-                {sp.examples.length > 0 && (
-                  <ul className="flex flex-col">
-                    {sp.examples.map((e) => (
-                      <li key={e.url} className="flex min-w-0 flex-col gap-2 border-b border-line py-8 last:border-b-0">
-                        <span className="text-label text-ink">{e.title}</span>
-                        <span className="text-micro text-muted">
-                          {e.views === null ? 'Views not shown' : `${fmtInt(e.views)} views`}. Disclosure: {e.disclosure}
-                        </span>
-                        <ExactLink href={e.url} />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </>
-            )}
-          </Section>
+          {d.invite && (
+            <Section label="Discord server" hint="Resolved through Discord's public invite lookup">
+              <InviteFacts invite={d.invite} />
+            </Section>
+          )}
 
-          <Section label="Brand safety" hint={`${bs.checked} recent titles read`}>
-            {bs.unavailable ? (
-              <p className="text-label text-warn">The brand-safety check did not run: {bs.unavailable}. Rerun to try again.</p>
-            ) : bs.flags.length === 0 ? (
-              <p className="text-label text-ink">No concerns found in {bs.checked} recent titles.</p>
-            ) : (
-              <ul className="flex flex-col">
-                {bs.flags.map((f) => (
-                  <li key={`${f.category}-${f.url}`} className="flex min-w-0 flex-col gap-2 border-b border-line py-8 last:border-b-0">
-                    <span className="flex flex-wrap items-center gap-8">
-                      <Badge tone={confTone[f.confidence] ?? 'muted'}>{f.category}</Badge>
-                      <span className="text-micro text-muted">{f.confidence} confidence</span>
-                    </span>
-                    <span className="text-label text-ink">{f.evidenceTitle}</span>
-                    <ExactLink href={f.url} />
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p className="text-micro text-subtle">
-              {bs.familySafe === null ? 'YouTube did not include a family-safe marker.' : bs.familySafe ? 'YouTube marks this channel family safe.' : 'YouTube does not mark this channel family safe.'}
-            </p>
-          </Section>
+          {person && (
+            <Section label="Channels found for this person" hint={`${d.channels.length} found`}>
+              {d.channels.length === 0 ? (
+                <p className="max-w-prose text-label text-muted">None. Nothing on their Roblox profile, in their profile text or on the pages they linked names a public channel.</p>
+              ) : (
+                <ul className="flex flex-col">
+                  {d.channels.map((c) => (
+                    <li key={`${c.kind}|${c.url}`} className="flex min-w-0 flex-col gap-2 border-b border-line py-8 first:pt-0 last:border-b-0">
+                      <span className="flex flex-wrap items-center gap-8">
+                        <span className="text-label text-ink">{c.label}</span>
+                        <Badge tone={confTone[c.confidence]}>{c.confidence}</Badge>
+                      </span>
+                      <ExactLink href={c.url} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Section>
+          )}
 
-          <Section label="Public business contact">
-            {d.contact.email ? (
-              <div className="flex flex-wrap items-center gap-12">
-                <span className="min-w-0 break-all font-mono text-label text-ink">{d.contact.email}</span>
-                <Button size="sm" icon={Copy} onClick={() => void copy(d.contact.email as string)}>
-                  Copy
-                </Button>
-              </div>
-            ) : (
-              <p className="text-label text-ink">No public business contact</p>
-            )}
-            {d.contact.lines.length > 0 && (
-              <ul className="flex flex-col gap-4">
-                {d.contact.lines.map((l) => (
-                  <li key={l} className="break-words text-micro text-muted">
-                    {l}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p className="text-micro text-subtle">Only text the creator published in their channel description. YouTube keeps the "business email" behind a captcha, so it is never read.</p>
-          </Section>
+          {d.roles && d.roles.length > 0 && (
+            <Section label="Group roles checked" hint="Highest rank first">
+              <Table caption="Roles in the owning group and whether their members were read as leaders">
+                <thead>
+                  <tr>
+                    <Th>Role</Th>
+                    <Th numeric>Rank</Th>
+                    <Th numeric>Members</Th>
+                    <Th>Read as leaders</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {d.roles.map((r) => (
+                    <tr key={r.id}>
+                      <Td className="whitespace-nowrap text-ink">{r.name}</Td>
+                      <Td numeric>{r.rank}</Td>
+                      <Td numeric>{fmtInt(r.memberCount)}</Td>
+                      <Td className="min-w-160 whitespace-normal text-muted">{r.leader ? `Yes. ${r.why}` : `No. ${r.why}`}</Td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <p className="text-micro text-subtle">Roles with no members are not listed. Leaders are the members of the roles marked yes. Roblox hides the top Owner role, so the registered owner of the group is added separately.</p>
+            </Section>
+          )}
+
+          {channel && !d.invite && (
+            <Section label="Link">
+              <dl>
+                <KeyValue label="Channel" value={channel.label} />
+                <KeyValue label={channel.kind === 'email' ? 'Address' : 'Handle'} value={channel.handle} mono />
+                <KeyValue label="Exact link" value={<span className="break-all">{channel.url}</span>} mono />
+              </dl>
+              {channel.kind === 'email' && <p className="max-w-prose text-micro text-subtle">This address is written out in public text, quoted on the left. It was never guessed or built from a name.</p>}
+            </Section>
+          )}
         </div>
       </div>
 
-      <Section label={`Videos about ${d.game}`} hint="Newest first">
-        {d.gameVideos.length === 0 ? (
-          <p className="text-label text-muted">No video about {d.game} was found in the last {d.stats.uploadsRead} uploads or the searches.</p>
-        ) : (
-          <ul className="flex flex-col">
-            {d.gameVideos.map((v) => (
-              <li key={v.url} className="flex flex-wrap items-start gap-x-16 gap-y-2 border-b border-line py-8 last:border-b-0">
-                <div className="flex min-w-0 flex-1 basis-240 flex-col gap-2">
-                  <span className="text-label text-ink">{v.title}</span>
-                  <ExactLink href={v.url} />
-                </div>
-                <span className="tabular whitespace-nowrap text-label text-ink">{v.views === null ? 'Views not shown' : `${fmtInt(v.views)} views`}</span>
-                <span className="whitespace-nowrap text-micro text-muted">{v.publishedText}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
-
-      {d.talkingPoints.length > 0 && (
-        <Section label="Talking points" hint="Written by the analysis model from the videos above">
-          <ul className="flex max-w-prose flex-col gap-4 text-label text-ink">
-            {d.talkingPoints.map((t) => (
-              <li key={t} className="flex gap-8">
-                <span aria-hidden className="mt-8 size-4 shrink-0 rounded-full bg-accent" />
-                <span>{t}</span>
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
-
       <div className="flex flex-wrap items-center gap-12 border-t border-line pt-12">
         {contacted ? (
-          <Badge tone="live" dot pulse={false}>
-            Contacted
-          </Badge>
+          <>
+            <Badge tone="live" dot pulse={false}>
+              Contacted
+            </Badge>
+            <Button size="sm" icon={Undo2} onClick={() => act('open')}>
+              Reopen
+            </Button>
+          </>
         ) : (
-          <Button
-            size="sm"
-            variant="primary"
-            icon={Check}
-            onClick={() => {
-              act('contacted')
-              toast.push({ title: 'Marked as contacted', description: `${d.channel.name} is tracked as contacted in this session.`, tone: 'ok' })
-            }}
-          >
-            Mark as contacted
+          <Button size="sm" variant="primary" icon={Check} onClick={() => act('contacted')}>
+            Mark contacted
           </Button>
         )}
-        <span className="text-micro text-subtle">Kept in this session only. Nothing is sent to the creator.</span>
+        <span className="text-micro text-subtle">Kept in this list only. Nothing is sent to anyone.</span>
       </div>
-      <p className="flex flex-wrap gap-x-12 border-t border-line pt-12 text-label">
-        <span className="font-medium text-muted">Not collected</span>
-        <span className="text-ink">{d.notCollected.replace(/^Not collected:\s*/i, '')}</span>
-      </p>
+      <p className="text-micro text-subtle">{d.notCollected}</p>
     </div>
   )
 }

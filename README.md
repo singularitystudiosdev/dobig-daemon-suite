@@ -53,7 +53,7 @@ Thumbnail Daemon and 2,500 to the others. There is no payment: it is a local all
 | DMCA Daemon | Roblox search for candidate copies of the game, each linked so you can check it. It prepares evidence and a draft notice. | An OpenRouter key. |
 | Discord Daemon | Recent messages from your own server, read by your own bot, summed up as sentiment per person. Quotes are short excerpts. | A Discord bot token, the Message Content intent, and an OpenRouter key. |
 | Description Daemon | The live Roblox description, drafted again and linted for policy. | An OpenRouter key. |
-| Creator Dox | Public YouTube channel data for creators covering the game. Only public data; no private details. | An OpenRouter key. |
+| Creator Dox | How to reach the people behind the game: the owner, the owning group's leaders, Discord servers tied to the game (each resolved through Discord's public invite lookup), and the X, YouTube and other links or emails they published in their own profile text. Roblox shows game and group social links only to signed-in users, so those are not read. Only what the owner published; no private details. | Nothing. |
 
 ### What is and is not automated
 
