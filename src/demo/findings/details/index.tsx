@@ -5,6 +5,7 @@ import DescriptionDetailView from './description'
 import DmcaDetailView from './dmca'
 import HackDetailView from './hack'
 import SentimentDetailView from './sentiment'
+import ThumbnailDetailView from './thumbnail'
 import type { DetailViewProps } from './types'
 
 /** finding.detail.kind -> the view for its expanded row. */
@@ -15,4 +16,5 @@ export const detailViews: Record<FindingDetail['kind'], ComponentType<DetailView
   sentiment: SentimentDetailView,
   description: DescriptionDetailView,
   creator: CreatorDetailView,
+  thumbnail: ThumbnailDetailView,
 }

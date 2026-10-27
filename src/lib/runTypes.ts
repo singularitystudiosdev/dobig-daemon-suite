@@ -5,6 +5,7 @@ import type { DescriptionDetail } from './details/description'
 import type { DmcaDetail } from './details/dmca'
 import type { HackDetail } from './details/hack'
 import type { SentimentDetail } from './details/sentiment'
+import type { ThumbnailDetail } from './details/thumbnail'
 
 /* The wire contract for real runs and daemons. Types and tiny constants only: nothing here may import
    runtime code, because the server (server/**) and the client (src/**) both import this file. */
@@ -73,7 +74,7 @@ export interface Meta {
   value: string
 }
 
-export type FindingDetail = HackDetail | DmcaDetail | SentimentDetail | DescriptionDetail | CreatorDetail
+export type FindingDetail = HackDetail | DmcaDetail | SentimentDetail | DescriptionDetail | CreatorDetail | ThumbnailDetail
 
 export interface Finding {
   /** Stable across runs for the same underlying thing, so a rerun can tell what is new. */

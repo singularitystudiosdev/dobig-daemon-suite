@@ -19,6 +19,9 @@ export interface GameEntry {
   addedAt: number
   /** The server-side daemon that runs this target. */
   daemonId: string
+  /** True only for a game the user just added by pressing the tool's button in this session. The Thumbnail workspace
+   *  generates variants on mount ONLY then; a game restored from the server after a reload never generates by itself. */
+  autoRun?: boolean
 }
 
 /** A Discord server the user is tracking with the Discord tool. */
