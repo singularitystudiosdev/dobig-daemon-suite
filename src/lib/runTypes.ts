@@ -4,6 +4,9 @@ import type { CreatorDetail } from './details/creator'
 import type { DescriptionDetail } from './details/description'
 import type { DmcaDetail } from './details/dmca'
 import type { HackDetail } from './details/hack'
+import type { PulseDetail } from './details/pulse'
+import type { RankDetail } from './details/rank'
+import type { SponsorDetail } from './details/sponsor'
 import type { SentimentDetail } from './details/sentiment'
 import type { ThumbnailDetail } from './details/thumbnail'
 
@@ -19,6 +22,9 @@ export const TOOL_TARGET: Record<DaemonSlug, TargetKind> = {
   'dmca-daemon': 'roblox-game',
   'description-daemon': 'roblox-game',
   'creator-dox': 'roblox-game',
+  'rank-daemon': 'roblox-game',
+  'sponsor-daemon': 'roblox-game',
+  'pulse-daemon': 'roblox-game',
   'discord-daemon': 'discord-server',
 }
 
@@ -74,7 +80,7 @@ export interface Meta {
   value: string
 }
 
-export type FindingDetail = HackDetail | DmcaDetail | SentimentDetail | DescriptionDetail | CreatorDetail | ThumbnailDetail
+export type FindingDetail = HackDetail | DmcaDetail | SentimentDetail | DescriptionDetail | CreatorDetail | ThumbnailDetail | RankDetail | SponsorDetail | PulseDetail
 
 export interface Finding {
   /** Stable across runs for the same underlying thing, so a rerun can tell what is new. */

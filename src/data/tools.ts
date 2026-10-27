@@ -173,6 +173,75 @@ export const tools: ToolMeta[] = [
     daemonNote: 'Every rerun searches YouTube again and flags new exploit videos since the last run.',
     thinking: ['Composing the watchlist query', 'Crawling public videos', 'Filtering bait and malware', 'Clustering real exploits', 'Mapping to game systems', 'Writing developer briefs'],
   },
+  {
+    slug: 'sponsor-daemon',
+    name: 'Sponsor Daemon',
+    blurb: 'Reach the creators who should be playing your game.',
+    art: asset('/tools/sponsor-daemon.webp'),
+    description: [
+      'Sponsor Daemon finds the YouTube creators who already cover games like yours, scores how well each one fits, and writes a personal outreach message for every good match, with their numbers and the video it refers to.',
+      'It keeps the pipeline across reruns: who is new, who you have a draft for, who you contacted. Messages are drafted for you to send; sending them automatically is set up with our engineers.',
+    ],
+    steps: ['Finds creators covering your game and its genre', 'Reads their audience, views and past sponsorships', 'Scores fit and checks brand safety', 'Drafts a personal outreach message for each good match'],
+    facts: [
+      { label: 'Output', value: 'Ranked creators and drafts' },
+      { label: 'Sends', value: 'Nothing on its own' },
+    ],
+    inputLabel: 'Roblox game link',
+    inputHint: 'Paste a roblox.com/games link of a game you want sponsored coverage for.',
+    runVerb: 'Find creators',
+    startCredits: 5000,
+    topUp: 2500,
+    resultsTitle: 'Creators to sponsor',
+    daemonNote: 'Every rerun looks for new creators and drafts a message for each new good fit.',
+    thinking: ['Searching YouTube for coverage', 'Reading channels and recent uploads', 'Checking paid-promotion history', 'Scoring fit and brand safety', 'Drafting outreach messages'],
+  },
+  {
+    slug: 'rank-daemon',
+    name: 'Rank Daemon',
+    blurb: 'See where you rank for what players search.',
+    art: asset('/tools/rank-daemon.webp'),
+    description: [
+      'Rank Daemon searches Roblox the way players do and finds where your game appears for the words that should lead to it: its name, its genre words and any terms you add.',
+      'Every rerun compares with the last one and flags climbs, drops and the games that passed you, so a ranking slide is caught the day it starts, not weeks later in the player count.',
+    ],
+    steps: ['Builds the search words from your game and the ones you add', 'Searches Roblox for each and finds your position', 'Compares with the last run', 'Flags climbs, drops and who passed you'],
+    facts: [
+      { label: 'Output', value: 'Position per keyword' },
+      { label: 'Source', value: 'Roblox search' },
+    ],
+    inputLabel: 'Roblox game link',
+    inputHint: 'Paste a roblox.com/games link of a game you operate.',
+    runVerb: 'Check rankings',
+    startCredits: 5000,
+    topUp: 2500,
+    resultsTitle: 'Keywords by rank change',
+    daemonNote: 'Every rerun searches Roblox again and flags every keyword where your position moved.',
+    thinking: ['Building the keyword list', 'Searching Roblox for each keyword', 'Finding your position', 'Comparing with the last run'],
+  },
+  {
+    slug: 'pulse-daemon',
+    name: 'Pulse Daemon',
+    blurb: 'Catch a sick game before the reviews do.',
+    art: asset('/tools/pulse-daemon.webp'),
+    description: [
+      'Pulse Daemon reads your game\'s vital signs the way Roblox shows them to players: players now, likes against dislikes, how full and how fast the public servers are, and how long since the last update.',
+      'Every rerun compares with the last one and flags what regressed, such as a sudden player drop, a falling like ratio after an update, or servers with low frame rates and high ping.',
+    ],
+    steps: ['Reads players, votes and the last update', 'Samples the public servers for frame rate and ping', 'Compares with the last run', 'Flags regressions with the numbers'],
+    facts: [
+      { label: 'Output', value: 'Vitals and regressions' },
+      { label: 'Source', value: 'Roblox public data' },
+    ],
+    inputLabel: 'Roblox game link',
+    inputHint: 'Paste a roblox.com/games link of a game you operate.',
+    runVerb: 'Check vitals',
+    startCredits: 5000,
+    topUp: 2500,
+    resultsTitle: 'Vitals',
+    daemonNote: 'Every rerun reads the vitals again and flags anything that got worse since the last run.',
+    thinking: ['Reading players and votes', 'Sampling public servers', 'Comparing with the last run', 'Flagging regressions'],
+  },
 ]
 
 export const toolsBySlug: Record<DaemonSlug, ToolMeta> = Object.fromEntries(tools.map((t) => [t.slug, t])) as Record<DaemonSlug, ToolMeta>
@@ -185,5 +254,73 @@ export const CREDITS_PER_VARIANT = 250
 export function runCost(slug: DaemonSlug, galleryCount = 0, perThumb = 3): number {
   if (slug === 'thumbnail-daemon') return Math.max(1, galleryCount) * perThumb * CREDITS_PER_VARIANT
   if (slug === 'hack-daemon' || slug === 'dmca-daemon') return 1500
+  if (slug === 'rank-daemon' || slug === 'pulse-daemon') return 500
   return 1000
 }
+
+/* "Set it up for me": every tool can be automated by our forward deployed engineers. The option opens the contact-us
+   panel with this request already written. `{game}` is replaced with the game's name. Nothing here claims the tool
+   does it by itself. */
+export interface Automation {
+  /** The button. */
+  label: string
+  /** One sentence: what our engineers set up. */
+  pitch: string
+  /** The request the panel starts with. */
+  template: string
+}
+
+export const automation: Record<DaemonSlug, Automation> = {
+  'creator-dox': {
+    label: 'Reach the team for me',
+    pitch: 'Our engineers contact the owner and leaders for you, from your accounts, and keep every reply in one thread.',
+    template: 'Please set up automatic outreach for {game}: when Creator Dox finds a new owner, leader or Discord server, contact them with our first message and track the replies.',
+  },
+  'thumbnail-daemon': {
+    label: 'Auto-upload and optimize',
+    pitch: 'We upload the winning variants to your game page, run the split test and keep the best one live, with a rollback.',
+    template: 'Please set up automatic thumbnail upload and optimization for {game}: upload the variants, run the experiment and keep the winner live.',
+  },
+  'discord-daemon': {
+    label: 'Alert my team on sentiment shifts',
+    pitch: 'We post sentiment drops to your Slack or Discord and open a task for each topic, with the quotes.',
+    template: 'Please set up sentiment alerts for {game}: post sentiment shifts from our Discord to our team channel and open a task per topic.',
+  },
+  'description-daemon': {
+    label: 'Auto-publish winning descriptions',
+    pitch: 'We publish the best draft through Open Cloud, watch click-through and roll back if it drops.',
+    template: 'Please set up automatic description publishing for {game}: publish the best draft, watch click-through and roll back if it drops.',
+  },
+  'dmca-daemon': {
+    label: 'Send DMCA takedowns for me',
+    pitch: 'We file the takedowns for confirmed copies in Rights Manager on your behalf, using your signed attestation, and track every request to the end.',
+    template: 'Please set up automatic DMCA takedowns for {game}: file the takedowns for confirmed copies in Rights Manager on our behalf and track each request.',
+  },
+  'hack-daemon': {
+    label: 'Send exploit briefs to my team',
+    pitch: 'We open a ticket per exploit class in your tracker, with the server-side fix, and follow it until it is patched.',
+    template: 'Please set up exploit tickets for {game}: open one ticket per exploit class in our tracker with the fix and follow it until it is patched.',
+  },
+  'sponsor-daemon': {
+    label: 'Send the outreach for me',
+    pitch: 'We send each approved message from your address, follow up, and keep every reply and rate in one place.',
+    template: 'Please set up automatic creator outreach for {game}: send the approved sponsorship messages from our address, follow up and track replies and rates.',
+  },
+  'rank-daemon': {
+    label: 'Auto-optimize my ranking',
+    pitch: 'We test titles, thumbnails and keywords against your search position and keep what moves you up.',
+    template: 'Please set up ranking optimization for {game}: test titles, thumbnails and keywords against our search position and keep what works.',
+  },
+  'pulse-daemon': {
+    label: 'Page my team on regressions',
+    pitch: 'We alert your on-call developer with the likely cause and open a rollback ticket when the vitals drop.',
+    template: 'Please set up regression alerts for {game}: page our on-call developer with the likely cause and open a rollback ticket when the vitals drop.',
+  },
+}
+
+/** Real games to try a tool on without owning one. They fill the input; nothing runs until the visitor presses the button. */
+export const TRY_GAMES: { name: string; link: string }[] = [
+  { name: 'Steal An Egg', link: 'https://www.roblox.com/games/107778070777162/Steal-An-Egg' },
+  { name: 'Grow a Garden', link: 'https://www.roblox.com/games/126884695634066/Grow-a-Garden' },
+  { name: 'Fisch', link: 'https://www.roblox.com/games/16732694052/Fisch' },
+]

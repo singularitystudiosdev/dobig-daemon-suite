@@ -4,6 +4,9 @@ import CreatorDetailView from './creator'
 import DescriptionDetailView from './description'
 import DmcaDetailView from './dmca'
 import HackDetailView from './hack'
+import PulseDetailView from './pulse'
+import RankDetailView from './rank'
+import SponsorDetailView from './sponsor'
 import SentimentDetailView from './sentiment'
 import ThumbnailDetailView from './thumbnail'
 import type { DetailViewProps } from './types'
@@ -17,4 +20,7 @@ export const detailViews: Record<FindingDetail['kind'], ComponentType<DetailView
   description: DescriptionDetailView,
   creator: CreatorDetailView,
   thumbnail: ThumbnailDetailView,
+  rank: RankDetailView,
+  sponsor: SponsorDetailView,
+  pulse: PulseDetailView,
 }

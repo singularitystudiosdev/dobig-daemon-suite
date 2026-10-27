@@ -1,4 +1,4 @@
-import { Bug, Images, MessagesSquare, PenLine, ShieldAlert, UserSearch, type LucideIcon } from 'lucide-react'
+import { Activity, Bug, Handshake, Images, MessagesSquare, PenLine, ShieldAlert, TrendingUp, UserSearch, type LucideIcon } from 'lucide-react'
 import type { Tone } from '@/lib/tone'
 
 export type DaemonSlug =
@@ -8,6 +8,9 @@ export type DaemonSlug =
   | 'description-daemon'
   | 'dmca-daemon'
   | 'hack-daemon'
+  | 'rank-daemon'
+  | 'sponsor-daemon'
+  | 'pulse-daemon'
 
 export interface DaemonMeta {
   slug: DaemonSlug
@@ -61,6 +64,9 @@ export const daemons: DaemonMeta[] = [
     icon: Bug,
     tone: 'data5',
   },
+  { slug: 'rank-daemon', name: 'Rank Daemon', navLabel: 'Rankings', icon: TrendingUp, tone: 'live' },
+  { slug: 'sponsor-daemon', name: 'Sponsor Daemon', navLabel: 'Sponsors', icon: Handshake, tone: 'accent' },
+  { slug: 'pulse-daemon', name: 'Pulse Daemon', navLabel: 'Pulse', icon: Activity, tone: 'warn' },
 ]
 
 export const daemonsBySlug: Record<DaemonSlug, DaemonMeta> = Object.fromEntries(daemons.map((d) => [d.slug, d])) as Record<

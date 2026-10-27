@@ -54,4 +54,7 @@ export const fakeAnalyzers: Record<DaemonSlug, Analyzer> = {
   'discord-daemon': analyzer,
   'description-daemon': analyzer,
   'creator-dox': analyzer,
+  'rank-daemon': analyzer,
+  'sponsor-daemon': analyzer,
+  'pulse-daemon': analyzer,
 }
