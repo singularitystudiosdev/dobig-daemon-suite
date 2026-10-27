@@ -41,7 +41,7 @@ export interface YtWatch {
 
 export type YtSort = 'relevance' | 'date'
 
-async function getHtml(url: string, signal?: AbortSignal): Promise<string> {
+export async function getHtml(url: string, signal?: AbortSignal): Promise<string> {
   let lastStatus = 0
   for (let attempt = 0; attempt < 3; attempt++) {
     const res = await fetch(url, { headers: HEADERS, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(25_000)]) : AbortSignal.timeout(25_000) })
@@ -54,7 +54,7 @@ async function getHtml(url: string, signal?: AbortSignal): Promise<string> {
 }
 
 /** Pull `var NAME = {...};` out of the page with brace matching (regexes break on nested `;`). */
-function extractJson(html: string, name: string): unknown | null {
+export function extractJson(html: string, name: string): unknown | null {
   const marker = new RegExp(`(?:var\\s+)?${name}\\s*=\\s*`)
   const m = marker.exec(html)
   if (!m) return null
@@ -85,7 +85,7 @@ function extractJson(html: string, name: string): unknown | null {
   return null
 }
 
-function walk(node: unknown, visit: (key: string, value: Record<string, unknown>) => void): void {
+export function walk(node: unknown, visit: (key: string, value: Record<string, unknown>) => void): void {
   if (!node || typeof node !== 'object') return
   if (Array.isArray(node)) {
     for (const n of node) walk(n, visit)
@@ -97,7 +97,7 @@ function walk(node: unknown, visit: (key: string, value: Record<string, unknown>
   }
 }
 
-const text = (t: unknown): string | null => {
+export const text = (t: unknown): string | null => {
   const o = t as { simpleText?: string; runs?: { text?: string }[] } | undefined
   if (!o) return null
   if (typeof o.simpleText === 'string') return o.simpleText
