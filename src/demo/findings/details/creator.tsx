@@ -111,7 +111,21 @@ function InviteFacts({ invite }: { invite: CreatorInvite }) {
   )
 }
 
-export default function CreatorDetailView({ detail: d, state, act }: DetailViewProps<CreatorDetail>) {
+/* Results saved before Creator Dox looked for the team (it used to rank YouTube creators) have the old detail shape.
+   They are kept, never deleted; the row says so and the next run replaces them. */
+export default function CreatorDetailView(props: DetailViewProps<CreatorDetail>) {
+  if (!Array.isArray(props.detail.provenance)) {
+    return (
+      <p className="max-w-prose text-label text-muted">
+        This result was saved by an older version of Creator Dox, which ranked YouTube creators. Creator Dox now finds the owner, the leaders and the Discord
+        servers behind a game. Press Run now to replace it.
+      </p>
+    )
+  }
+  return <CreatorContactView {...props} />
+}
+
+function CreatorContactView({ detail: d, state, act }: DetailViewProps<CreatorDetail>) {
   const toast = useToast()
   const contacted = state === 'contacted'
   const fetched = d.fetchedAt.slice(0, 16).replace('T', ' ')
