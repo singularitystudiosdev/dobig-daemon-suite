@@ -286,3 +286,227 @@ export async function resolveGame(link: string): Promise<ResolveResponse> {
   const universeId = await universeOf(placeId)
   return gameCache.wrap(`u${universeId}`, () => loadGame(universeId))
 }
+
+// ------------------------------------------------- additive helpers for the analyzers (dmca and friends)
+// These share the rolling-minute limiter above, wait for retry-after instead of failing fast, and take an AbortSignal.
+
+/** Waits for a slot in the shared limiter. Unlike takeToken it waits as long as it must (the caller's signal stops it). */
+export async function takeRobloxToken(signal?: AbortSignal): Promise<void> {
+  for (;;) {
+    if (signal?.aborted) throw new ResolveError('upstream', 'The run was cancelled.')
+    const now = Date.now()
+    while (stamps.length && now - stamps[0] >= WINDOW_MS) stamps.shift()
+    if (stamps.length < MAX_PER_WINDOW) {
+      stamps.push(now)
+      return
+    }
+    await sleep(Math.min(stamps[0] + WINDOW_MS - now + 25, 5000))
+  }
+}
+
+/** GET a Roblox JSON endpoint under the shared limiter. Honours 429 retry-after (up to 4 tries) and retries one 5xx. */
+export async function robloxGetJson(url: string, signal?: AbortSignal): Promise<{ status: number; json: unknown }> {
+  let lastRetry = 5
+  let serverErrors = 0
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    await takeRobloxToken(signal)
+    let res: Response
+    try {
+      const timeout = AbortSignal.timeout(15_000)
+      res = await fetch(url, { headers: { accept: 'application/json' }, signal: signal ? AbortSignal.any([signal, timeout]) : timeout })
+    } catch {
+      throw new ResolveError('upstream', 'Roblox did not answer. Check your connection and run again in a moment.')
+    }
+    if (res.status === 429) {
+      const header = Number(res.headers.get('retry-after'))
+      lastRetry = Math.min(Number.isFinite(header) && header > 0 ? header : 5, 30)
+      await res.arrayBuffer().catch(() => undefined)
+      await sleep(lastRetry * 1000)
+      continue
+    }
+    if (res.status >= 500) {
+      await res.arrayBuffer().catch(() => undefined)
+      if (++serverErrors < 2) {
+        await sleep(1500)
+        continue
+      }
+      throw new ResolveError('upstream', 'Roblox is having trouble right now. Try again in a minute.')
+    }
+    let json: unknown = null
+    try {
+      json = await res.json()
+    } catch {
+      /* non-JSON body */
+    }
+    return { status: res.status, json }
+  }
+  throw new ResolveError('rate-limited', `Roblox is rate limiting lookups. Wait ${lastRetry} seconds and run again.`, lastRetry)
+}
+
+export interface OmniGame {
+  universeId: number
+  placeId: number
+  name: string
+  description: string
+  playing: number
+  upVotes: number
+  downVotes: number
+  creatorName: string
+  creatorId: number
+  creatorVerified: boolean
+}
+
+/** One page of Roblox omni-search (no login). Returns the games in it and the token for the next page, if any. */
+export async function omniSearchGames(query: string, sessionId: string, pageToken: string | null, signal?: AbortSignal): Promise<{ games: OmniGame[]; nextPageToken: string | null }> {
+  const params = new URLSearchParams({ searchQuery: query, pageType: 'all', sessionId })
+  if (pageToken) params.set('pageToken', pageToken)
+  const { status, json } = await robloxGetJson(`https://apis.roblox.com/search-api/omni-search?${params}`, signal)
+  if (status !== 200) throw new ResolveError('upstream', 'Roblox search did not answer. Try again in a minute.')
+  const root = obj(json)
+  const games: OmniGame[] = []
+  const groups = Array.isArray(root.searchResults) ? root.searchResults : []
+  for (const g of groups) {
+    const group = obj(g)
+    if (str(group.contentGroupType) !== 'Game') continue
+    const contents = Array.isArray(group.contents) ? group.contents : []
+    for (const c of contents) {
+      const x = obj(c)
+      const universeId = num(x.universeId)
+      const placeId = num(x.rootPlaceId)
+      if (!universeId || !placeId || !str(x.name)) continue
+      games.push({
+        universeId,
+        placeId,
+        name: str(x.name),
+        description: str(x.description),
+        playing: num(x.playerCount),
+        upVotes: num(x.totalUpVotes),
+        downVotes: num(x.totalDownVotes),
+        creatorName: str(x.creatorName),
+        creatorId: num(x.creatorId),
+        creatorVerified: x.creatorHasVerifiedBadge === true,
+      })
+    }
+  }
+  const next = str(root.nextPageToken)
+  return { games, nextPageToken: next || null }
+}
+
+export interface GameDetails {
+  universeId: number
+  placeId: number
+  name: string
+  description: string
+  creatorId: number
+  creatorName: string
+  /** 'User' or 'Group' as Roblox reports it. */
+  creatorType: string
+  playing: number
+  visits: number
+  created: string
+  updated: string
+}
+
+/** games.roblox.com/v1/games for many universes (the API takes up to 100 ids; this uses 50 per call). */
+export async function fetchGameDetails(universeIds: number[], signal?: AbortSignal): Promise<Map<number, GameDetails>> {
+  const out = new Map<number, GameDetails>()
+  for (let i = 0; i < universeIds.length; i += 50) {
+    const chunk = universeIds.slice(i, i + 50)
+    const { status, json } = await robloxGetJson(`https://games.roblox.com/v1/games?universeIds=${chunk.join(',')}`, signal)
+    if (status !== 200) throw new ResolveError('upstream', 'Roblox could not load game details. Try again in a minute.')
+    const rows = obj(json).data
+    for (const r of Array.isArray(rows) ? rows : []) {
+      const g = obj(r)
+      const creator = obj(g.creator)
+      const universeId = num(g.id)
+      if (!universeId || !str(g.name) || g.name === '[TITLE UNAVAILABLE]') continue
+      out.set(universeId, {
+        universeId,
+        placeId: num(g.rootPlaceId),
+        name: str(g.name),
+        description: str(g.description),
+        creatorId: num(creator.id),
+        creatorName: str(creator.name),
+        creatorType: str(creator.type),
+        playing: num(g.playing),
+        visits: num(g.visits),
+        created: str(g.created),
+        updated: str(g.updated),
+      })
+    }
+  }
+  return out
+}
+
+/** Gallery thumbnails (768x432 JPEG) for many universes; 30 universes per call, pending images retried twice. */
+export async function fetchGalleryUrls(universeIds: number[], perUniverse: number, signal?: AbortSignal): Promise<Map<number, string[]>> {
+  const out = new Map<number, string[]>()
+  for (let i = 0; i < universeIds.length; i += 30) {
+    let todo = universeIds.slice(i, i + 30)
+    for (let attempt = 0; attempt < 3 && todo.length; attempt++) {
+      const url = `https://thumbnails.roblox.com/v1/games/multiget/thumbnails?universeIds=${todo.join(',')}&countPerUniverse=${perUniverse}&defaults=true&size=768x432&format=Jpeg&isCircular=false`
+      const { status, json } = await robloxGetJson(url, signal)
+      if (status !== 200) throw new ResolveError('upstream', 'Roblox could not load screenshots. Try again in a minute.')
+      const rows = obj(json).data
+      const pending: number[] = []
+      for (const r of Array.isArray(rows) ? rows : []) {
+        const row = obj(r)
+        const universeId = num(row.universeId)
+        const thumbs = Array.isArray(row.thumbnails) ? row.thumbnails.map(obj) : []
+        const urls: string[] = []
+        let hasPending = false
+        for (const t of thumbs) {
+          const state = str(t.state)
+          if (state === 'Pending') hasPending = true
+          if (state !== 'Completed') continue
+          const u = trUrl(t.imageUrl)
+          if (u && !urls.includes(u)) urls.push(u)
+        }
+        out.set(universeId, urls.slice(0, perUniverse))
+        if (hasPending) pending.push(universeId)
+      }
+      todo = pending
+      if (todo.length) await sleep(1200)
+    }
+  }
+  return out
+}
+
+/** Game icons (512x512 JPEG), 100 universes per call. Games without a Completed icon are left out. */
+export async function fetchIconUrls(universeIds: number[], signal?: AbortSignal): Promise<Map<number, string>> {
+  const out = new Map<number, string>()
+  for (let i = 0; i < universeIds.length; i += 100) {
+    const chunk = universeIds.slice(i, i + 100)
+    const { status, json } = await robloxGetJson(`https://thumbnails.roblox.com/v1/games/icons?universeIds=${chunk.join(',')}&size=512x512&format=Jpeg`, signal)
+    if (status !== 200) continue
+    const rows = obj(json).data
+    for (const r of Array.isArray(rows) ? rows : []) {
+      const row = obj(r)
+      const u = str(row.state) === 'Completed' ? trUrl(row.imageUrl) : null
+      if (u) out.set(num(row.targetId), u)
+    }
+  }
+  return out
+}
+
+/** Downloads one tr.rbxcdn.com image (not rate limited like the API). Returns null when it cannot be had. */
+export async function downloadRobloxImage(url: string, signal?: AbortSignal): Promise<Buffer | null> {
+  if (!trUrl(url)) return null
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const timeout = AbortSignal.timeout(15_000)
+      const res = await fetch(url, { signal: signal ? AbortSignal.any([signal, timeout]) : timeout })
+      if (res.status === 429 || res.status >= 500) {
+        await res.arrayBuffer().catch(() => undefined)
+        await sleep(1000)
+        continue
+      }
+      if (!res.ok) return null
+      const buf = Buffer.from(await res.arrayBuffer())
+      return buf.length > 0 && buf.length < 6_000_000 ? buf : null
+    } catch {
+      if (signal?.aborted) return null
+    }
+  }
+  return null
+}

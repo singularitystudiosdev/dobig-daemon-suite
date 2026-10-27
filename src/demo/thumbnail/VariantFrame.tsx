@@ -50,11 +50,12 @@ function RevealImage({ src, alt, shimmer }: { src: string; alt: string; shimmer?
   )
 }
 
-export function OriginalFrame({ url, alt }: { url: string; alt: string }) {
+export function OriginalFrame({ url, alt, isNew }: { url: string; alt: string; isNew?: boolean }) {
   return (
     <div className="relative aspect-video overflow-hidden rounded-8 bg-raised">
       <RevealImage src={url} alt={alt} />
       <span className={chip}>Original</span>
+      {isNew && <span className="absolute right-8 top-8 rounded-full bg-accent px-8 py-2 text-micro font-medium text-ink">New</span>}
     </div>
   )
 }
@@ -68,7 +69,7 @@ export function VariantFrame({
   onRetry,
   onAddKey,
 }: {
-  tile: Tile
+  tile: Tile | { status: 'idle' }
   label: string
   name: string
   downloadName: string
@@ -82,6 +83,7 @@ export function VariantFrame({
         <RevealImage key={tile.src} src={tile.src} alt={`${name} variant`} shimmer />
         <button type="button" onClick={onOpen} aria-label={`Enlarge ${name}`} className="absolute inset-0 rounded-8" />
         <span className={cn(chip, 'pointer-events-none')}>{label}</span>
+        {tile.earlier && <span className={cn(statusChip, 'pointer-events-none text-muted')}>Generated earlier</span>}
         <a
           href={tile.src}
           download={downloadName}
@@ -113,6 +115,15 @@ export function VariantFrame({
           </Button>
         )}
         <span className={cn(chip, 'text-ink')}>{label}</span>
+      </div>
+    )
+  }
+
+  if (tile.status === 'idle') {
+    return (
+      <div role="group" aria-label={`${name}, not generated`} className="relative flex aspect-video items-center justify-center overflow-hidden rounded-8 border border-dashed border-line bg-sunken">
+        <span className="text-micro text-subtle">Not generated</span>
+        <span className={chip}>{label}</span>
       </div>
     )
   }

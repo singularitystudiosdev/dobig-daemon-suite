@@ -2,6 +2,8 @@ import { useEffect, useId, useRef, useState, ViewTransition, type KeyboardEvent 
 import { ChevronDown, LayoutGrid, Zap } from 'lucide-react'
 import { tools, toolsBySlug } from '@/data/tools'
 import type { DaemonSlug } from '@/data/daemons'
+import { Skeleton } from '@/components/ui'
+import { fmtInt } from '@/lib/format'
 import { useBalance } from '@/lib/credits'
 import { navigate } from '@/lib/router'
 import { useOnClickOutside } from '@/lib/hooks'
@@ -16,7 +18,7 @@ function Credits({ slug }: { slug: DaemonSlug }) {
   return (
     <span className="tabular inline-flex items-center gap-4 text-micro text-muted">
       <Zap aria-hidden className="size-12" />
-      {n} left
+      {n === null ? <Skeleton className="h-10 w-32" /> : `${fmtInt(n)} credits left`}
     </span>
   )
 }
@@ -80,7 +82,7 @@ export function ToolSwitcher({ slug }: { slug: DaemonSlug }) {
         className="state-layer flex max-w-full min-w-0 items-center gap-12 rounded-8 py-4 pl-4 pr-12"
       >
         <ViewTransition name={`tool-${slug}`} share="tool-morph" default="none">
-          <img src={tool.art} alt="" width={64} height={36} className="h-36 w-64 shrink-0 rounded-8 object-cover" />
+          <img src={tool.art} alt="" width={64} height={36} className="hidden h-36 w-64 shrink-0 rounded-8 object-cover sm:block" />
         </ViewTransition>
         <span className="min-w-0 truncate text-body font-bold text-ink">{tool.name}</span>
         <ChevronDown aria-hidden className={cn('size-16 shrink-0 text-muted transition-transform duration-200 motion-reduce:transition-none', open && 'rotate-180')} />

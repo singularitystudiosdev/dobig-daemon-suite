@@ -1,168 +1,107 @@
-import { useEffect, useRef, useState } from 'react'
-import { Check, ChevronDown, LoaderCircle } from 'lucide-react'
-import { Panel, ProgressBar } from '@/components/ui'
+import { useEffect, useState } from 'react'
+import { Check, ChevronDown, LoaderCircle, TriangleAlert, X } from 'lucide-react'
+import { Panel } from '@/components/ui'
 import { cn } from '@/lib/cn'
-import { clamp } from '@/lib/format'
-import { useReducedMotion } from '@/lib/hooks'
+import { fmtInt } from '@/lib/format'
+import type { StepState } from '@/lib/runTypes'
+import { isEnded, plural, useNow, type RunState } from './runState'
 
-/* The visible thinking phase: a live header, the tool's steps revealing one after another, a slim
-   progress bar, then a one-line summary that expands back into the steps. */
+/* The run's real steps, as the server reports them. While the run is going the panel shows each step with a spinner
+   (active), check (done), warning mark (warn) or x (failed) and its detail line, and an elapsed clock counted from the
+   start event. When the run ends it collapses to one line that expands back into the steps. Nothing is scripted. */
 
-const REDUCED_MS = 700
+const seconds = (ms: number) => `${(ms / 1000).toFixed(1)} s`
 
-/** Total thinking time: 5 to 8 seconds, scaled by step count, with a small per-game jitter. */
-export function thinkingMs(stepCount: number, seed: string): number {
-  let h = 0
-  for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0
-  const jitter = ((h % 5) - 2) * 0.1
-  return Math.round(clamp(5.2 + (stepCount - 4) * 1.3 + jitter, 5, 8) * 1000)
+const STEP_ICON: Record<StepState, { Icon: typeof Check; className: string; label: string }> = {
+  active: { Icon: LoaderCircle, className: 'text-accent-ink motion-safe:animate-spin', label: 'In progress' },
+  done: { Icon: Check, className: 'text-live', label: 'Done' },
+  warn: { Icon: TriangleAlert, className: 'text-warn', label: 'Finished with a warning' },
+  failed: { Icon: X, className: 'text-danger', label: 'Failed' },
 }
 
-export interface ThinkingState {
-  elapsedMs: number
-  totalMs: number
-  progress: number
-  done: boolean
-  /** Index of the step in progress; steps.length once finished. */
-  active: number
-  /** 0 to 1 within the active step. */
-  stepProgress: number
-  reduced: boolean
-  /** Per-step [start, end] in ms. */
-  spans: [number, number][]
+function StepList({ steps, id }: { steps: RunState['steps']; id?: string }) {
+  return (
+    <ol id={id} className="flex flex-col gap-12">
+      {steps.map((s) => {
+        const { Icon, className, label } = STEP_ICON[s.state]
+        return (
+          <li key={s.id} className="flex items-start gap-12">
+            <Icon role="img" aria-label={label} className={cn('mt-2 size-16 shrink-0', className)} />
+            <div className="flex min-w-0 flex-1 flex-col gap-2 md:flex-row md:items-baseline md:justify-between md:gap-16">
+              <span className={cn('text-label', s.state === 'active' ? 'text-ink' : 'text-muted')}>{s.label}</span>
+              {s.detail && <span className="tabular text-micro text-subtle md:text-right">{s.detail}</span>}
+            </div>
+          </li>
+        )
+      })}
+    </ol>
+  )
 }
 
-/** Runs once per mounted component. The start time lives in a ref, so a StrictMode remount resumes instead of restarting. */
-export function useThinking(stepCount: number, seed: string): ThinkingState {
-  const reduced = useReducedMotion()
-  const totalMs = reduced ? REDUCED_MS : thinkingMs(stepCount, seed)
-  const startRef = useRef<number | null>(null)
-  const [elapsedMs, setElapsedMs] = useState(0)
-  const [done, setDone] = useState(false)
+export function ThinkingPanel({ name, state }: { name: string; state: RunState }) {
+  const ended = isEnded(state)
+  const [override, setOverride] = useState<boolean | null>(null)
+  // The panel closes itself when the run ends, and a replay of a finished run (which arrives already ended) starts closed.
+  useEffect(() => setOverride(null), [ended, state.runId])
+  const open = override ?? !ended
+  const now = useNow(!ended && state.started)
 
-  useEffect(() => {
-    if (done) return
-    startRef.current ??= performance.now()
-    const id = window.setInterval(() => {
-      const e = performance.now() - (startRef.current ?? 0)
-      if (e >= totalMs) {
-        window.clearInterval(id)
-        setElapsedMs(totalMs)
-        setDone(true)
-      } else setElapsedMs(e)
-    }, 100)
-    return () => window.clearInterval(id)
-  }, [done, totalMs])
+  if (!state.runId) return null
 
-  // Uneven but deterministic step lengths, so the narration does not tick like a metronome.
-  const weights = Array.from({ length: stepCount }, (_, i) => 1 + 0.4 * Math.sin(i * 2.3 + 1))
-  const sum = weights.reduce((a, w) => a + w, 0) || 1
-  let at = 0
-  const spans: [number, number][] = weights.map((w) => {
-    const start = at
-    at += (w / sum) * totalMs
-    return [start, at]
-  })
-  const active = done ? stepCount : Math.max(0, spans.findIndex(([, end]) => elapsedMs < end))
-  const [s, e] = spans[Math.min(active, stepCount - 1)] ?? [0, 1]
-  return {
-    elapsedMs,
-    totalMs,
-    progress: done ? 1 : clamp(elapsedMs / totalMs),
-    done,
-    active,
-    stepProgress: done ? 1 : clamp((elapsedMs - s) / (e - s || 1)),
-    reduced,
-    spans,
-  }
-}
-
-const seconds = (ms: number) => `${(ms / 1000).toFixed(1)}s`
-
-export function ThinkingPanel({
-  name,
-  steps,
-  details,
-  state,
-  findingCount,
-}: {
-  name: string
-  steps: string[]
-  details: ((p: number) => string)[]
-  state: ThinkingState
-  findingCount: number
-}) {
-  const [open, setOpen] = useState(false)
-  const { done, active, reduced } = state
-
-  if (done) {
+  if (ended) {
+    const failed = state.end?.status === 'failed' || (state.error !== null && state.end === null)
+    const count = state.findings.length
+    const took = state.end ? seconds(state.end.durationMs) : null
+    const text = failed
+      ? `${took ? `Stopped after ${took}` : 'Stopped'}, ${plural(count, 'finding', 'findings')}`
+      : `Analysed in ${took}, ${plural(count, 'finding', 'findings')}`
+    const refunded = state.end?.refunded ?? 0
     return (
       <Panel bodyClassName="px-16 py-12 md:px-24">
         <div className="flex items-center gap-12">
-          <Check aria-hidden className="size-16 shrink-0 text-live" />
+          {failed ? <X role="img" aria-label="Failed" className="size-16 shrink-0 text-danger" /> : <Check role="img" aria-label="Done" className="size-16 shrink-0 text-live" />}
           <p role="status" className="min-w-0 flex-1 text-label text-ink">
-            <span className="tabular">Analysed in {seconds(state.totalMs)}, {findingCount} findings</span>
+            <span className="tabular">{text}</span>
+            {refunded > 0 && <span className="tabular text-muted">. {fmtInt(refunded)} credits refunded</span>}
           </p>
-          <button
-            type="button"
-            aria-expanded={open}
-            aria-controls="thinking-steps"
-            onClick={() => setOpen((v) => !v)}
-            className="state-layer inline-flex h-32 items-center gap-6 rounded-8 px-8 text-label text-muted"
-          >
-            {open ? 'Hide steps' : 'Show steps'}
-            <ChevronDown aria-hidden className={cn('size-16 transition-transform duration-200 motion-reduce:transition-none', open && 'rotate-180')} />
-          </button>
+          {state.steps.length > 0 && (
+            <button
+              type="button"
+              aria-expanded={open}
+              aria-controls="run-steps"
+              onClick={() => setOverride(!open)}
+              className="state-layer inline-flex h-32 items-center gap-6 rounded-8 px-8 text-label text-muted"
+            >
+              {open ? 'Hide steps' : 'Show steps'}
+              <ChevronDown aria-hidden className={cn('size-16 transition-transform duration-200 motion-reduce:transition-none', open && 'rotate-180')} />
+            </button>
+          )}
         </div>
-        {open && (
-          <ol id="thinking-steps" className="mt-12 flex flex-col gap-8 border-t border-line pt-12 motion-safe:animate-enter">
-            {steps.map((label, i) => (
-              <li key={label} className="flex items-start gap-12">
-                <Check aria-hidden className="mt-2 size-16 shrink-0 text-live" />
-                <StepText label={label} detail={details[i]?.(1)} done />
-              </li>
-            ))}
-          </ol>
+        {open && state.steps.length > 0 && (
+          <div className="mt-12 border-t border-line pt-12">
+            <StepList steps={state.steps} id="run-steps" />
+          </div>
         )}
       </Panel>
     )
   }
 
+  const elapsed = state.startedAt !== null ? Math.max(0, now - state.startedAt) : 0
   return (
     <Panel bodyClassName="p-16 md:p-24">
       <div className="flex items-center gap-12">
         <LoaderCircle aria-hidden className="size-20 shrink-0 text-accent-ink motion-safe:animate-spin" />
         <h2 role="status" className="min-w-0 flex-1 truncate text-stat font-bold text-ink">
-          {name} is thinking
+          {state.started ? `${name} is running` : 'Connecting to the run'}
         </h2>
-        <span className="tabular shrink-0 text-label text-muted">{seconds(state.elapsedMs)}</span>
+        {state.cost > 0 && <span className="tabular shrink-0 text-label text-subtle">{fmtInt(state.cost)} credits</span>}
+        {state.started && <span className="tabular shrink-0 text-label text-muted">{seconds(elapsed)}</span>}
       </div>
-      <ProgressBar value={state.progress} size="sm" label={`${name} progress`} className="mt-12" />
-      {!reduced && (
-        <ol className="mt-16 flex flex-col gap-12">
-          {steps.slice(0, active + 1).map((label, i) => {
-            const current = i === active
-            return (
-              <li key={label} className="flex items-start gap-12 motion-safe:animate-enter">
-                {current ? <LoaderCircle aria-hidden className="mt-2 size-16 shrink-0 text-accent-ink motion-safe:animate-spin" /> : <Check aria-hidden className="mt-2 size-16 shrink-0 text-live" />}
-                <StepText label={label} detail={details[i]?.(current ? state.stepProgress : 1)} done={!current} caret={current} />
-              </li>
-            )
-          })}
-        </ol>
+      {state.steps.length > 0 && (
+        <div className="mt-16">
+          <StepList steps={state.steps} />
+        </div>
       )}
     </Panel>
-  )
-}
-
-function StepText({ label, detail, done, caret }: { label: string; detail?: string; done?: boolean; caret?: boolean }) {
-  return (
-    <div className="flex min-w-0 flex-1 flex-col gap-2 md:flex-row md:items-baseline md:justify-between md:gap-16">
-      <span className={cn('text-label', done ? 'text-muted' : 'text-ink')}>
-        {label}
-        {caret && <span aria-hidden className="ml-4 inline-block h-12 w-2 translate-y-2 bg-ink motion-safe:animate-blink" />}
-      </span>
-      {detail && <span className="tabular font-mono text-micro text-subtle md:text-right">{detail}</span>}
-    </div>
   )
 }

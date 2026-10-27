@@ -15,7 +15,11 @@ import {
 } from '../src/lib/apiTypes.ts'
 import { GeminiError, generateVariant, sniff } from './gemini.ts'
 import { BodyError, readJson, redactKeys, sendJson, startNdjson } from './http.ts'
+import { providerForKey, resolveImageKey } from './keys.ts'
 import { generateWithOpenRouter } from './openrouter.ts'
+import type { Credits } from './credits.ts'
+import type { Secrets } from './tools/types.ts'
+import { CREDITS_PER_VARIANT } from '../src/data/tools.ts'
 
 /** Default output directory for generated images; /api/img serves them to the browser. */
 export const CACHE_DIR = '.cache/variants'
@@ -24,6 +28,7 @@ const CONCURRENCY = 3
 const EXT: Record<string, string> = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }
 const MIME: Record<string, string> = { jpg: 'image/jpeg', png: 'image/png', webp: 'image/webp' }
 const MAX_THUMB_BYTES = 8 * 1024 * 1024
+const NO_SECRETS: Secrets = { get: () => null, has: () => false }
 
 export interface ServerEnv {
   /** Server-side Gemini key (env). Never logged or sent to the client. */
@@ -93,13 +98,7 @@ export function parseVariantRequest(raw: unknown): { error: string } | { gallery
   return { gallery, perThumb, tiles }
 }
 
-const KEY_SHAPE = /^[A-Za-z0-9_-]{6,256}$/
-const OPENROUTER_PREFIX = 'sk-or-'
-
-/** The provider a browser-supplied key belongs to: OpenRouter keys start with sk-or-, anything else is a Gemini key. */
-export function providerForKey(key: string): ImageProvider {
-  return key.startsWith(OPENROUTER_PREFIX) ? 'openrouter' : 'google'
-}
+export { providerForKey }
 
 /** The provider the server's own environment keys select (a Gemini key wins when both are set), or null with none. */
 export function envProvider(env: ServerEnv): ImageProvider | null {
@@ -135,7 +134,13 @@ async function downloadThumb(url: string, signal: AbortSignal): Promise<{ mime: 
   return { mime, base64: bytes.toString('base64') }
 }
 
-export async function handleVariants(req: IncomingMessage, res: ServerResponse, env: ServerEnv): Promise<void> {
+/** What the stream needs from the backbone: the server-side balance and the saved keys. Optional so the handler still works bare. */
+export interface VariantsDeps {
+  credits: Credits
+  secrets: Secrets
+}
+
+export async function handleVariants(req: IncomingMessage, res: ServerResponse, env: ServerEnv, deps?: VariantsDeps): Promise<void> {
   let raw: unknown
   try {
     raw = await readJson(req, MAX_BODY)
@@ -146,22 +151,36 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
   const parsed = parseVariantRequest(raw)
   if ('error' in parsed) return invalid(res, parsed.error)
 
-  // A key typed into the browser wins over the one in the server environment.
+  // A key typed into the browser wins over the server's own (environment, then the saved keys).
   const header = req.headers['x-gemini-key']
   const headerKey = (Array.isArray(header) ? header[0] : header)?.trim() ?? ''
-  let apiKey = ''
-  let provider: ImageProvider | null = null
-  if (headerKey && KEY_SHAPE.test(headerKey)) {
-    apiKey = headerKey
-    provider = providerForKey(headerKey)
-  } else {
-    provider = envProvider(env)
-    apiKey = provider === 'google' ? env.key : provider === 'openrouter' ? env.openrouterKey : ''
-  }
+  const resolved = resolveImageKey(headerKey, env, deps?.secrets ?? NO_SECRETS)
+  const apiKey = resolved?.key ?? ''
+  let provider: ImageProvider | null = resolved?.provider ?? null
   const { tiles } = parsed
-  // Every tile is a fresh call to the model; with no key anywhere nothing is generated.
+  // Every tile is a fresh call to the model; with no key anywhere nothing is generated (and nothing is charged).
   const mode: 'live' | 'unavailable' = apiKey ? 'live' : 'unavailable'
   if (mode === 'unavailable') provider = null
+
+  // Credits are charged by the server before any stream byte: tiles x 250. A tile that fails is refunded below.
+  const needed = mode === 'live' && deps ? tiles.length * CREDITS_PER_VARIANT : 0
+  if (deps && needed > 0 && !deps.credits.charge('thumbnail-daemon', needed)) {
+    const balance = deps.credits.balance('thumbnail-daemon')
+    return sendJson(res, 402, {
+      ok: false,
+      code: 'credits',
+      message: `This needs ${needed.toLocaleString('en-US')} credits (${tiles.length} ${tiles.length === 1 ? 'variant' : 'variants'} at ${CREDITS_PER_VARIANT} each) and the Thumbnail Daemon has ${balance.toLocaleString('en-US')}. Add credits to continue.`,
+      needed,
+      balance,
+    })
+  }
+  const settled = new Set<Tile>()
+  const refundTile = (t: Tile) => {
+    if (needed > 0 && deps && !settled.has(t)) {
+      settled.add(t)
+      deps.credits.refund('thumbnail-daemon', CREDITS_PER_VARIANT)
+    }
+  }
 
   const out = startNdjson(req, res)
   const emit = (e: VariantEvent) => out.write(e)
@@ -182,6 +201,7 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
 
   const fail = (t: Tile, reason: VariantFailure, message: string) => {
     failed++
+    refundTile(t)
     emit({ type: 'failed', thumbId: t.thumb.id, index: t.index, reason, message })
   }
 
@@ -189,6 +209,7 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
     if (out.signal.aborted) return
     const started = Date.now()
     const ok = (src: string) => {
+      settled.add(t)
       done++
       emit({ type: 'done', thumbId: t.thumb.id, index: t.index, src, ms: Date.now() - started })
     }
@@ -229,8 +250,30 @@ export async function handleVariants(req: IncomingMessage, res: ServerResponse, 
     }
   }
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, tiles.length) }, worker))
+  // A client that left early never received the rest: refund every tile that did not complete.
+  for (const t of tiles) if (!settled.has(t)) refundTile(t)
   if (!out.signal.aborted) emit({ type: 'end', done, failed })
   out.end()
+}
+
+/** GET /api/variants/existing?ids=a,b,c: the variants already on disk for these gallery ids. Never generates anything. */
+export function listExistingVariants(res: ServerResponse, env: ServerEnv, idsParam: string): void {
+  const ids = [...new Set(idsParam.split(',').map((x) => x.trim()).filter((x) => /^\d{1,20}$/.test(x)))].slice(0, 64)
+  const variants: { thumbId: string; index: number; src: string }[] = []
+  let files: string[] = []
+  try {
+    files = fs.readdirSync(env.cacheDir)
+  } catch {
+    /* nothing generated yet */
+  }
+  const byName = new Set(files)
+  for (const id of ids) {
+    for (let index = 0; index < VARIANTS_PER_THUMB; index++) {
+      const name = ['jpg', 'png', 'webp'].map((ext) => `${id}-${index}.${ext}`).find((n) => byName.has(n))
+      if (name) variants.push({ thumbId: id, index, src: imgSrc(env, name) })
+    }
+  }
+  sendJson(res, 200, { ok: true, variants })
 }
 
 export function serveGeneratedImage(req: IncomingMessage, res: ServerResponse, env: ServerEnv, file: string): void {

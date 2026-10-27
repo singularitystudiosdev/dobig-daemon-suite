@@ -1,6 +1,6 @@
 import { ViewTransition } from 'react'
 import { ArrowLeft, Play, SearchX } from 'lucide-react'
-import { daemonHref, demoHref, markNav, navigate } from '@/lib/router'
+import { demoHref, markNav, navigate } from '@/lib/router'
 import { isDaemonSlug } from '@/data/daemons'
 import { toolsBySlug } from '@/data/tools'
 import { EmptyState } from '@/components/ui'
@@ -86,9 +86,6 @@ export default function ToolDetail({ slug }: { slug: string }) {
                 Back to toolkit
               </a>
             </div>
-            <a href={daemonHref(tool.slug)} className="rounded-8 text-label text-muted underline-offset-4 transition-colors duration-150 hover:text-ink hover:underline">
-              See the full simulated run
-            </a>
           </div>
         </div>
       </div>

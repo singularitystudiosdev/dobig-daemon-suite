@@ -1,13 +1,17 @@
 import type { ImageProvider, VariantEvent, VariantFailure } from '@/lib/apiTypes'
+import type { ExistingVariant } from './variantsClient'
 
-/* Tile state for the Thumbnail workspace. Every variant frame exists from the first render as 'queued';
-   NDJSON events move it to working, then done or failed. */
+/* Tile state for the Thumbnail workspace. A tile that is not in the map has nothing generated yet (idle).
+   NDJSON events move a tile to queued, working, then done or failed; outputs from earlier sessions arrive as done
+   tiles flagged `earlier`. */
 
 export interface Tile {
   status: 'queued' | 'working' | 'done' | 'failed'
   src?: string
   reason?: VariantFailure
   message?: string
+  /** Generated in an earlier session; shown read-only until the user generates again. */
+  earlier?: boolean
 }
 
 export interface TilesState {
@@ -24,14 +28,13 @@ export type TilesAction =
   | { type: 'queue'; keys: string[] }
   | { type: 'event'; event: VariantEvent }
   | { type: 'fail'; keys: string[]; reason: VariantFailure; message: string }
+  | { type: 'existing'; items: ExistingVariant[] }
   | { type: 'unavailable' }
   | { type: 'restart' }
 
 export const tileKey = (thumbId: string, index: number) => `${thumbId}:${index}`
 
-export function initTiles(keys: string[]): TilesState {
-  return { tiles: Object.fromEntries(keys.map((k) => [k, { status: 'queued' } as Tile])), mode: null, provider: null, unavailable: false }
-}
+export const INITIAL_TILES: TilesState = { tiles: {}, mode: null, provider: null, unavailable: false }
 
 export function tilesReducer(state: TilesState, action: TilesAction): TilesState {
   switch (action.type) {
@@ -48,6 +51,14 @@ export function tilesReducer(state: TilesState, action: TilesAction): TilesState
       }
       return { ...state, tiles }
     }
+    case 'existing': {
+      const tiles = { ...state.tiles }
+      for (const v of action.items) {
+        const k = tileKey(v.thumbId, v.index)
+        if (!tiles[k]) tiles[k] = { status: 'done', src: v.src, earlier: true }
+      }
+      return { ...state, tiles }
+    }
     case 'unavailable':
       return { ...state, unavailable: true }
     case 'restart':
@@ -57,10 +68,9 @@ export function tilesReducer(state: TilesState, action: TilesAction): TilesState
       if (e.type === 'start') return e.mode === 'unavailable' ? state : { ...state, mode: e.mode, provider: e.provider ?? null }
       if (e.type === 'end') return state
       const key = tileKey(e.thumbId, e.index)
-      if (!(key in state.tiles)) return state
       if (e.type === 'working') {
         const cur = state.tiles[key]
-        if (cur.status === 'done' || cur.status === 'failed') return state
+        if (cur && (cur.status === 'done' || cur.status === 'failed') && !cur.earlier) return state
         return { ...state, tiles: { ...state.tiles, [key]: { status: 'working' } } }
       }
       if (e.type === 'done') return { ...state, tiles: { ...state.tiles, [key]: { status: 'done', src: e.src } } }

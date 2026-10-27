@@ -32,10 +32,15 @@ function dedupe(gallery: GalleryThumb[]): GalleryThumb[] {
 }
 
 /** POSTs a variants request and calls `onEvent` for each NDJSON line as it arrives.
-    Resolves when the stream closes; an abort resolves quietly; other failures reject. */
-export async function streamVariants(request: VariantRequest, key: string, onEvent: (e: VariantEvent) => void, signal: AbortSignal): Promise<void> {
+    Resolves when the stream closes; an abort resolves quietly; other failures reject.
+    The server holds the image key and charges credits, so nothing key-like is sent from here. The older four-argument
+    form `(request, key, onEvent, signal)` still works: the key is ignored. */
+export function streamVariants(request: VariantRequest, onEvent: (e: VariantEvent) => void, signal: AbortSignal): Promise<void>
+export function streamVariants(request: VariantRequest, ignoredKey: string, onEvent: (e: VariantEvent) => void, signal: AbortSignal): Promise<void>
+export async function streamVariants(request: VariantRequest, a: string | ((e: VariantEvent) => void), b: ((e: VariantEvent) => void) | AbortSignal, c?: AbortSignal): Promise<void> {
+  const onEvent = typeof a === 'function' ? a : (b as (e: VariantEvent) => void)
+  const signal = typeof a === 'function' ? (b as AbortSignal) : (c as AbortSignal)
   const headers: Record<string, string> = { 'content-type': 'application/json', accept: 'application/x-ndjson' }
-  if (key) headers['x-gemini-key'] = key
   try {
     const res = await fetch('/api/variants', { method: 'POST', headers, body: JSON.stringify(request), signal })
     if (!res.ok || !res.body) throw new Error(`The variants request failed (${res.status})`)

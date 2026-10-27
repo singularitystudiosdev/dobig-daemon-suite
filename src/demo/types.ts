@@ -76,7 +76,8 @@ export interface AddCardProps {
   /** Prefill only: a link in the URL never submits by itself. */
   initialLink: string
   focusOnMount: boolean
-  onAdd: (entry: TargetEntry, runId: string) => void
+  /** `daemon` is the record createDaemon returned; pass it when you have it so the list updates without a round trip. */
+  onAdd: (entry: TargetEntry, runId: string, daemon?: DaemonRecord) => void
   /** The target is already in the list: select it instead of adding it again. */
   onExisting: (id: string) => void
   onTopUp: () => void

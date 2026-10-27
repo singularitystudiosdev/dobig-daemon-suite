@@ -11,6 +11,7 @@ const phase = process.argv[2] ?? 'live'
 // An OpenRouter header key must start with this prefix; the rest is an obviously fake test token (the mock ignores the prefix).
 const OR_PREFIX = 'sk-or-'
 const orKey = (name) => OR_PREFIX + name
+const SYNTH_MANY = Array.from({ length: 12 }, (_, i) => ({ id: String(900000 + i), url: 'https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter' }))
 const PROMPT = 'Make a variant of this thumbnail with a novel perspective'
 let pass = 0
 let fail = 0
@@ -24,7 +25,19 @@ const getJson = async (path, init) => {
 }
 const mock = async (p = '/__stats') => (await fetch(MOCK + p)).json()
 
-async function stream(body, headers = {}, { abortAfterMs } = {}) {
+// Credits are charged server-side (250 per tile); keep the thumbnail balance topped up so the stream tests below run.
+// Start the server with DAEMON_DATA_DIR=$(mktemp -d) so the balance starts fresh.
+async function fund(min = 9000) {
+  for (let i = 0; i < 20; i++) {
+    const c = await (await fetch(BASE + '/api/credits')).json()
+    if (c.balances['thumbnail-daemon'] >= min) return c.balances['thumbnail-daemon']
+    await fetch(BASE + '/api/credits/topup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ tool: 'thumbnail-daemon' }) })
+  }
+}
+const balance = async () => (await (await fetch(BASE + '/api/credits')).json()).balances['thumbnail-daemon']
+
+async function stream(body, headers = {}, { abortAfterMs, noFund } = {}) {
+  if (!noFund) await fund()
   const ac = new AbortController()
   if (abortAfterMs) setTimeout(() => ac.abort(), abortAfterMs)
   const r = await fetch(BASE + '/api/variants', { method: 'POST', headers: { 'content-type': 'application/json', ...headers }, body: JSON.stringify(body), signal: ac.signal })
@@ -56,7 +69,7 @@ console.log('status', JSON.stringify(status.body))
 if (phase === 'live') {
   check('status geminiKey true', status.body.geminiKey === true)
   check('status model/perThumb', status.body.model === 'gemini-nano-banana-2.1' && status.body.perThumb === 3)
-  check('status fields exactly geminiKey,model,perThumb,provider', Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb,provider', Object.keys(status.body).join())
+  check('status fields exactly geminiKey,llm,model,perThumb,provider', Object.keys(status.body).sort().join() === 'geminiKey,llm,model,perThumb,provider', Object.keys(status.body).join())
   check('status provider google (env Gemini key)', status.body.provider === 'google')
 
   // ---- /api/game
@@ -66,6 +79,34 @@ if (phase === 'live') {
   check('4 gallery images, all tr.rbxcdn.com', g.body.gallery?.length === 4 && g.body.gallery.every((t) => /^https:\/\/tr\.rbxcdn\.com\//.test(t.url) && /^\d+$/.test(t.id)))
   check('cover = first gallery image', g.body.game?.cover === g.body.gallery?.[0]?.url)
   const gallery = g.body.gallery ?? []
+
+  // ---- credits: charged before the stream, refunded per failed tile, 402 before any stream byte
+  {
+    await fund(1000)
+    const b0 = await balance()
+    const ok = await stream({ gallery: gallery.slice(0, 1) }, {}, { noFund: true })
+    const b1 = await balance()
+    check('credits: a 3-tile stream that succeeds spends 750', ok.events.filter((e) => e.type === 'done').length === 3 && b0 - b1 === 750, `${b0} -> ${b1}`)
+    const bad = await stream({ gallery: gallery.slice(0, 1) }, { 'x-gemini-key': 'test-badkey' }, { noFund: true })
+    const b2 = await balance()
+    check('credits: failed tiles are refunded (balance unchanged)', bad.events.filter((e) => e.type === 'failed').length === 3 && b2 === b1, `${b1} -> ${b2}`)
+    let bal = await balance()
+    for (let i = 0; i < 20 && bal >= 9000; i++) {
+      await stream({ gallery: gallery.slice(0, 1) }, {}, { noFund: true })
+      bal = await balance()
+    }
+    const many = [...gallery, ...SYNTH_MANY].slice(0, 12)
+    const over = await stream({ gallery: many }, {}, { noFund: true })
+    const need = many.length * 3 * 250
+    check('credits: over-budget request is 402 JSON with needed and balance, before any stream bytes', over.r.status === 402 && /json/.test(over.r.headers.get('content-type')) && over.events[0].ok === false && over.events[0].code === 'credits' && over.events[0].needed === need && over.events[0].balance === bal, JSON.stringify(over.events[0]))
+    check('credits: the 402 charged nothing', (await balance()) === bal)
+    const ex = await getJson(`/api/variants/existing?ids=${gallery.map((t) => t.id).join(',')},999`)
+    const first = ex.body.variants?.filter((v) => v.thumbId === gallery[0].id) ?? []
+    check('variants/existing lists generated files (read-only)', ex.status === 200 && ex.body.ok === true && first.length === 3 && first.every((v) => /^\/api\/img\/\d+-[0-2]\.(jpg|png|webp)\?v=\d+$/.test(v.src)) && !ex.body.variants.some((v) => v.thumbId === '999'), JSON.stringify(ex.body).slice(0, 200))
+    const img = await fetch(BASE + first[0].src)
+    check('variants/existing src is served by /api/img', img.status === 200 && img.headers.get('content-type') === 'image/jpeg')
+    check('variants/existing with no ids is an empty list', JSON.stringify((await getJson('/api/variants/existing')).body) === JSON.stringify({ ok: true, variants: [] }))
+  }
 
   const variants = [
     ['locale + start link', '/api/game?link=' + encodeURIComponent('https://web.roblox.com/en/games/107778070777162'), 200],
@@ -251,7 +292,7 @@ if (phase === 'live') {
 
 if (phase === 'nokey') {
   check('status geminiKey false', status.body.geminiKey === false)
-  check('status provider null, fields exactly geminiKey,model,perThumb,provider', status.body.provider === null && Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb,provider', Object.keys(status.body).join())
+  check('status provider null, fields exactly geminiKey,llm,model,perThumb,provider', status.body.provider === null && Object.keys(status.body).sort().join() === 'geminiKey,llm,model,perThumb,provider', Object.keys(status.body).join())
   await mock('/__reset')
   // A made-up id and a real Steal An Egg gallery (when Roblox is reachable): both unavailable, neither touches the mock.
   const galleries = [[{ id: '424242', url: 'https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter' }]]
@@ -276,7 +317,7 @@ if (phase === 'nokey') {
 const SYNTH = [{ id: '424242', url: 'https://tr.rbxcdn.com/180DAY-1e742eea0123525631cc6b21b4f77efc/768/432/Image/Jpeg/noFilter' }]
 if (phase === 'orenv') {
   // Server env has OPENROUTER_API_KEY=test-or-ok (+ OPENROUTER_BASE_URL at the mock) and NO Gemini key.
-  check('status: geminiKey true, provider openrouter, fields', status.body.geminiKey === true && status.body.provider === 'openrouter' && status.body.model === 'gemini-nano-banana-2.1' && Object.keys(status.body).sort().join() === 'geminiKey,model,perThumb,provider', JSON.stringify(status.body))
+  check('status: geminiKey true, provider openrouter, fields', status.body.geminiKey === true && status.body.provider === 'openrouter' && status.body.model === 'gemini-nano-banana-2.1' && Object.keys(status.body).sort().join() === 'geminiKey,llm,model,perThumb,provider', JSON.stringify(status.body))
   await mock('/__reset')
   const r = await stream({ gallery: SYNTH })
   const st = await mock()
